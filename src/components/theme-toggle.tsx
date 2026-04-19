@@ -1,8 +1,34 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type FunctionComponent } from 'react'
+
+/**
+ * Types
+ */
 
 type ThemeMode = 'light' | 'dark' | 'auto'
 
-function getInitialMode(): ThemeMode {
+/**
+ * Constants
+ */
+
+const THEME_LABELS: Record<ThemeMode, string> = {
+  light: 'Light',
+  dark: 'Dark',
+  auto: 'Auto',
+}
+
+const MODE_SEQUENCE: ThemeMode[] = ['light', 'dark', 'auto']
+
+/**
+ * Helpers
+ */
+
+const getNextMode = (current: ThemeMode): ThemeMode => {
+  const index = MODE_SEQUENCE.indexOf(current)
+  const nextIndex = (index + 1) % MODE_SEQUENCE.length
+  return MODE_SEQUENCE[nextIndex]
+}
+
+const getInitialMode = (): ThemeMode => {
   if (typeof window === 'undefined') {
     return 'auto'
   }
@@ -15,9 +41,16 @@ function getInitialMode(): ThemeMode {
   return 'auto'
 }
 
-function applyThemeMode(mode: ThemeMode) {
+const getResolvedTheme = (mode: ThemeMode): ThemeMode => {
+  if (mode !== 'auto') {
+    return mode
+  }
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const resolved = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode
+  return prefersDark ? 'dark' : 'light'
+}
+
+const applyThemeMode = (mode: ThemeMode): void => {
+  const resolved = getResolvedTheme(mode)
 
   document.documentElement.classList.remove('light', 'dark')
   document.documentElement.classList.add(resolved)
@@ -31,7 +64,11 @@ function applyThemeMode(mode: ThemeMode) {
   document.documentElement.style.colorScheme = resolved
 }
 
-export default function ThemeToggle() {
+/**
+ * ThemeToggle
+ */
+
+export const ThemeToggle: FunctionComponent = () => {
   const [mode, setMode] = useState<ThemeMode>('auto')
 
   useEffect(() => {
@@ -46,7 +83,10 @@ export default function ThemeToggle() {
     }
 
     const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => applyThemeMode('auto')
+
+    const onChange = (): void => {
+      applyThemeMode('auto')
+    }
 
     media.addEventListener('change', onChange)
     return () => {
@@ -54,18 +94,22 @@ export default function ThemeToggle() {
     }
   }, [mode])
 
-  function toggleMode() {
-    const nextMode: ThemeMode =
-      mode === 'light' ? 'dark' : mode === 'dark' ? 'auto' : 'light'
+  const toggleMode = (): void => {
+    const nextMode = getNextMode(mode)
+
     setMode(nextMode)
     applyThemeMode(nextMode)
     window.localStorage.setItem('theme', nextMode)
   }
 
-  const label =
-    mode === 'auto'
-      ? 'Theme mode: auto (system). Click to switch to light mode.'
-      : `Theme mode: ${mode}. Click to switch mode.`
+  const getLabel = (): string => {
+    if (mode === 'auto') {
+      return 'Theme mode: auto (system). Click to switch to light mode.'
+    }
+    return `Theme mode: ${mode}. Click to switch mode.`
+  }
+
+  const label = getLabel()
 
   return (
     <button
@@ -75,7 +119,7 @@ export default function ThemeToggle() {
       title={label}
       className="rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-1.5 text-sm font-semibold text-[var(--sea-ink)] shadow-[0_8px_22px_rgba(30,90,72,0.08)] transition hover:-translate-y-0.5"
     >
-      {mode === 'auto' ? 'Auto' : mode === 'dark' ? 'Dark' : 'Light'}
+      {THEME_LABELS[mode]}
     </button>
   )
 }
