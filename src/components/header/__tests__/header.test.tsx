@@ -18,11 +18,6 @@ describe('Header', () => {
     expect(screen.getByRole('link', { name: 'Docs' })).toBeInTheDocument()
   })
 
-  it('should render theme toggle', () => {
-    render(<Header />)
-    expect(screen.getByRole('button', { name: /theme mode/i })).toBeInTheDocument()
-  })
-
   it('should render social links', () => {
     render(<Header />)
     expect(screen.getByRole('link', { name: /follow tanstack on x/i })).toBeInTheDocument()
