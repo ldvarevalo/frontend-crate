@@ -1,19 +1,49 @@
 # AGENTS.md
 
-## Convenciones de Código
+## Commands
 
-### Naming Conventions
+```bash
+yarn dev          # Start dev server
+yarn build       # Build (validates syntax + imports)
+yarn lint        # ESLint
+yarn lint:fix    # ESLint auto-fix
+yarn typescript  # TypeScript check
+yarn test        # Run tests
+yarn test:watch  # Watch mode
+```
 
-- **Archivos**: `kebab-case` (`footer.tsx`, `theme-toggle.tsx`)
-- **Componentes**: `PascalCase` (`ThemeToggle`)
-- **Hooks**: `use` + `PascalCase`
-- **Types**: `Use[Nombre]Props`, `Use[Nombre]Hook`
-- **Helpers**: `camelCase`
-- **Tests**: `*.test.ts` en `__tests__/`
+## Verification Order
 
-### Separadores de Sección
+`lint → typescript → test`
 
-Orden obligatorio en TypeScript:
+## Git Workflow
+
+- **Never use `git add`** — only commit already staged files
+- Use `git commit --no-verify -m "<message>"` with staged files
+- Use `yarn add -E <package>` for exact versions
+
+## Naming
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Files | kebab-case | `footer.tsx`, `theme-toggle.tsx` |
+| Components | PascalCase | `ThemeToggle` |
+| Hooks | use + PascalCase | `useThemeToggle` |
+| Types | Use[Nombre]Props/Hook | `UseThemeToggleProps` |
+
+## TanStack Router
+
+- `routeTree.gen.ts` is **auto-generated** — never edit manually
+- Exclude it from linter/formatter in `eslint.config.js`
+- Tests require `RouterContextProvider` wrapper (see `test-utils`)
+
+## Testing
+
+- Test utilities: `src/lib/test-utils/index.tsx`
+- Import via `@test-utils`: `import { render, screen } from '@test-utils'`
+- Render wraps components with `RouterContextProvider`
+
+## Section Order (TypeScript)
 
 ```typescript
 /**
@@ -37,17 +67,7 @@ const formatDate = () => { ... };
 export const MyComponent = () => { ... };
 ```
 
-### TypeScript
+## TypeScript Rules
 
-- **NO usar `any`**: usar `unknown` + type guards
-- **Type imports separados**
-
-## Verificación
-
-```bash
-yarn build   # Build (verifica sintaxis y imports)
-yarn lint   # ESLint (puede tener advertencias)
-yarn test   # Vitest
-```
-
-Orden recomendado: `build → lint → test`
+- **NO `any`** — use `unknown` + type guards
+- Keep type imports separate
