@@ -1,19 +1,17 @@
 // @ts-check
 
-import prettier from 'eslint-config-prettier'
-import etc from 'eslint-plugin-etc'
-import eslintPluginImport from 'eslint-plugin-import'
-
-import jsxA11y from 'eslint-plugin-jsx-a11y'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import sonarjs from 'eslint-plugin-sonarjs'
-import unicorn from 'eslint-plugin-unicorn'
-import tseslint from 'typescript-eslint'
+import prettier from 'eslint-config-prettier';
+import etc from 'eslint-plugin-etc';
+import eslintPluginImport from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import sonarjs from 'eslint-plugin-sonarjs';
+import unicorn from 'eslint-plugin-unicorn';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   prettier,
-
   {
     ignores: ['dist/**', 'node_modules/**', '.git/**'],
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -58,46 +56,70 @@ export default tseslint.config(
       'max-params': ['error', { max: 3 }],
       'max-statements': ['error', { max: 12 }],
       'arrow-body-style': ['error', 'as-needed'],
-      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
-      'no-warning-comments': ['error', { terms: ['fixme'],
-location: 'anywhere' }],
+      'object-property-newline': [
+        'error',
+        { allowAllPropertiesOnSameLine: false },
+      ],
+      'no-warning-comments': [
+        'error',
+        {
+          terms: ['fixme'],
+          location: 'anywhere',
+        },
+      ],
       'no-promise-executor-return': 'off',
       'no-param-reassign': 'off',
-
-      'etc/prefer-interface': ['error', { allowIntersection: true,
-allowLocal: true }],
+      'etc/prefer-interface': [
+        'error',
+        {
+          allowIntersection: true,
+          allowLocal: true,
+        },
+      ],
 
       'import/order': [
         'error',
         {
           groups: ['builtin', 'external', 'internal'],
           pathGroups: [
-            { pattern: 'react',
-group: 'external',
-position: 'before' },
-            { pattern: '@ticmas-ui/*',
-group: 'external',
-position: 'after' },
             {
-              pattern: '@{components,components/**,config,core/**,features/**,pages/**,settings,settings/**,styles/**,test-utils,types,types/**,utils,utils/**}',
+              pattern: 'react',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@ticmas-ui/*',
+              group: 'external',
+              position: 'after',
+            },
+            {
+              pattern:
+                '@{components,components/**,config,core/**,features/**,pages/**,settings,settings/**,styles/**,test-utils,types,types/**,utils,utils/**}',
               group: 'external',
               position: 'after',
             },
           ],
           pathGroupsExcludedImportTypes: ['next', 'react'],
-          alphabetize: { order: 'asc',
-caseInsensitive: true },
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
         },
       ],
       'import/no-cycle': 'off',
-      'import/extensions': ['error', 'never', { svg: 'always',
-webp: 'always',
-json: 'always',
-gen: 'always' }],
+      'import/extensions': [
+        'error',
+        'never',
+        {
+          svg: 'always',
+          webp: 'always',
+          json: 'always',
+          gen: 'always',
+        },
+      ],
       'import/prefer-default-export': 'off',
       'import/no-extraneous-dependencies': 'off',
       'import/no-unresolved': 'off',
-
       'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
       'react/destructuring-assignment': 'error',
       'react/hook-use-state': 'error',
@@ -109,8 +131,13 @@ gen: 'always' }],
       'react/self-closing-comp': ['error'],
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react/function-component-definition': [2, { namedComponents: 'arrow-function',
-unnamedComponents: 'arrow-function' }],
+      'react/function-component-definition': [
+        2,
+        {
+          namedComponents: 'arrow-function',
+          unnamedComponents: 'arrow-function',
+        },
+      ],
       'react/jsx-props-no-spreading': 'off',
 
       'testing-library/render-result-naming-convention': 'off',
@@ -186,5 +213,5 @@ unnamedComponents: 'arrow-function' }],
       'max-nested-callbacks': 'off',
       'max-statements': 'off',
     },
-  },
-)
+  }
+);

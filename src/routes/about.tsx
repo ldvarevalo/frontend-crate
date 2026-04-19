@@ -1,5 +1,5 @@
-import type { FunctionComponent } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import type { FunctionComponent } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 
 /**
  * About component
@@ -19,7 +19,7 @@ const About: FunctionComponent = () => (
       </p>
     </section>
   </main>
-)
+);
 
 /**
  * About route
@@ -27,4 +27,4 @@ const About: FunctionComponent = () => (
 
 export const Route = createFileRoute('/about')({
   component: About,
-})
+});

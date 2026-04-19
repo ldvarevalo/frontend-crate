@@ -1,10 +1,10 @@
-import { useEffect, useState, type FunctionComponent } from 'react'
+import { useEffect, useState, type FunctionComponent } from 'react';
 
 /**
  * Types
  */
 
-type ThemeMode = 'light' | 'dark' | 'auto'
+type ThemeMode = 'light' | 'dark' | 'auto';
 
 /**
  * Constants
@@ -14,102 +14,102 @@ const THEME_LABELS: Record<ThemeMode, string> = {
   light: 'Light',
   dark: 'Dark',
   auto: 'Auto',
-}
+};
 
-const MODE_SEQUENCE: ThemeMode[] = ['light', 'dark', 'auto']
+const MODE_SEQUENCE: ThemeMode[] = ['light', 'dark', 'auto'];
 
 /**
  * Helpers
  */
 
 const getNextMode = (current: ThemeMode): ThemeMode => {
-  const index = MODE_SEQUENCE.indexOf(current)
-  const nextIndex = (index + 1) % MODE_SEQUENCE.length
-  return MODE_SEQUENCE[nextIndex]
-}
+  const index = MODE_SEQUENCE.indexOf(current);
+  const nextIndex = (index + 1) % MODE_SEQUENCE.length;
+  return MODE_SEQUENCE[nextIndex];
+};
 
 const getInitialMode = (): ThemeMode => {
   if (typeof window === 'undefined') {
-    return 'auto'
+    return 'auto';
   }
 
-  const stored = window.localStorage.getItem('theme')
+  const stored = window.localStorage.getItem('theme');
   if (stored === 'light' || stored === 'dark' || stored === 'auto') {
-    return stored
+    return stored;
   }
 
-  return 'auto'
-}
+  return 'auto';
+};
 
 const getResolvedTheme = (mode: ThemeMode): ThemeMode => {
   if (mode !== 'auto') {
-    return mode
+    return mode;
   }
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  return prefersDark ? 'dark' : 'light'
-}
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return prefersDark ? 'dark' : 'light';
+};
 
 const applyThemeMode = (mode: ThemeMode): void => {
-  const resolved = getResolvedTheme(mode)
+  const resolved = getResolvedTheme(mode);
 
-  document.documentElement.classList.remove('light', 'dark')
-  document.documentElement.classList.add(resolved)
+  document.documentElement.classList.remove('light', 'dark');
+  document.documentElement.classList.add(resolved);
 
   if (mode === 'auto') {
-    document.documentElement.removeAttribute('data-theme')
+    document.documentElement.removeAttribute('data-theme');
   } else {
-    document.documentElement.setAttribute('data-theme', mode)
+    document.documentElement.setAttribute('data-theme', mode);
   }
 
-  document.documentElement.style.colorScheme = resolved
-}
+  document.documentElement.style.colorScheme = resolved;
+};
 
 /**
  * ThemeToggle
  */
 
 export const ThemeToggle: FunctionComponent = () => {
-  const [mode, setMode] = useState<ThemeMode>('auto')
+  const [mode, setMode] = useState<ThemeMode>('auto');
 
   useEffect(() => {
-    const initialMode = getInitialMode()
-    setMode(initialMode)
-    applyThemeMode(initialMode)
-  }, [])
+    const initialMode = getInitialMode();
+    setMode(initialMode);
+    applyThemeMode(initialMode);
+  }, []);
 
   useEffect(() => {
     if (mode !== 'auto') {
-      return
+      return;
     }
 
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
 
     const onChange = (): void => {
-      applyThemeMode('auto')
-    }
+      applyThemeMode('auto');
+    };
 
-    media.addEventListener('change', onChange)
+    media.addEventListener('change', onChange);
     return () => {
-      media.removeEventListener('change', onChange)
-    }
-  }, [mode])
+      media.removeEventListener('change', onChange);
+    };
+  }, [mode]);
 
   const toggleMode = (): void => {
-    const nextMode = getNextMode(mode)
+    const nextMode = getNextMode(mode);
 
-    setMode(nextMode)
-    applyThemeMode(nextMode)
-    window.localStorage.setItem('theme', nextMode)
-  }
+    setMode(nextMode);
+    applyThemeMode(nextMode);
+    window.localStorage.setItem('theme', nextMode);
+  };
 
   const getLabel = (): string => {
     if (mode === 'auto') {
-      return 'Theme mode: auto (system). Click to switch to light mode.'
+      return 'Theme mode: auto (system). Click to switch to light mode.';
     }
-    return `Theme mode: ${mode}. Click to switch mode.`
-  }
+    return `Theme mode: ${mode}. Click to switch mode.`;
+  };
 
-  const label = getLabel()
+  const label = getLabel();
 
   return (
     <button
@@ -121,5 +121,5 @@ export const ThemeToggle: FunctionComponent = () => {
     >
       {THEME_LABELS[mode]}
     </button>
-  )
-}
+  );
+};

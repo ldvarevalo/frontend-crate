@@ -12,8 +12,7 @@
     "test": "vitest run",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier --check .",
-    "check": "prettier --write . && eslint --fix",
+    "format": "prettier --write . && yarn lint:fix",
     "typescript": "tsc --noEmit"
   },
   "dependencies": {
