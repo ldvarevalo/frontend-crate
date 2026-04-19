@@ -113,6 +113,7 @@ export const ThemeToggle: FunctionComponent = () => {
 
   return (
     <button
+      role="button"
       type="button"
       onClick={toggleMode}
       aria-label={label}

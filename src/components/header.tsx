@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
 import { Link } from '@tanstack/react-router';
-
 import { ThemeToggle } from './theme-toggle';
 
 /**
