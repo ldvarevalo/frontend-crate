@@ -13,7 +13,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   prettier,
   {
-    ignores: ['dist/**', 'node_modules/**', '.git/**'],
+    ignores: ['dist/**', 'node_modules/**', '.git/**', 'src/routeTree.gen.ts'],
     files: ['**/*.{js,jsx,ts,tsx}'],
     settings: {
       react: {
