@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
-import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 
 import appCss from '../styles.css?url';
@@ -26,7 +25,6 @@ const RootDocument = ({ children }: { children: ReactNode }): ReactNode => (
     <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
       <Header />
       {children}
-      <Footer />
       <TanStackDevtools
         config={{
           position: 'bottom-right',
