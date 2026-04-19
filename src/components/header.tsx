@@ -1,3 +1,4 @@
+import type { FunctionComponent } from 'react'
 import { Link } from '@tanstack/react-router'
 
 import ThemeToggle from './theme-toggle'
@@ -6,8 +7,7 @@ import ThemeToggle from './theme-toggle'
  * Header component
  */
 
-export default function Header() {
-  return (
+export const Header: FunctionComponent = () => (
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4 backdrop-blur-lg">
       <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
         <h2 className="m-0 flex-shrink-0 text-base font-semibold tracking-tight">
@@ -80,4 +80,3 @@ export default function Header() {
       </nav>
     </header>
   )
-}

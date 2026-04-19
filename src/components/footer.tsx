@@ -1,8 +1,10 @@
+import type { FunctionComponent } from 'react'
+
 /**
  * Footer component
  */
 
-export default function Footer() {
+export const Footer: FunctionComponent = () => {
   const year = new Date().getFullYear()
 
   return (
