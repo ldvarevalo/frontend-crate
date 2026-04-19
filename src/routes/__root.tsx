@@ -1,4 +1,4 @@
-import type { FunctionComponent } from 'react'
+import type { ReactNode } from 'react'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
@@ -6,14 +6,6 @@ import { Footer } from '../components/footer'
 import { Header } from '../components/header'
 
 import appCss from '../styles.css?url'
-
-/**
- * Types
- */
-
-interface RootDocumentProps {
-  children: React.ReactNode
-}
 
 /**
  * Constants
@@ -25,7 +17,7 @@ const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getIte
  * Root
  */
 
-const RootDocument: FunctionComponent<RootDocumentProps> = ({ children }) => (
+const RootDocument = ({ children }: { children: ReactNode }): ReactNode => (
   <html lang="en" suppressHydrationWarning>
     <head>
       <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
