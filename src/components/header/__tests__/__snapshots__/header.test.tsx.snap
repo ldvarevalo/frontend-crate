@@ -4,10 +4,10 @@ exports[`Header > should render logo link 1`] = `
 <body>
   <div>
     <header
-      class="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4 backdrop-blur-lg"
+      class="sticky flex items-center justify-between top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4"
     >
       <nav
-        class="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4"
+        class="page-wrap flex flex-wrap gap-x-3 gap-y-2 py-3 sm:py-4"
       >
         <h2
           class="display-title font-bold italic text-2xl m-0 flex-shrink-0 tracking-tight"
@@ -22,7 +22,7 @@ exports[`Header > should render logo link 1`] = `
           </a>
         </h2>
         <div
-          class="order-3 flex w-full flex-wrap items-center gap-x-4 gap-y-1 pb-1 text-sm font-semibold sm:order-2 sm:w-auto sm:flex-nowrap sm:pb-0"
+          class="order-3 flex w-full items-center gap-x-4 gap-y-1 pb-1 text-sm font-semibold sm:order-2 sm:w-auto sm:flex-nowrap sm:pb-0"
         >
           <a
             aria-current="page"
@@ -34,15 +34,13 @@ exports[`Header > should render logo link 1`] = `
           </a>
           <a
             class="nav-link"
-            href="/about"
+            href="/collection"
           >
             Collection
           </a>
           <a
             class="nav-link"
-            href="https://tanstack.com/start/latest/docs/framework/react/overview"
-            rel="noreferrer"
-            target="_blank"
+            href="/add"
           >
             Add
           </a>
