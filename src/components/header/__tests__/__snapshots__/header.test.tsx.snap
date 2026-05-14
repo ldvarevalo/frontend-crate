@@ -4,17 +4,17 @@ exports[`Header > should render logo link 1`] = `
 <body>
   <div>
     <header
-      class="sticky flex items-center justify-between top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4"
+      class="sticky top-0 z-50 flex items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur-sm"
     >
       <nav
         class="page-wrap flex flex-wrap gap-x-3 gap-y-2 py-3 sm:py-4"
       >
         <h2
-          class="display-title font-bold italic text-2xl m-0 flex-shrink-0 tracking-tight"
+          class="m-0 flex-shrink-0 font-heading text-2xl font-bold italic tracking-tight"
         >
           <a
             aria-current="page"
-            class="inline-flex items-center gap-2 px-3 py-1.5 text-[var(--sea-ink)] no-underline sm:px-4 sm:py-2 active"
+            class="inline-flex items-center gap-2 px-3 py-1.5 text-foreground no-underline sm:px-4 sm:py-2 active"
             data-status="active"
             href="/"
           >
@@ -26,20 +26,20 @@ exports[`Header > should render logo link 1`] = `
         >
           <a
             aria-current="page"
-            class="nav-link nav-link is-active"
+            class="text-muted-foreground no-underline transition-colors hover:text-foreground text-foreground"
             data-status="active"
             href="/"
           >
             Dashboard
           </a>
           <a
-            class="nav-link"
+            class="text-muted-foreground no-underline transition-colors hover:text-foreground"
             href="/collection"
           >
             Collection
           </a>
           <a
-            class="nav-link"
+            class="text-muted-foreground no-underline transition-colors hover:text-foreground"
             href="/add"
           >
             Add
