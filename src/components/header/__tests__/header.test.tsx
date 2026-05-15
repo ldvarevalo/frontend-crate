@@ -1,9 +1,5 @@
-import { createRouter } from '@tanstack/react-router';
-import { render, screen } from '@test-utils';
-import { routeTree } from '#/routeTree.gen';
+import { render, routerMock, screen } from '@test-utils';
 import { Header } from '../header';
-
-const router = createRouter({ routeTree });
 
 /**
  * Header
@@ -24,7 +20,7 @@ describe('Header', () => {
   it('should render navigation links when authenticated on auth route', async () => {
     localStorage.setItem('is_authenticated', 'true');
 
-    await router.navigate({ to: '/inicio' });
+    await routerMock.navigate({ to: '/inicio' });
 
     render(<Header />);
 

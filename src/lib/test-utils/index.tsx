@@ -14,7 +14,7 @@ import { routeTree } from '#/routeTree.gen'
  * Router
  */
 
-const router = createRouter({
+export const routerMock = createRouter({
     routeTree
 })
 
@@ -27,7 +27,7 @@ const render = (
   options?: Omit<RenderOptions, 'wrapper'>
 ) => rtlRender(ui, {
     wrapper: (props: { children: ReactNode }) => (
-      <RouterContextProvider router={router}>
+      <RouterContextProvider router={routerMock}>
         {props.children}
       </RouterContextProvider>
     ),
@@ -39,7 +39,7 @@ const renderHook = <T,>(
   options?: Omit<RenderHookOptions<T>, 'wrapper'>
 ) => rtlRenderHook(callback, {
     wrapper: (props: { children: ReactNode }) => (
-      <RouterContextProvider router={router}>
+      <RouterContextProvider router={routerMock}>
         {props.children}
       </RouterContextProvider>
     ),
