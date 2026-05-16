@@ -6,7 +6,16 @@ import { cn } from '#/lib/utils';
  * Types
  */
 
-type TypographyAs = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'label';
+type TypographyAs =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'p'
+  | 'span'
+  | 'label';
 
 interface TypographyProps extends VariantProps<typeof typographyVariants> {
   as?: TypographyAs;
@@ -94,14 +103,16 @@ export const Typography: FunctionComponent<TypographyProps> = ({
   const Component: ElementType = as ?? DEFAULT_ELEMENT[family ?? 'body'] ?? 'p';
   return (
     <Component
-      className={cn(typographyVariants({
-        family,
-        size,
-        weight,
-        transform: uppercase ? 'uppercase' : transform,
-        tracking,
-        className,
-      }))}
+      className={cn(
+        typographyVariants({
+          family,
+          size,
+          weight,
+          transform: uppercase ? 'uppercase' : transform,
+          tracking,
+          className,
+        })
+      )}
     >
       {children}
     </Component>

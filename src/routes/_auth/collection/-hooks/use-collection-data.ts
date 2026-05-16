@@ -109,13 +109,17 @@ export const useCollectionData = (): CollectionData => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('ALL');
 
-  const filteredAlbums = MOCK_ALBUMS.filter((album) => {
-    const matchesTab = activeTab === 'ALL' || album.status === STATUS_MAP[activeTab];
+  const filteredAlbums = MOCK_ALBUMS.filter(album => {
+    const matchesTab =
+      activeTab === 'ALL' || album.status === STATUS_MAP[activeTab];
+
     const q = searchQuery.toLowerCase();
+
     const matchesSearch =
       !q ||
       album.title.toLowerCase().includes(q) ||
       album.artist.toLowerCase().includes(q);
+
     return matchesTab && matchesSearch;
   });
 

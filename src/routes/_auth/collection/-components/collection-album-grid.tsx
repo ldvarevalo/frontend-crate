@@ -15,12 +15,11 @@ interface CollectionAlbumGridProps {
  * CollectionAlbumGrid
  */
 
-export const CollectionAlbumGrid: FunctionComponent<CollectionAlbumGridProps> = ({
-  albums,
-  onAlbumClick,
-}) => (
+export const CollectionAlbumGrid: FunctionComponent<
+  CollectionAlbumGridProps
+> = ({ albums, onAlbumClick }) => (
   <div className="grid grid-cols-2 gap-4">
-    {albums.map((album) => (
+    {albums.map(album => (
       <AlbumCard
         key={album.id}
         coverUrl={album.coverUrl}
