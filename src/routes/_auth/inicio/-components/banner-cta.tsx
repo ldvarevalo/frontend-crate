@@ -27,7 +27,7 @@ export const BannerCta: FunctionComponent<BannerCtaProps> = ({
       <Typography size="xs" transform="uppercase" tracking="wider" weight="medium" className="text-on-primary-container">
         WANT TO LISTEN
       </Typography>
-      <Typography family="heading" size="lg" className="text-on-primary-container">
+      <Typography family="heading" size="xl" className="text-on-primary-container">
         {count} items waiting
       </Typography>
     </div>
