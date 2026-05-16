@@ -33,7 +33,7 @@ export const FilterTabs: FunctionComponent<FilterTabsProps> = ({
         type="button"
         onClick={() => onTabChange(tab.id)}
         className={cn(
-          'flex-shrink-0 px-4 py-2',
+          'shrink-0 px-4 py-2',
           activeTab === tab.id
             ? 'bg-primary-container text-on-primary-container'
             : 'bg-surface-container-high text-on-surface-variant',
