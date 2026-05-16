@@ -1,15 +1,54 @@
 import type { FunctionComponent } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { Typography } from '#/components/ui/typography';
+import { SearchBar } from './-components/search-bar';
+import { FilterTabs } from './-components/filter-tabs';
+import { CollectionAlbumGrid } from './-components/collection-album-grid';
+import { useCollectionData } from './-hooks/use-collection-data';
+
+/**
+ * Constants
+ */
+
+const TABS = [
+  { id: 'ALL', label: 'ALL' },
+  { id: 'WANT', label: 'WANT' },
+  { id: 'LISTENING', label: 'LISTENING' },
+  { id: 'LISTENED', label: 'LISTENED' },
+];
 
 /**
  * CollectionPage
  */
 
-const CollectionPage: FunctionComponent = () => (
-  <main className="page-wrap py-6">
-    <p>Collection</p>
-  </main>
-);
+const CollectionPage: FunctionComponent = () => {
+  const navigate = useNavigate();
+  const { filteredAlbums, searchQuery, setSearchQuery, activeTab, setActiveTab } =
+    useCollectionData();
+
+  return (
+    <main className="page-wrap space-y-6 py-6">
+      <SearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      <div>
+        <Typography family="heading" size="2xl">
+          Archive
+        </Typography>
+        <Typography size="xs" weight="medium" transform="uppercase" tracking="wider">
+          {filteredAlbums.length} RECORDS COLLECTED
+        </Typography>
+      </div>
+      <FilterTabs
+        tabs={TABS}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
+      <CollectionAlbumGrid
+        albums={filteredAlbums}
+        onAlbumClick={(id) => navigate({ to: `/album/${id}` })}
+      />
+    </main>
+  );
+};
 
 /**
  * CollectionRoute
@@ -17,4 +56,9 @@ const CollectionPage: FunctionComponent = () => (
 
 export const Route = createFileRoute('/_auth/collection/')({
   component: CollectionPage,
+  loader: () => ({
+    pageHeader: {
+      title: 'Crate',
+    },
+  }),
 });
