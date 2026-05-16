@@ -45,7 +45,17 @@ Todos los tokens están definidos en `src/styles.css`. Nunca usar hex, genérico
 | `outline` | `rgba(255,255,255,0.15)` | Outlines |
 | `outline-20` | `rgba(255,255,255,0.20)` | Outlines con más opacidad |
 
-### 1.4 Radios
+### 1.4 Colores de chart
+
+| Token | Resuelve a | Uso |
+|---|---|---|
+| `chart-1` | `primary` | Series de gráficos |
+| `chart-2` | `primary-container` | Series de gráficos |
+| `chart-3` | `on-surface-variant` | Series de gráficos |
+| `chart-4` | `on-surface` | Series de gráficos |
+| `chart-5` | `on-surface` | Series de gráficos |
+
+### 1.5 Radios
 
 | Token | Valor |
 |---|---|
@@ -78,7 +88,7 @@ import { Button } from '#/components/ui/button'
 
 | Prop | Valores | Default |
 |---|---|---|
-| `variant` | `default` / `outline` / `secondary` / `ghost` / `destructive` / `link` | `default` |
+| `variant` | `default` / `outline` / `secondary` / `ghost` / `destructive` / `link` / `text` | `default` |
 | `size` | `default` / `xs` / `sm` / `lg` / `icon` / `icon-xs` / `icon-sm` / `icon-lg` | `default` |
 
 **Ejemplos:**
@@ -88,9 +98,49 @@ import { Button } from '#/components/ui/button'
 <Button variant="ghost">Ghost</Button>
 <Button variant="destructive">Eliminar</Button>
 <Button variant="link">Ver más</Button>
+<Button variant="text">VIEW ALL</Button>
 <Button size="sm">Small</Button>
 <Button size="lg">Large</Button>
 <Button size="icon"><X /></Button>
+```
+
+---
+
+### Typography
+
+```
+import { Typography } from '#/components/ui/typography'
+```
+
+**Variantes CVA:**
+
+| Prop | Valores | Default |
+|---|---|---|
+| `family` | `sans` / `heading` | `sans` |
+| `size` | `2xs` / `xs` / `sm` / `base` / `lg` / `xl` / `2xl` | `sm` |
+| `weight` | `normal` / `medium` / `semibold` / `bold` | `normal` |
+| `transform` | `none` / `uppercase` | `none` |
+| `tracking` | `normal` / `tight` / `wider` | `normal` |
+
+**Prop `as`** — elemento HTML renderizado. Si no se pasa, se infiere de `family`:
+
+| `family` | Default `as` |
+|---|---|
+| `display` | `h1` |
+| `heading` | `h2` |
+| `label` | `label` |
+| `body` | `p` |
+| `nav-link` | `span` |
+| `nav-tab` | `span` |
+| `logo` | `span` |
+| (otro) | `p` |
+
+**Ejemplos:**
+```tsx
+<Typography family="heading" size="lg">Section Title</Typography>
+<Typography size="xs" weight="medium">Label</Typography>
+<Typography size="2xs" transform="uppercase" tracking="wider">Small Caps</Typography>
+<Typography as="h3" family="heading" size="xl">Heading as h3</Typography>
 ```
 
 ---
@@ -127,7 +177,112 @@ import { Header } from '#/components/header'
 <Header />
 ```
 
-Header sticky con glassmorphism (`bg-background/80 backdrop-blur-sm`), borde inferior, logo "Crate" en `font-heading` y navegación con links a Dashboard, Collection, Add, Logout.
+Header sticky con glassmorphism (`bg-background/80 backdrop-blur-sm`), logo "Crate" en `font-heading` y link a `/logout`.
+
+---
+
+### AlbumCard
+
+```
+import { AlbumCard } from '#/components/album-card'
+```
+
+**Props:**
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `coverUrl` | `string` | — |
+| `title` | `string` | — |
+| `artist` | `string` | — |
+| `onClick` | `() => void` | — |
+
+**Ejemplo:**
+```tsx
+<AlbumCard
+  coverUrl="https://picsum.photos/seed/album1/400"
+  title="Dark Side"
+  artist="Pink Floyd"
+  onClick={() => navigate({ to: `/album/1` })}
+/>
+```
+
+---
+
+### SectionHeader
+
+```
+import { SectionHeader } from '#/components/section-header'
+```
+
+**Props:**
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `title` | `string` | — |
+| `onLinkClick?` | `() => void` | — |
+| `linkLabel?` | `string` | `'VIEW ALL'` |
+
+**Ejemplo:**
+```tsx
+<SectionHeader
+  title="Recently Listened"
+  onLinkClick={() => navigate({ to: '/recent' })}
+/>
+```
+
+Renderiza un título con `Typography family="heading" size="lg"` y un `Button variant="text"` opcional a la derecha.
+
+---
+
+### TrackRow
+
+```
+import { TrackRow } from '#/components/track-row'
+```
+
+**Props:**
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `title` | `string` | — |
+| `artist` | `string` | — |
+| `duration` | `string` | — |
+| `isActive?` | `boolean` | `false` |
+| `onClick` | `() => void` | — |
+
+**Ejemplo:**
+```tsx
+<TrackRow
+  title="Time"
+  artist="Pink Floyd"
+  duration="6:53"
+  isActive
+  onClick={() => navigate({ to: `/track/t1` })}
+/>
+```
+
+Track activo muestra fondo `bg-secondary`, inactivo `hover:bg-secondary/50`.
+
+---
+
+### BottomNav
+
+```
+import { BottomNav } from '#/components/bottom-nav'
+```
+
+**Props:**
+
+| Prop | Tipo |
+|---|---|
+| `activeTab` | `TabId` (`'home' | 'collection' | 'add'`) |
+
+**Ejemplo:**
+```tsx
+<BottomNav activeTab="home" />
+```
+
+Navegación inferior fija con glassmorphism, 3 tabs (Home, Collection, Add) con íconos Lucide. El tab activo usa `text-primary`, los inactivos `text-muted-foreground`.
 
 ---
 
@@ -140,6 +295,25 @@ El contenido ocupa todo el ancho disponible con padding lateral consistente via 
 <main className="page-wrap">
   {children}
 </main>
+```
+
+`.page-wrap` está definido en `src/styles.css`:
+```css
+.page-wrap {
+  container-type: inline-size;
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 1rem;
+}
+```
+
+### Soul gradient
+
+Fondo degradado disponible via `.soul-gradient`:
+```css
+.soul-gradient {
+  background: linear-gradient(135deg, var(--color-primary-container), #7c4dff);
+}
 ```
 
 ### Sidebar + contenido
