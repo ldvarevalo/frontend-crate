@@ -101,4 +101,13 @@
   .soul-gradient {
     background: linear-gradient(135deg, var(--color-primary-container), #7c4dff);
   }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }

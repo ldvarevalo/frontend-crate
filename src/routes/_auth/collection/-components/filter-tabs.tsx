@@ -26,7 +26,7 @@ export const FilterTabs: FunctionComponent<FilterTabsProps> = ({
   activeTab,
   onTabChange,
 }) => (
-  <div className="flex gap-2 overflow-x-auto">
+  <div className="flex gap-2 overflow-x-auto hide-scrollbar">
     {tabs.map((tab) => (
       <button
         key={tab.id}
