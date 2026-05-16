@@ -1,6 +1,8 @@
-import type { FunctionComponent } from "react";
-import { createFileRoute, redirect, Outlet } from "@tanstack/react-router";
-import { Header } from "#/components/header";
+import type { FunctionComponent } from 'react';
+import { createFileRoute, redirect, Outlet, useMatchRoute } from '@tanstack/react-router';
+import { type TabId, BottomNav } from '#/components/bottom-nav';
+import { Header } from '#/components/header';
+import type { FileRouteTypes } from '#/routeTree.gen';
 
 /**
  * Helpers
@@ -9,16 +11,28 @@ import { Header } from "#/components/header";
 const isAuthenticated = (): boolean =>
   localStorage?.getItem('is_authenticated') === 'true';
 
+const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
+  ['home', '/inicio'],
+  ['collection', '/collection'],
+  ['add', '/collection/add'],
+];
+
 /**
  * AuthenticatedLayout
  */
 
-const AuthenticatedLayout: FunctionComponent = () => (
-  <div>
-    <Header />
-    <Outlet />
-  </div>
-);
+const AuthenticatedLayout: FunctionComponent = () => {
+  const matchRoute = useMatchRoute();
+  const activeTab = TAB_ROUTES.find(([, to]) => matchRoute({ to }))?.[0] ?? 'home';
+
+  return (
+    <div className="min-h-screen bg-background pb-20">
+      <Header />
+      <Outlet />
+      <BottomNav activeTab={activeTab} />
+    </div>
+  );
+};
 
 /**
  * AuthenticatedRoute

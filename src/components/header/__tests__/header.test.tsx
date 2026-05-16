@@ -1,4 +1,4 @@
-import { render, routerMock, screen } from '@test-utils';
+import { render, screen } from '@test-utils';
 import { Header } from '../header';
 
 /**
@@ -6,10 +6,6 @@ import { Header } from '../header';
  */
 
 describe('Header', () => {
-  afterEach(() => {
-    localStorage.clear();
-  });
-
   it('should render logo link', () => {
     render(<Header />);
 
@@ -17,17 +13,9 @@ describe('Header', () => {
     expect(document.body).toMatchSnapshot();
   });
 
-  it('should render navigation links when authenticated on auth route', async () => {
-    localStorage.setItem('is_authenticated', 'true');
-
-    await routerMock.navigate({ to: '/inicio' });
-
+  it('should render logout link', () => {
     render(<Header />);
 
-    expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', { name: 'Collection' })
-    ).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Add' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Log out' })).toBeInTheDocument();
   });
 });

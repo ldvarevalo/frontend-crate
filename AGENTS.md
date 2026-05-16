@@ -16,6 +16,27 @@ yarn test:watch  # Watch mode
 
 `lint → typescript → test`
 
+## Workflow
+
+- **Branch first:** crear branch (`feat/<name>`) antes de implementar
+- **Brainstorming first:** usar `brainstorming` skill para diseñar antes de tocar código
+- **Plan approval:** presentar diseño/plan y obtener aprobación antes de implementar
+- **No commitear specs ni plans:** archivos de diseño y planificación no se commitean
+- **Commits granulares:** un commit por componente/grupo lógico — no commits masivos
+
+## UI Conventions
+
+- Seguir `docs/ui-spec.md` estrictamente: solo tokens CSS, `--radius: 0px`, sin hex hardcodeados
+- Seguir `.claude/skills/new-page` para estructura de rutas: `-components/`, `-hooks/`, `-helpers/`
+- **Component directory pattern:** cada componente en su carpeta con `{component}.tsx` + `index.ts` + `__tests__/` (ej: `src/components/header/`)
+- **Typography:** usar `<Typography>` de `#/components/ui/typography` con props `family`, `size`, `weight`, `transform`, `tracking`, `as`. El color lo define el contenedor, no el componente
+- **Button links:** usar `<Button variant="text">` para links inline ("VIEW ALL"). La variant `text` usa Typography internamente
+- **Navigation activeTab:** usar array lookup (`TAB_ROUTES.find`) en vez de ternary chains
+
+## Data Layer
+
+- **Mock data primero:** empezar con datos mock en hooks; GraphQL solo cuando se necesite
+
 ## Git Workflow
 
 - **Never use `git add`** — only commit already staged files
