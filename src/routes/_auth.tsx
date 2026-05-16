@@ -1,7 +1,8 @@
 import type { FunctionComponent } from 'react';
 import { createFileRoute, redirect, Outlet, useMatchRoute } from '@tanstack/react-router';
-import { BottomNav } from '#/components/bottom-nav';
+import { type TabId, BottomNav } from '#/components/bottom-nav';
 import { Header } from '#/components/header';
+import type { FileRouteTypes } from '#/routeTree.gen';
 
 /**
  * Helpers
@@ -10,10 +11,10 @@ import { Header } from '#/components/header';
 const isAuthenticated = (): boolean =>
   localStorage?.getItem('is_authenticated') === 'true';
 
-const TAB_ROUTES: [string, string][] = [
+const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
   ['home', '/inicio'],
   ['collection', '/collection'],
-  ['add', '/add'],
+  ['add', '/collection/add'],
 ];
 
 /**
@@ -28,7 +29,7 @@ const AuthenticatedLayout: FunctionComponent = () => {
     <div className="min-h-screen bg-background pb-20">
       <Header />
       <Outlet />
-      <BottomNav activeTab={activeTab as 'home' | 'collection' | 'add'} />
+      <BottomNav activeTab={activeTab} />
     </div>
   );
 };

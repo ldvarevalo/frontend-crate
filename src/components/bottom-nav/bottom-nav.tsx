@@ -8,7 +8,7 @@ import { cn } from '#/lib/utils';
  * Types
  */
 
-type TabId = 'home' | 'collection' | 'add';
+export type TabId = 'home' | 'collection' | 'add';
 
 interface Tab {
   id: TabId;
@@ -42,7 +42,7 @@ const TABS: Tab[] = [
     id: 'add',
     label: 'Add',
     icon: Plus,
-    to: '/add',
+    to: '/collection/add',
   },
 ];
 

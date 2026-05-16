@@ -13,6 +13,8 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LogoutIndexRouteImport } from './routes/logout/index'
 import { Route as AuthInicioIndexRouteImport } from './routes/_auth/inicio/index'
+import { Route as AuthCollectionIndexRouteImport } from './routes/_auth/collection/index'
+import { Route as AuthCollectionAddIndexRouteImport } from './routes/_auth/collection/add/index'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -33,30 +35,53 @@ const AuthInicioIndexRoute = AuthInicioIndexRouteImport.update({
   path: '/inicio/',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthCollectionIndexRoute = AuthCollectionIndexRouteImport.update({
+  id: '/collection/',
+  path: '/collection/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthCollectionAddIndexRoute = AuthCollectionAddIndexRouteImport.update({
+  id: '/collection/add/',
+  path: '/collection/add/',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/logout/': typeof LogoutIndexRoute
+  '/collection/': typeof AuthCollectionIndexRoute
   '/inicio/': typeof AuthInicioIndexRoute
+  '/collection/add/': typeof AuthCollectionAddIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/logout': typeof LogoutIndexRoute
+  '/collection': typeof AuthCollectionIndexRoute
   '/inicio': typeof AuthInicioIndexRoute
+  '/collection/add': typeof AuthCollectionAddIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/logout/': typeof LogoutIndexRoute
+  '/_auth/collection/': typeof AuthCollectionIndexRoute
   '/_auth/inicio/': typeof AuthInicioIndexRoute
+  '/_auth/collection/add/': typeof AuthCollectionAddIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/logout/' | '/inicio/'
+  fullPaths: '/' | '/logout/' | '/collection/' | '/inicio/' | '/collection/add/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/logout' | '/inicio'
-  id: '__root__' | '/' | '/_auth' | '/logout/' | '/_auth/inicio/'
+  to: '/' | '/logout' | '/collection' | '/inicio' | '/collection/add'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/logout/'
+    | '/_auth/collection/'
+    | '/_auth/inicio/'
+    | '/_auth/collection/add/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,15 +120,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthInicioIndexRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/collection/': {
+      id: '/_auth/collection/'
+      path: '/collection'
+      fullPath: '/collection/'
+      preLoaderRoute: typeof AuthCollectionIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/collection/add/': {
+      id: '/_auth/collection/add/'
+      path: '/collection/add'
+      fullPath: '/collection/add/'
+      preLoaderRoute: typeof AuthCollectionAddIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
 
 interface AuthRouteChildren {
+  AuthCollectionIndexRoute: typeof AuthCollectionIndexRoute
   AuthInicioIndexRoute: typeof AuthInicioIndexRoute
+  AuthCollectionAddIndexRoute: typeof AuthCollectionAddIndexRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthCollectionIndexRoute: AuthCollectionIndexRoute,
   AuthInicioIndexRoute: AuthInicioIndexRoute,
+  AuthCollectionAddIndexRoute: AuthCollectionAddIndexRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
