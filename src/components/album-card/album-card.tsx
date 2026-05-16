@@ -9,6 +9,7 @@ interface AlbumCardProps {
   coverUrl: string;
   title: string;
   artist: string;
+  year?: string;
   onClick: () => void;
 }
 
@@ -20,6 +21,7 @@ export const AlbumCard: FunctionComponent<AlbumCardProps> = ({
   coverUrl,
   title,
   artist,
+  year,
   onClick,
 }) => (
   <button
@@ -40,5 +42,10 @@ export const AlbumCard: FunctionComponent<AlbumCardProps> = ({
     <Typography size="xs">
       {artist}
     </Typography>
+    {year && (
+      <Typography size="xs">
+        {year}
+      </Typography>
+    )}
   </button>
 );
