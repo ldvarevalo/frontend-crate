@@ -33,17 +33,17 @@ const AddReleasePage: FunctionComponent = () => {
 
   return (
     <main className="page-wrap space-y-6 py-6">
-      <Typography family="heading" size="md">
+      <Typography as="h2" family="heading" size="2xl">
         Add release
       </Typography>
 
       <div>
         <Typography
           size="xs"
-          weight="medium"
+          weight="bold"
           tracking="widest"
           transform="uppercase"
-          className="mb-2 text-primary"
+          className="mb-6 text-primary"
         >
           SEARCH RESULTS
         </Typography>
