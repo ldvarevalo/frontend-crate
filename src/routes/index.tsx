@@ -1,5 +1,6 @@
 import { useState, type FunctionComponent } from 'react';
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+import { Button } from '#/components/ui/button';
 
 /**
  * Login
@@ -27,15 +28,8 @@ const Login: FunctionComponent = () => {
   };
 
   return (
-    <main className="page-wrap py-20">
-      <button
-        onClick={handleLogin}
-        className="inline-block px-6 py-3 bg-primary-container text-on-primary-container font-semibold"
-      >
-        Entrar
-      </button>
-
-      <label className="flex items-center gap-3 mb-8 cursor-pointer">
+    <main className="page-wrap space-y-6 py-20">
+      <label className="flex items-center gap-3 cursor-pointer">
         <input
           type="checkbox"
           checked={isChecked}
@@ -44,6 +38,10 @@ const Login: FunctionComponent = () => {
         />
         <span className="text-foreground">Mantener sesión iniciada</span>
       </label>
+
+      <Button variant="primary" size="lg" onClick={handleLogin}>
+        Entrar
+      </Button>
     </main>
   );
 };

@@ -135,7 +135,6 @@ export const ManualEntryForm: FunctionComponent<ManualEntryFormProps> = ({
       size="lg"
       onClick={onSubmit}
       disabled={!isValid}
-      className="w-full"
     >
       SAVE
     </Button>
