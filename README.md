@@ -1,5 +1,7 @@
 # Crate
 
+[![CI](https://github.com/ldvarevalo/frontend-crate/actions/workflows/ci.yml/badge.svg)](https://github.com/ldvarevalo/frontend-crate/actions/workflows/ci.yml)
+
 Aplicación de descubrimiento musical. Actualmente maquetada con datos mock — a futuro se conectará con un backend.
 
 ![Home page mobile viewport](https://github.com/ldvarevalo/frontend-crate/releases/download/untagged-579291b112f8023eaae9/home-page-mobile-viewport.png)
