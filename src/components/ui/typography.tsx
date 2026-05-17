@@ -62,6 +62,7 @@ const typographyVariants = cva('', {
       normal: 'font-normal',
       medium: 'font-medium',
       semibold: 'font-semibold',
+      black: 'font-black',
       bold: 'font-bold',
     },
     transform: {
