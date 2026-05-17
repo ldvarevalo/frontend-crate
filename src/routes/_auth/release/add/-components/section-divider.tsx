@@ -13,7 +13,9 @@ interface SectionDividerProps {
  * SectionDivider
  */
 
-export const SectionDivider: FunctionComponent<SectionDividerProps> = ({ label }) => (
+export const SectionDivider: FunctionComponent<SectionDividerProps> = ({
+  label,
+}) => (
   <div className="flex items-center gap-3 px-6 py-12 mb-0">
     <div className="h-0.5 flex-1 bg-outline/25" />
     <Typography

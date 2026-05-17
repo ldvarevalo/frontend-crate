@@ -35,14 +35,18 @@ export const useManualEntry = (): UseManualEntryHook => {
   const [values, setValues] = useState<ManualEntryData>(INITIAL_VALUES);
 
   const setField = (field: keyof ManualEntryData, value: string): void => {
-    setValues((prev) => ({ ...prev,
-[field]: value }));
+    setValues(prev => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   const isValid = values.title.trim() !== '' && values.artist.trim() !== '';
 
   const handleSubmit = (): void => {
-    if (!isValid) {return;}
+    if (!isValid) {
+      return;
+    }
     console.log('Release added:', values);
     setValues(INITIAL_VALUES);
   };

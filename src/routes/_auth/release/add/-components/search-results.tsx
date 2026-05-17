@@ -21,14 +21,20 @@ export const SearchResults: FunctionComponent<SearchResultsProps> = ({
   onToggle,
 }) => (
   <div className="divide-y divide-outline/15">
-    {results.map((result) => (
+    {results.map(result => (
       <AlbumRow
         key={result.id}
         thumbnail={result.thumbnail}
         title={result.title}
         artist={result.artist}
         isAdded={result.isAdded}
-        actionIcon={result.isAdded ? <Check className="size-4" /> : <Plus className="size-4" />}
+        actionIcon={
+          result.isAdded ? (
+            <Check className="size-4" />
+          ) : (
+            <Plus className="size-4" />
+          )
+        }
         onClick={() => onToggle(result.id)}
       />
     ))}

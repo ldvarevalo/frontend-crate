@@ -38,13 +38,13 @@ export const AlbumRow: FunctionComponent<AlbumRowProps> = ({
       'flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors',
       isActive && 'bg-secondary',
       !isActive && 'hover:bg-secondary/50',
-      isAdded && 'border-l-2 border-primary-container',
+      isAdded && 'border-l-2 border-primary-container'
     )}
   >
     <img
       src={thumbnail}
       alt={title}
-      className="size-10 flex-shrink-0 rounded-none object-cover"
+      className="size-10 shrink-0 rounded-none object-cover"
     />
     <div className="flex min-w-0 flex-1 flex-col gap-0.5">
       <Typography size="sm" className="truncate">
@@ -55,12 +55,17 @@ export const AlbumRow: FunctionComponent<AlbumRowProps> = ({
       </Typography>
     </div>
     {actionIcon && (
-      <span className={cn('flex-shrink-0', isAdded ? 'text-primary' : 'text-on-surface-variant')}>
+      <span
+        className={cn(
+          'shrink-0',
+          isAdded ? 'text-primary' : 'text-on-surface-variant'
+        )}
+      >
         {actionIcon}
       </span>
     )}
     {!actionIcon && duration && (
-      <Typography size="xs" className="flex-shrink-0">
+      <Typography size="xs" className="shrink-0">
         {duration}
       </Typography>
     )}

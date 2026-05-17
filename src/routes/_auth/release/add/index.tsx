@@ -24,12 +24,7 @@ const AddReleasePage: FunctionComponent = () => {
     setCurrentPage,
     toggleResult,
   } = useSearchReleases();
-  const {
-    values,
-    setField,
-    isValid,
-    handleSubmit,
-  } = useManualEntry();
+  const { values, setField, isValid, handleSubmit } = useManualEntry();
 
   return (
     <main className="page-wrap space-y-6 py-6">
@@ -49,7 +44,7 @@ const AddReleasePage: FunctionComponent = () => {
         </Typography>
         <SearchBar
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={e => setQuery(e.target.value)}
           placeholder="SEARCH ARTIST OR ALBUM"
         />
       </div>

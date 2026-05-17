@@ -21,7 +21,9 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
-  if (totalPages <= 1) {return null;}
+  if (totalPages <= 1) {
+    return null;
+  }
 
   const pages: number[] = [];
   for (let i = 1; i <= totalPages; i++) {
@@ -38,7 +40,7 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
       >
         ‹
       </Button>
-      {pages.map((page) => (
+      {pages.map(page => (
         <Button
           key={page}
           variant="text"
@@ -47,7 +49,7 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
             'min-w-6',
             page === currentPage
               ? 'font-bold text-on-surface underline decoration-2 underline-offset-4 decoration-primary'
-              : 'text-on-surface-variant',
+              : 'text-on-surface-variant'
           )}
         >
           {page}
