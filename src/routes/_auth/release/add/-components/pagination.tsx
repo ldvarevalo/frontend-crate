@@ -21,7 +21,7 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1) {return null;}
 
   const pages: number[] = [];
   for (let i = 1; i <= totalPages; i++) {

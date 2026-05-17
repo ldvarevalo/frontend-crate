@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
-import { Input } from '#/components/ui/input';
 import { Button } from '#/components/ui/button';
+import { Input } from '#/components/ui/input';
 import { Typography } from '#/components/ui/typography';
 import { ArtworkPreview } from './artwork-preview';
 import type { ManualEntryData } from '../-hooks/use-manual-entry';
@@ -28,13 +28,25 @@ interface ManualEntryFormProps {
  */
 
 const FULL_FIELDS: ManualEntryFormField[] = [
-  { key: 'title', label: 'RELEASE TITLE', placeholder: 'e.g. A Love Supreme', width: 'full' },
-  { key: 'artist', label: 'ARTIST', placeholder: 'e.g. John Coltrane', width: 'full' },
+  { key: 'title',
+label: 'RELEASE TITLE',
+placeholder: 'e.g. A Love Supreme',
+width: 'full' },
+  { key: 'artist',
+label: 'ARTIST',
+placeholder: 'e.g. John Coltrane',
+width: 'full' },
 ];
 
 const HALF_FIELDS: ManualEntryFormField[] = [
-  { key: 'year', label: 'RELEASE YEAR', placeholder: '1965', width: 'half' },
-  { key: 'genre', label: 'GENRE', placeholder: 'Jazz', width: 'half' },
+  { key: 'year',
+label: 'RELEASE YEAR',
+placeholder: '1965',
+width: 'half' },
+  { key: 'genre',
+label: 'GENRE',
+placeholder: 'Jazz',
+width: 'half' },
 ];
 
 /**

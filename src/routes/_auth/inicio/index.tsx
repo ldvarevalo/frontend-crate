@@ -1,8 +1,8 @@
 import type { FunctionComponent } from 'react';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { AlbumCard } from '#/components/album-card';
-import { SectionHeader } from '#/components/section-header';
 import { AlbumRow } from '#/components/album-row';
+import { SectionHeader } from '#/components/section-header';
 import { BannerCta } from './-components/banner-cta';
 import { StatsCard } from './-components/stats-card';
 import { useHomeData } from './-hooks/use-home-data';

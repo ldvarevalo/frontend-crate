@@ -1,13 +1,13 @@
 import type { FunctionComponent } from 'react';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Typography } from '#/components/ui/typography';
 import { SearchBar } from '#/components/search-bar';
-import { SearchResults } from './-components/search-results';
-import { Pagination } from './-components/pagination';
-import { SectionDivider } from './-components/section-divider';
+import { Typography } from '#/components/ui/typography';
 import { ManualEntryForm } from './-components/manual-entry-form';
-import { useSearchReleases } from './-hooks/use-search-releases';
+import { Pagination } from './-components/pagination';
+import { SearchResults } from './-components/search-results';
+import { SectionDivider } from './-components/section-divider';
 import { useManualEntry } from './-hooks/use-manual-entry';
+import { useSearchReleases } from './-hooks/use-search-releases';
 
 /**
  * AddReleasePage
@@ -21,7 +21,7 @@ const AddReleasePage: FunctionComponent = () => {
     results,
     currentPage,
     totalPages,
-    setPage,
+    setCurrentPage,
     toggleResult,
   } = useSearchReleases();
   const {
@@ -60,7 +60,7 @@ const AddReleasePage: FunctionComponent = () => {
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={setPage}
+            onPageChange={setCurrentPage}
           />
         </>
       )}

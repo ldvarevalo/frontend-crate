@@ -1,9 +1,9 @@
 import type { FunctionComponent } from 'react';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { SearchBar } from '#/components/search-bar';
 import { Typography } from '#/components/ui/typography';
 import { CollectionAlbumGrid } from './-components/collection-album-grid';
 import { FilterTabs } from './-components/filter-tabs';
-import { SearchBar } from '#/components/search-bar';
 import { useCollectionData } from './-hooks/use-collection-data';
 
 /**
