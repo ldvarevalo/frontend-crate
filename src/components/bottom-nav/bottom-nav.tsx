@@ -42,7 +42,7 @@ const TABS: Tab[] = [
     id: 'add',
     label: 'Add',
     icon: Plus,
-    to: '/collection/add',
+    to: '/release/add',
   },
 ];
 
