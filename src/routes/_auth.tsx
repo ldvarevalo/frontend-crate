@@ -9,12 +9,12 @@ import type { FileRouteTypes } from '#/routeTree.gen';
  */
 
 const isAuthenticated = (): boolean =>
-  localStorage?.getItem('is_authenticated') === 'true';
+  localStorage.getItem('is_authenticated') === 'true';
 
 const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
   ['home', '/inicio'],
   ['collection', '/collection'],
-  ['add', '/collection/add'],
+  ['add', '/release/add'],
 ];
 
 /**
