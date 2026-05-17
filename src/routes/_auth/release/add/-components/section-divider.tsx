@@ -14,8 +14,8 @@ interface SectionDividerProps {
  */
 
 export const SectionDivider: FunctionComponent<SectionDividerProps> = ({ label }) => (
-  <div className="flex items-center gap-3">
-    <div className="h-px flex-1 bg-outline/15" />
+  <div className="flex items-center gap-3 px-6 py-12 mb-0">
+    <div className="h-0.5 flex-1 bg-outline/25" />
     <Typography
       size="xs"
       weight="medium"
@@ -25,6 +25,6 @@ export const SectionDivider: FunctionComponent<SectionDividerProps> = ({ label }
     >
       {label}
     </Typography>
-    <div className="h-px flex-1 bg-outline/15" />
+    <div className="h-0.5 flex-1 bg-outline/25" />
   </div>
 );
