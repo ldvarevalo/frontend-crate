@@ -108,34 +108,29 @@ export const ManualEntryForm: FunctionComponent<ManualEntryFormProps> = ({
       ))}
     </div>
 
-    <div className="flex gap-4">
-      <div className="flex-1">
-        <Typography
-          size="xs"
-          weight="black"
-          tracking="widest"
-          transform="uppercase"
-          className="mb-2 text-primary"
-        >
-          ARTWORK URL
-        </Typography>
+    <div className="flex flex-col gap-4">
+      <Typography
+        size="xs"
+        weight="black"
+        tracking="widest"
+        transform="uppercase"
+        className="mb-2 text-primary"
+      >
+        ARTWORK URL
+      </Typography>
+      <div className="flex flex-1 flex-col gap-4">
         <Input
           value={values.artworkUrl}
           onChange={e => onFieldChange('artworkUrl', e.target.value)}
           placeholder="https://..."
         />
-      </div>
-      <div className="w-20 shrink-0">
-        <ArtworkPreview imageUrl={values.artworkUrl} />
+        <div className="w-full shrink-0">
+          <ArtworkPreview imageUrl={values.artworkUrl} />
+        </div>
       </div>
     </div>
 
-    <Button
-      variant="primary"
-      size="lg"
-      onClick={onSubmit}
-      disabled={!isValid}
-    >
+    <Button variant="primary" size="lg" onClick={onSubmit} disabled={!isValid}>
       SAVE
     </Button>
   </div>
