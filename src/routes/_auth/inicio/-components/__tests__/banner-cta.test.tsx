@@ -3,7 +3,7 @@ import { BannerCta } from '../banner-cta';
 
 describe('BannerCta', () => {
   it('should render count and items waiting text', () => {
-    render(<BannerCta count={5} onClick={() => {}} />);
+    render(<BannerCta count={5} onClick={vi.fn()} />);
     expect(screen.getByText('5 items waiting')).toBeInTheDocument();
     expect(screen.getByText('WANT TO LISTEN')).toBeInTheDocument();
   });

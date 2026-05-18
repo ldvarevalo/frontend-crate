@@ -1,8 +1,8 @@
 import { render, screen } from '@test-utils';
-import { FilterTabs } from '../filter-tabs';
+import { FilterTabs, type Tab } from '../filter-tabs';
 
 describe('FilterTabs', () => {
-  const tabs = [
+  const tabs: Tab[] = [
     { id: 'all',
 label: 'All' },
     { id: 'vinyl',
@@ -12,14 +12,14 @@ label: 'CD' },
   ];
 
   it('should render all tabs', () => {
-    render(<FilterTabs tabs={tabs} activeTab="all" onTabChange={() => {}} />);
+    render(<FilterTabs tabs={tabs} activeTab="all" onTabChange={vi.fn()} />);
     expect(screen.getByText('All')).toBeInTheDocument();
     expect(screen.getByText('Vinyl')).toBeInTheDocument();
     expect(screen.getByText('CD')).toBeInTheDocument();
   });
 
   it('should highlight active tab', () => {
-    const { container } = render(<FilterTabs tabs={tabs} activeTab="vinyl" onTabChange={() => {}} />);
+    const { container } = render(<FilterTabs tabs={tabs} activeTab="vinyl" onTabChange={vi.fn()} />);
     const buttons = container.querySelectorAll('button');
     const vinylButton = Array.from(buttons).find(b => b.textContent === 'Vinyl');
     expect(vinylButton).toHaveClass('bg-primary-container');

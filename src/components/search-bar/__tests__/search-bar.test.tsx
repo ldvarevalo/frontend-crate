@@ -4,17 +4,17 @@ import { SearchBar } from '../search-bar';
 
 describe('SearchBar', () => {
   it('should render input with default placeholder', () => {
-    render(<SearchBar value="" onChange={() => {}} />);
+    render(<SearchBar value="" onChange={vi.fn()} />);
     expect(screen.getByPlaceholderText('Search archive...')).toBeInTheDocument();
   });
 
   it('should render custom placeholder', () => {
-    render(<SearchBar value="" onChange={() => {}} placeholder="Search albums..." />);
+    render(<SearchBar value="" onChange={vi.fn()} placeholder="Search albums..." />);
     expect(screen.getByPlaceholderText('Search albums...')).toBeInTheDocument();
   });
 
   it('should pass value to input', () => {
-    render(<SearchBar value="test" onChange={() => {}} />);
+    render(<SearchBar value="test" onChange={vi.fn()} />);
     expect(screen.getByDisplayValue('test')).toBeInTheDocument();
   });
 

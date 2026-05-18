@@ -1,8 +1,9 @@
 import { render, screen } from '@test-utils';
+import type { SearchResult } from '../../-hooks/use-search-releases';
 import { SearchResults } from '../search-results';
 
 describe('SearchResults', () => {
-  const results = [
+  const results: SearchResult[] = [
     { id: '1',
 title: 'Album 1',
 artist: 'Artist 1',
@@ -16,7 +17,7 @@ isAdded: true },
   ];
 
   it('should render album rows for each result', () => {
-    render(<SearchResults results={results} onToggle={() => {}} />);
+    render(<SearchResults results={results} onToggle={vi.fn()} />);
     expect(screen.getByText('Album 1')).toBeInTheDocument();
     expect(screen.getByText('Album 2')).toBeInTheDocument();
   });

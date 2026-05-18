@@ -1,12 +1,12 @@
 import { render, screen } from '@test-utils';
-import { AlbumRow } from '../album-row';
+import { AlbumRow, type AlbumRowProps } from '../album-row';
 
 describe('AlbumRow', () => {
-  const defaultProps = {
+  const defaultProps: AlbumRowProps = {
     thumbnail: 'https://example.com/thumb.jpg',
     title: 'A Love Supreme',
     artist: 'John Coltrane',
-    onClick: () => {},
+    onClick: vi.fn(),
   };
 
   it('should render title, artist and thumbnail', () => {

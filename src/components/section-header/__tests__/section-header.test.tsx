@@ -8,12 +8,12 @@ describe('SectionHeader', () => {
   });
 
   it('should render link button when onLinkClick provided', () => {
-    render(<SectionHeader title="My Section" onLinkClick={() => {}} />);
+    render(<SectionHeader title="My Section" onLinkClick={vi.fn()} />);
     expect(screen.getByText('VIEW ALL')).toBeInTheDocument();
   });
 
   it('should use custom linkLabel when provided', () => {
-    render(<SectionHeader title="My Section" onLinkClick={() => {}} linkLabel="SHOW MORE" />);
+    render(<SectionHeader title="My Section" onLinkClick={vi.fn()} linkLabel="SHOW MORE" />);
     expect(screen.getByText('SHOW MORE')).toBeInTheDocument();
   });
 

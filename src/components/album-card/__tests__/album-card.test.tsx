@@ -1,12 +1,12 @@
 import { render, screen } from '@test-utils';
-import { AlbumCard } from '../album-card';
+import { AlbumCard, type AlbumCardProps } from '../album-card';
 
 describe('AlbumCard', () => {
-  const defaultProps = {
+  const defaultProps: AlbumCardProps = {
     coverUrl: 'https://example.com/cover.jpg',
     title: 'A Love Supreme',
     artist: 'John Coltrane',
-    onClick: () => {},
+    onClick: vi.fn(),
   };
 
   it('should render title and artist', () => {
@@ -38,8 +38,9 @@ describe('AlbumCard', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('should match snapshot', () => {
+  it('should render with year and match snapshot', () => {
     const { container } = render(<AlbumCard {...defaultProps} year="1965" />);
+    expect(screen.getByText('1965')).toBeInTheDocument();
     expect(container.firstChild).toMatchSnapshot();
   });
 });

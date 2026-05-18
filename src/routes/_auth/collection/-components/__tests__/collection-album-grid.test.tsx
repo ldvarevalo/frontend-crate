@@ -1,8 +1,9 @@
 import { render, screen } from '@test-utils';
+import type { CollectionAlbum } from '../../-hooks/use-collection-data';
 import { CollectionAlbumGrid } from '../collection-album-grid';
 
 describe('CollectionAlbumGrid', () => {
-  const albums = [
+  const albums: CollectionAlbum[] = [
     {
       id: '1',
       coverUrl: 'https://example.com/1.jpg',
@@ -22,7 +23,7 @@ describe('CollectionAlbumGrid', () => {
   ];
 
   it('should render album cards for each album', () => {
-    render(<CollectionAlbumGrid albums={albums} onAlbumClick={() => {}} />);
+    render(<CollectionAlbumGrid albums={albums} onAlbumClick={vi.fn()} />);
     expect(screen.getByText('Album 1')).toBeInTheDocument();
     expect(screen.getByText('Album 2')).toBeInTheDocument();
   });
