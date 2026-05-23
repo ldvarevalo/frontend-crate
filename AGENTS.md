@@ -39,7 +39,8 @@ yarn test:watch  # Watch mode
 
 ## Git Workflow
 
-- **Never use `git add`** — only commit already staged files
+- **Never use `git add`** — only commit already staged files. Never use `git add -A` or `git add .` (picks up unintended files like `.claude/`, `.codegraph/`, docs)
+- **Only commit what's defined in the plan/task** — no extra files
 - Use `git commit --no-verify -m "<message>"` with staged files
 - Use `yarn add -E <package>` for exact versions
 
