@@ -402,7 +402,7 @@ export const MyComponent = () => { ... };
 
 ### Testing
 
-- Wrapper: `RouterContextProvider` (ver `@test-utils`)
+- Wrapper: `QueryClientProvider` + `RouterContextProvider` (ver `@test-utils`)
 - Import: `import { render, screen } from '@test-utils'`
 - Los tests se colocan en `__tests__/` junto al componente
 

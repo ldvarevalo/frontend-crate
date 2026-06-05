@@ -34,18 +34,19 @@ Si el índice tiene más de 10 minutos desde el último sync, o si hay cambios r
 sin indexar, correr `codegraph sync` automáticamente antes de continuar.
 
 Usar CodeGraph para preguntas estructurales:
-- `codegraph_files` sobre `src/core/components/ui/` → lista de componentes atómicos
-- `codegraph_files` sobre `src/core/components/` → lista de compuestos
+- `codegraph_files` sobre `src/components/ui/` → lista de componentes atómicos
+- `codegraph_files` sobre `src/components/` → lista de compuestos
 - `codegraph_search` para encontrar símbolos específicos (tokens, interfaces, hooks)
 - `codegraph_node` para obtener la firma real de un componente
 
 **Si CodeGraph no está disponible**, escanear manualmente en paralelo:
-- `src/core/components/ui/` — componentes atómicos
-- `src/core/components/` — componentes compuestos (excluir `ui/`)
-- `src/styles/tokens.css` — tokens de diseño
-- `src/routes/_authenticated/` — patrones de estructura de rutas en uso
+- `src/components/ui/` — componentes atómicos
+- `src/components/` — componentes compuestos (excluir `ui/`)
+- `src/styles.css` — tokens de diseño
+- `src/routes/_auth/` — patrones de estructura de rutas en uso
 - `docs/specs/` — specs existentes
 - `CLAUDE.md`
+- `AGENTS.md`
 
 ---
 
@@ -81,9 +82,9 @@ Para cada spec existente, hacer las siguientes verificaciones:
 ### 4a. Validación de referencias
 
 Verificar que cada path de archivo o símbolo mencionado en el spec todavía existe:
-- Imports: `@core/components/ui/button` → verificar que el archivo existe
+- Imports: `#/components/ui/button` → verificar que el archivo existe
 - Nombres de props/variantes: comparar contra el TypeScript real del componente
-- Nombres de tokens: comparar contra `tokens.css`
+- Nombres de tokens: comparar contra `styles.css`
 - Aliases de path: verificar contra `tsconfig.json` o `vite.config.ts`
 
 Marcar como **ROTO** cualquier referencia que no se pueda verificar.
@@ -100,8 +101,8 @@ Buscar contenido que el codebase haya superado:
 
 Escanear el codebase buscando patrones recurrentes que no aparezcan en ningún spec:
 - Hooks con el mismo shape en múltiples rutas
-- Componentes compuestos nuevos en `src/core/components/`
-- Nuevos tokens en `tokens.css`
+- Componentes compuestos nuevos en `src/components/`
+- Nuevos tokens en `styles.css`
 - Patrones de estructura de archivos que difieren de lo documentado
 
 ### 4d. Verificar con git log
@@ -109,7 +110,7 @@ Escanear el codebase buscando patrones recurrentes que no aparezcan en ningún s
 Mirar los commits recientes para acotar qué áreas pueden haber cambiado:
 
 ```bash
-git log --oneline --since="2 weeks ago" -- src/core/components/ src/styles/ docs/
+git log --oneline --since="2 weeks ago" -- src/components/ src/styles/ docs/
 ```
 
 Priorizar la verificación de archivos tocados recientemente.

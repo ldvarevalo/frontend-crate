@@ -30,4 +30,4 @@ yarn test         # Vitest
 - **`routeTree.gen.ts`** is auto-generated — never edit manually
 - **git commit** only staged files, no `git add`
 
-See `AGENTS.md` and `docs/ui-spec.md` for full conventions.
+See `AGENTS.md` and `docs/specs/ui.spec.md` for full conventions.
