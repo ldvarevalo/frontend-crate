@@ -8,23 +8,13 @@ import {
 import { type TabId, BottomNav } from '#/components/bottom-nav';
 import { Header } from '#/components/header';
 import type { FileRouteTypes } from '#/routeTree.gen';
-
-/**
- * Helpers
- */
-
-const isAuthenticated = (): boolean =>
-  localStorage.getItem('is_authenticated') === 'true';
+import { authStore } from '#/core/auth/store';
 
 const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
   ['home', '/inicio'],
   ['collection', '/collection'],
   ['add', '/release/add'],
 ];
-
-/**
- * AuthenticatedLayout
- */
 
 const AuthenticatedLayout: FunctionComponent = () => {
   const matchRoute = useMatchRoute();
@@ -40,13 +30,9 @@ const AuthenticatedLayout: FunctionComponent = () => {
   );
 };
 
-/**
- * AuthenticatedRoute
- */
-
 export const Route = createFileRoute('/_auth')({
   beforeLoad: ({ location }) => {
-    if (!isAuthenticated()) {
+    if (!authStore.getUser()) {
       throw redirect({
         to: '/',
         search: { redirect: location.href },
