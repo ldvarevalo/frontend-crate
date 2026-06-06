@@ -7,8 +7,8 @@ import {
 } from '@tanstack/react-router';
 import { type TabId, BottomNav } from '#/components/bottom-nav';
 import { Header } from '#/components/header';
-import type { FileRouteTypes } from '#/routeTree.gen';
 import { authStore } from '#/core/auth/store';
+import type { FileRouteTypes } from '#/routeTree.gen';
 
 const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
   ['home', '/inicio'],

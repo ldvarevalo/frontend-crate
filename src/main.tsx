@@ -4,10 +4,10 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from '@tanstack/react-router';
 import { createRoot } from 'react-dom/client';
 
-import { createQueryClient } from './core/clients/react-query/query-client';
-import { createSupabaseClient } from './core/clients/supabase/client';
 import { createSupabaseAdapter } from './core/auth/adapters/supabase';
 import { AuthProvider } from './core/auth/auth-context';
+import { createQueryClient } from './core/clients/react-query/query-client';
+import { createSupabaseClient } from './core/clients/supabase/client';
 import { getRouter } from './router';
 
 const queryClient = createQueryClient();

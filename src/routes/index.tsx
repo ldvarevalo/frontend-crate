@@ -25,7 +25,8 @@ const Login: FunctionComponent = () => {
       await signIn(email, password);
       const target = redirect || '/inicio';
 
-      await navigate({ to: target, replace: true });
+      await navigate({ to: target,
+replace: true });
     } catch {
       // error is already set in context by AuthProvider
     }
@@ -34,7 +35,8 @@ const Login: FunctionComponent = () => {
   if (user) {
     const target = redirect || '/inicio';
 
-    navigate({ to: target, replace: true });
+    navigate({ to: target,
+replace: true });
 
     return null;
   }

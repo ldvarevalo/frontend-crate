@@ -8,7 +8,8 @@ const Logout: FunctionComponent = () => {
 
   useEffect(() => {
     signOut().then(() => {
-      navigate({ to: '/', replace: true });
+      navigate({ to: '/',
+replace: true });
     });
   }, [signOut, navigate]);
 

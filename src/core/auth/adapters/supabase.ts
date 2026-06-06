@@ -5,9 +5,10 @@ import { AuthError } from '../types';
 const mapUser = (
   user: { id: string; email?: string | null } | null
 ): AuthUser | null => {
-  if (!user) return null;
+  if (!user) {return null;}
 
-  return { id: user.id, email: user.email ?? '' };
+  return { id: user.id,
+email: user.email ?? '' };
 };
 
 const mapSession = (
@@ -16,7 +17,8 @@ const mapSession = (
     access_token: string;
   } | null
 ): AuthSession => {
-  if (!session) return { user: null, accessToken: null };
+  if (!session) {return { user: null,
+accessToken: null };}
 
   return {
     user: mapUser(session.user),

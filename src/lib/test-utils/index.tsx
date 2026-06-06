@@ -8,12 +8,11 @@ import {
   screen,
 } from '@testing-library/react';
 import type { RenderOptions, RenderHookOptions } from '@testing-library/react';
-import { vi } from 'vitest';
+import { createTestAuthAdapter } from '#/core/auth/adapters/__tests__/test-adapter';
+import { AuthProvider } from '#/core/auth/auth-context';
+import type { AuthUser } from '#/core/auth/types';
 import { createTestQueryClient } from '#/core/clients/react-query/query-client';
 import { routeTree } from '#/routeTree.gen';
-import { AuthProvider } from '#/core/auth/auth-context';
-import { createTestAuthAdapter } from '#/core/auth/adapters/__tests__/test-adapter';
-import type { AuthUser } from '#/core/auth/types';
 
 const testQueryClient = createTestQueryClient();
 const testAdapter = createTestAuthAdapter();
@@ -65,7 +64,8 @@ const renderWithAuth = (
     </AuthProvider>
   );
 
-  return rtlRender(ui, { wrapper: Wrapper, ...options });
+  return rtlRender(ui, { wrapper: Wrapper,
+...options });
 };
 
 const mockFn = vi.fn();

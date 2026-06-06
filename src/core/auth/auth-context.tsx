@@ -8,8 +8,8 @@ import {
   type FunctionComponent,
   type ReactNode,
 } from 'react';
-import type { AuthAdapter, AuthSession, AuthUser } from './types';
 import { authStore } from './store';
+import type { AuthAdapter, AuthSession, AuthUser } from './types';
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -42,7 +42,7 @@ export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
     adapter
       .getSession()
       .then((initialSession: AuthSession) => {
-        if (cancelled) return;
+        if (cancelled) {return;}
 
         setSession(initialSession);
         setUser(initialSession.user);
@@ -50,18 +50,19 @@ export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
         setIsLoading(false);
       })
       .catch(() => {
-        if (cancelled) return;
+        if (cancelled) {return;}
 
         setIsLoading(false);
       });
 
     const unsubscribe = adapter.onAuthStateChange(
       (updatedSession: AuthSession | null) => {
-        if (cancelled) return;
+        if (cancelled) {return;}
 
         const newUser = updatedSession?.user ?? null;
 
-        setSession(updatedSession ?? { user: null, accessToken: null });
+        setSession(updatedSession ?? { user: null,
+accessToken: null });
         setUser(newUser);
         authStore.setUser(newUser);
       }
@@ -100,7 +101,8 @@ export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
     try {
       await adapter.signOut();
       setUser(null);
-      setSession({ user: null, accessToken: null });
+      setSession({ user: null,
+accessToken: null });
       authStore.setUser(null);
     } catch (err: unknown) {
       const message =
@@ -112,7 +114,12 @@ export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
   }, [adapter]);
 
   const value = useMemo(
-    () => ({ user, session, isLoading, error, signIn, signOut }),
+    () => ({ user,
+session,
+isLoading,
+error,
+signIn,
+signOut }),
     [user, session, isLoading, error, signIn, signOut]
   );
 
