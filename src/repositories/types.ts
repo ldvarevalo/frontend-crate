@@ -7,7 +7,6 @@ import type {
   CollectionAlbum,
   HomeData,
   HomeStats,
-  ManualEntryData,
   SearchResult,
   Track,
 } from '#/types/domain';
@@ -29,7 +28,11 @@ export interface UserReleasesRepository {
   findHomeData(userId: string): Promise<HomeData>;
   findRecent(userId: string, limit: number): Promise<Album[]>;
   findAllByUser(userId: string): Promise<CollectionAlbum[]>;
-  create(data: ManualEntryData): Promise<void>;
+  create(data: {
+    userId: string;
+    releaseId: string;
+    status: string;
+  }): Promise<void>;
 }
 
 export interface TracksRepository {
