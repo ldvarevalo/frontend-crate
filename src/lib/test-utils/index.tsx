@@ -14,13 +14,25 @@ import type { AuthUser } from '#/core/auth/types';
 import { createTestQueryClient } from '#/core/clients/react-query/query-client';
 import { routeTree } from '#/routeTree.gen';
 
+/**
+ * Constants
+ */
+
 const testQueryClient = createTestQueryClient();
 const testAdapter = createTestAuthAdapter();
+
+/**
+ * routerMock
+ */
 
 export const routerMock = createRouter({
   routeTree,
   context: { queryClient: testQueryClient },
 });
+
+/**
+ * Components
+ */
 
 const AllTheProviders = ({ children }: { children: ReactNode }) => (
   <AuthProvider adapter={testAdapter}>
@@ -32,11 +44,19 @@ const AllTheProviders = ({ children }: { children: ReactNode }) => (
   </AuthProvider>
 );
 
+/**
+ * render
+ */
+
 const render = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
   rtlRender(ui, {
     wrapper: AllTheProviders,
     ...options,
   });
+
+/**
+ * renderHook
+ */
 
 const renderHook = <T,>(
   callback: () => T,
@@ -46,6 +66,10 @@ const renderHook = <T,>(
     wrapper: AllTheProviders,
     ...options,
   });
+
+/**
+ * renderWithAuth
+ */
 
 const renderWithAuth = (
   ui: ReactElement,
@@ -64,9 +88,15 @@ const renderWithAuth = (
     </AuthProvider>
   );
 
-  return rtlRender(ui, { wrapper: Wrapper,
-...options });
+  return rtlRender(ui, {
+    wrapper: Wrapper,
+    ...options,
+  });
 };
+
+/**
+ * mockFn
+ */
 
 const mockFn = vi.fn();
 

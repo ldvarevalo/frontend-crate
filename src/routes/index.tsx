@@ -8,6 +8,10 @@ import { Button } from '#/components/ui/button';
 import { Input } from '#/components/ui/input';
 import { useAuth } from '#/core/auth/auth-context';
 
+/**
+ * Components
+ */
+
 const Login: FunctionComponent = () => {
   const navigate = useNavigate();
   const { redirect } = useSearch({ from: '/' });
@@ -67,6 +71,10 @@ const Login: FunctionComponent = () => {
     </main>
   );
 };
+
+/**
+ * IndexRoute
+ */
 
 export const Route = createFileRoute('/')({
   validateSearch: (search: Record<string, string | undefined>) => ({

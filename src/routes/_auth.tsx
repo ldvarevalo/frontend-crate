@@ -10,11 +10,19 @@ import { Header } from '#/components/header';
 import { authStore } from '#/core/auth/store';
 import type { FileRouteTypes } from '#/routeTree.gen';
 
+/**
+ * Constants
+ */
+
 const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
   ['home', '/inicio'],
   ['collection', '/collection'],
   ['add', '/release/add'],
 ];
+
+/**
+ * Components
+ */
 
 const AuthenticatedLayout: FunctionComponent = () => {
   const matchRoute = useMatchRoute();
@@ -29,6 +37,10 @@ const AuthenticatedLayout: FunctionComponent = () => {
     </div>
   );
 };
+
+/**
+ * AuthenticatedRoute
+ */
 
 export const Route = createFileRoute('/_auth')({
   beforeLoad: ({ location }) => {

@@ -19,23 +19,26 @@ export const createTestAuthAdapter = (
   initialUser: AuthUser | null = null
 ): AuthAdapter => {
   const currentUser = initialUser;
-  const session: AuthSession = { user: currentUser,
-accessToken: 'test-token' };
+  const session: AuthSession = {
+    user: currentUser,
+    accessToken: 'test-token',
+  };
 
   return {
-    signIn: async (
-      email: string,
-      password: string
-    ) => {
+    signIn: async (email: string, password: string) => {
       if (password === 'wrong') {
         throw new AuthError('Invalid credentials');
       }
 
-      const user: AuthUser = { id: '1',
-  email };
+      const user: AuthUser = {
+        id: '1',
+        email,
+      };
 
-      return { user,
-  accessToken: 'test-token' };
+      return {
+        user,
+        accessToken: 'test-token',
+      };
     },
 
     signOut: async () => {},

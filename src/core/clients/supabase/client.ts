@@ -1,6 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
+/**
+ * Helpers
+ */
+
 const getSupabaseUrl = (): string => {
   const url = import.meta.env.VITE_SUPABASE_URL;
 
@@ -20,6 +24,10 @@ const getSupabaseAnonKey = (): string => {
 
   return key;
 };
+
+/**
+ * createSupabaseClient
+ */
 
 export const createSupabaseClient = (): SupabaseClient => {
   const supabaseUrl = getSupabaseUrl();

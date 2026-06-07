@@ -2,23 +2,42 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import type { AuthAdapter, AuthSession, AuthUser } from '../types';
 import { AuthError } from '../types';
 
-const mapUser = (
-  user: { id: string; email?: string | null } | null
-): AuthUser | null => {
-  if (!user) {return null;}
+/**
+ * Types
+ */
 
-  return { id: user.id,
-email: user.email ?? '' };
+interface SupabaseUser {
+  id: string;
+  email?: string | null;
+}
+
+interface SupabaseSession {
+  user: SupabaseUser;
+  access_token: string;
+}
+
+/**
+ * Helpers
+ */
+
+const mapUser = (user: SupabaseUser | null): AuthUser | null => {
+  if (!user) {
+    return null;
+  }
+
+  return {
+    id: user.id,
+    email: user.email ?? '',
+  };
 };
 
-const mapSession = (
-  session: {
-    user: { id: string; email?: string | null };
-    access_token: string;
-  } | null
-): AuthSession => {
-  if (!session) {return { user: null,
-accessToken: null };}
+const mapSession = (session: SupabaseSession | null): AuthSession => {
+  if (!session) {
+    return {
+      user: null,
+      accessToken: null,
+    };
+  }
 
   return {
     user: mapUser(session.user),
@@ -26,13 +45,14 @@ accessToken: null };}
   };
 };
 
+/**
+ * createSupabaseAdapter
+ */
+
 export const createSupabaseAdapter = (
   supabase: SupabaseClient
 ): AuthAdapter => ({
-  signIn: async (
-    email: string,
-    password: string
-  ): Promise<AuthSession> => {
+  signIn: async (email: string, password: string): Promise<AuthSession> => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,

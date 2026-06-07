@@ -11,6 +11,10 @@ import {
 import { authStore } from './store';
 import type { AuthAdapter, AuthSession, AuthUser } from './types';
 
+/**
+ * Types
+ */
+
 interface AuthContextValue {
   user: AuthUser | null;
   session: AuthSession | null;
@@ -20,12 +24,20 @@ interface AuthContextValue {
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextValue | null>(null);
-
 interface AuthProviderProps {
   adapter: AuthAdapter;
   children: ReactNode;
 }
+
+/**
+ * Constants
+ */
+
+const AuthContext = createContext<AuthContextValue | null>(null);
+
+/**
+ * AuthProvider
+ */
 
 export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
   adapter,
@@ -42,7 +54,9 @@ export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
     adapter
       .getSession()
       .then((initialSession: AuthSession) => {
-        if (cancelled) {return;}
+        if (cancelled) {
+          return;
+        }
 
         setSession(initialSession);
         setUser(initialSession.user);
@@ -50,19 +64,27 @@ export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
         setIsLoading(false);
       })
       .catch(() => {
-        if (cancelled) {return;}
+        if (cancelled) {
+          return;
+        }
 
         setIsLoading(false);
       });
 
     const unsubscribe = adapter.onAuthStateChange(
       (updatedSession: AuthSession | null) => {
-        if (cancelled) {return;}
+        if (cancelled) {
+          return;
+        }
 
         const newUser = updatedSession?.user ?? null;
 
-        setSession(updatedSession ?? { user: null,
-accessToken: null });
+        setSession(
+          updatedSession ?? {
+            user: null,
+            accessToken: null,
+          }
+        );
         setUser(newUser);
         authStore.setUser(newUser);
       }
@@ -101,8 +123,10 @@ accessToken: null });
     try {
       await adapter.signOut();
       setUser(null);
-      setSession({ user: null,
-accessToken: null });
+      setSession({
+        user: null,
+        accessToken: null,
+      });
       authStore.setUser(null);
     } catch (err: unknown) {
       const message =
@@ -114,12 +138,14 @@ accessToken: null });
   }, [adapter]);
 
   const value = useMemo(
-    () => ({ user,
-session,
-isLoading,
-error,
-signIn,
-signOut }),
+    () => ({
+      user,
+      session,
+      isLoading,
+      error,
+      signIn,
+      signOut,
+    }),
     [user, session, isLoading, error, signIn, signOut]
   );
 
@@ -134,6 +160,10 @@ signOut }),
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
+/**
+ * useAuth
+ */
+
 export const useAuth = (): AuthContextValue => {
   const context = useContext(AuthContext);
 
@@ -144,11 +174,23 @@ export const useAuth = (): AuthContextValue => {
   return context;
 };
 
+/**
+ * useUser
+ */
+
 export const useUser = (): AuthUser | null => useAuth().user;
+
+/**
+ * useSignIn
+ */
 
 export const useSignIn = (): ((
   email: string,
   password: string
 ) => Promise<void>) => useAuth().signIn;
+
+/**
+ * useSignOut
+ */
 
 export const useSignOut = (): (() => Promise<void>) => useAuth().signOut;
