@@ -53,6 +53,24 @@ export class SupabaseTracksRepository implements TracksRepository {
     userId: string,
     limit: number
   ): Promise<Track[]> {
+    const { data: userReleases, error: urError } = await this.supabase
+      .from('user_releases')
+      .select('release_id')
+      .eq('user_id', userId)
+      .in('status', ['listened', 'listening'])
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (urError) {
+      throw urError;
+    }
+
+    const releaseIds = (userReleases ?? []).map(r => r.release_id);
+
+    if (releaseIds.length === 0) {
+      return [];
+    }
+
     const { data, error } = await this.supabase
       .from('tracks')
       .select(
@@ -73,9 +91,8 @@ export class SupabaseTracksRepository implements TracksRepository {
         )
       `
       )
-      .eq('user_releases.user_id', userId)
-      .order('position', { ascending: true })
-      .limit(limit);
+      .in('release_id', releaseIds)
+      .order('position', { ascending: true });
 
     if (error) {
       throw error;
