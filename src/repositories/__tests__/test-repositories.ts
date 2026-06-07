@@ -1,7 +1,6 @@
 import type {
   Album,
   CollectionAlbum,
-  HomeData,
   HomeStats,
   Track,
 } from '#/types/domain';
@@ -12,20 +11,6 @@ import type {
   TracksRepository,
   UserReleasesRepository,
 } from '../types';
-
-/**
- * Constants
- */
-
-const EMPTY_HOME: HomeData = {
-  stats: {
-    totalReleases: 0,
-    thisMonth: 0,
-    wantToListen: 0,
-  },
-  albums: [],
-  tracks: [],
-};
 
 /**
  * createTestRepositories
@@ -42,7 +27,6 @@ export const createTestRepositories = (
   };
 
   const noopUserReleases: UserReleasesRepository = {
-    findHomeData: async () => EMPTY_HOME,
     findRecent: async (): Promise<Album[]> => [],
     findAllByUser: async (): Promise<CollectionAlbum[]> => [],
     create: async () => {

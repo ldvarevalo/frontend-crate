@@ -19,14 +19,19 @@ const PAGE_SIZE = 4;
 export const useSearchReleases = (): UseSearchReleasesHook => {
   const { releases } = useRepositories();
 
-  const [query, setQuery] = useState('');
+  const [queryValue, setQueryValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+
+  const setQuery = (q: string): void => {
+    setQueryValue(q);
+    setCurrentPage(1);
+  };
   const [addedIds, setAddedIds] = useState(new Set<string>());
 
   const { data } = useQuery({
-    queryKey: ['search-releases', query, currentPage],
-    queryFn: () => releases.findByQuery(query, currentPage, PAGE_SIZE),
-    enabled: query.length > 0,
+    queryKey: ['search-releases', queryValue, currentPage],
+    queryFn: () => releases.findByQuery(queryValue, currentPage, PAGE_SIZE),
+    enabled: queryValue.length > 0,
     placeholderData: (prev) => prev,
   });
 
@@ -58,7 +63,7 @@ export const useSearchReleases = (): UseSearchReleasesHook => {
   };
 
   return {
-    query,
+    query: queryValue,
     setQuery,
     results,
     currentPage,

@@ -6,7 +6,6 @@ import type {
   Album,
   CollectionAlbum,
   CollectionStatus,
-  HomeData,
   HomeStats,
   SearchResult,
   Track,
@@ -26,7 +25,6 @@ export interface ReleasesRepository {
 }
 
 export interface UserReleasesRepository {
-  findHomeData(userId: string): Promise<HomeData>;
   findRecent(userId: string, limit: number): Promise<Album[]>;
   findAllByUser(userId: string): Promise<CollectionAlbum[]>;
   create(data: {

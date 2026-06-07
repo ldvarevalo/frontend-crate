@@ -3,8 +3,6 @@ import type {
   Album,
   CollectionAlbum,
   CollectionStatus,
-  HomeData,
-  HomeStats,
 } from '#/types/domain';
 import type { UserReleasesRepository } from '../types';
 
@@ -12,14 +10,18 @@ import type { UserReleasesRepository } from '../types';
  * Constants
  */
 
-const RECENT_LIMIT = 4;
-
 const RECENT_ALBUM_SELECT = `
   release_id,
+  status,
   releases!inner (
     id,
     title,
-    cover_url
+    cover_url,
+    release_artists!inner (
+      artists!inner (
+        name
+      )
+    )
   )
 `;
 
@@ -33,13 +35,28 @@ const ALL_FIELDS_SELECT = `
     id,
     title,
     cover_url,
-    release_year
+    release_year,
+    release_artists!inner (
+      artists!inner (
+        name
+      )
+    )
   )
 `;
 
 /**
  * Helpers
  */
+
+const getArtistName = (releases: Record<string, unknown>): string => {
+  const releaseArtists = releases.release_artists as
+    | Array<Record<string, unknown>>
+    | undefined;
+
+  return (
+    (releaseArtists?.[0]?.artists as Record<string, unknown>)?.name as string
+  ) ?? '';
+};
 
 const mapCollectionAlbum = (row: Record<string, unknown>): CollectionAlbum => {
   const releases = row.releases as Record<string, unknown>;
@@ -48,7 +65,7 @@ const mapCollectionAlbum = (row: Record<string, unknown>): CollectionAlbum => {
     id: releases.id as string,
     coverUrl: (releases.cover_url as string) ?? '',
     title: releases.title as string,
-    artist: '',
+    artist: getArtistName(releases),
     year: (releases.release_year as string) ?? '',
     status: row.status as CollectionStatus,
   };
@@ -61,7 +78,7 @@ const mapToAlbum = (row: Record<string, unknown>): Album => {
     id: releases.id as string,
     coverUrl: (releases.cover_url as string) ?? '',
     title: releases.title as string,
-    artist: '',
+    artist: getArtistName(releases),
   };
 };
 
@@ -74,48 +91,6 @@ export class SupabaseUserReleasesRepository implements UserReleasesRepository {
 
   constructor(supabase: SupabaseClient) {
     this.supabase = supabase;
-  }
-
-  async findHomeData(userId: string): Promise<HomeData> {
-    const { data: stats, error: statsError } = await this.supabase
-      .from('user_releases')
-      .select('id, status, created_at')
-      .eq('user_id', userId);
-
-    if (statsError) {
-      throw statsError;
-    }
-
-    const now = new Date();
-    const firstOfMonth = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      1
-    ).toISOString();
-
-    const homeStats: HomeStats = {
-      totalReleases: (stats ?? []).filter(r => r.status !== 'want').length,
-      thisMonth: (stats ?? []).filter(r => r.created_at >= firstOfMonth).length,
-      wantToListen: (stats ?? []).filter(r => r.status === 'want').length,
-    };
-
-    const { data: albums, error: albumsError } = await this.supabase
-      .from('user_releases')
-      .select(RECENT_ALBUM_SELECT)
-      .eq('user_id', userId)
-      .in('status', ['listened', 'listening'])
-      .order('created_at', { ascending: false })
-      .limit(RECENT_LIMIT);
-
-    if (albumsError) {
-      throw albumsError;
-    }
-
-    return {
-      stats: homeStats,
-      albums: (albums ?? []).map(mapToAlbum),
-      tracks: [],
-    };
   }
 
   async findRecent(
