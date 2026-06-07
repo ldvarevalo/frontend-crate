@@ -37,10 +37,13 @@ export const useManualEntry = (): UseManualEntryHook => {
 
   const isValid = values.title.trim() !== '' && values.artist.trim() !== '';
 
-  const handleSubmit = (): void => {
+  const handleSubmit = async (): Promise<void> => {
     if (!isValid) {
       return;
     }
+
+    // TODO: create releases + user_release via repositories
+    // when the Supabase schema and insert flow are finalized
     console.log('Release added:', values);
     setValues(INITIAL_VALUES);
   };
