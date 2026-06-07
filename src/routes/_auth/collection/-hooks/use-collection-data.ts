@@ -1,13 +1,10 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useUser } from '#/core/auth';
+import { useRepositories } from '#/repositories/hooks';
+import type { CollectionAlbum } from '#/types/domain';
 
-import type {
-  CollectionAlbum,
-  CollectionStatus,
-} from '#/types/domain';
-
-/**
- * Types
- */
+type CollectionStatus = 'owned' | 'want' | 'listening' | 'listened';
 
 export interface CollectionData {
   albums: CollectionAlbum[];
@@ -18,92 +15,26 @@ export interface CollectionData {
   filteredAlbums: CollectionAlbum[];
 }
 
-/**
- * Constants
- */
-
 const STATUS_MAP: Record<string, CollectionStatus> = {
   WANT: 'want',
   LISTENING: 'listening',
   LISTENED: 'listened',
 };
 
-const MOCK_ALBUMS: CollectionAlbum[] = [
-  {
-    id: '1',
-    coverUrl: 'https://picsum.photos/seed/album1/400',
-    title: 'Dark Side',
-    artist: 'Pink Floyd',
-    year: '1973',
-    status: 'owned',
-  },
-  {
-    id: '2',
-    coverUrl: 'https://picsum.photos/seed/album2/400',
-    title: 'Rumours',
-    artist: 'Fleetwood Mac',
-    year: '1977',
-    status: 'owned',
-  },
-  {
-    id: '3',
-    coverUrl: 'https://picsum.photos/seed/album3/400',
-    title: 'Thriller',
-    artist: 'Michael Jackson',
-    year: '1982',
-    status: 'want',
-  },
-  {
-    id: '4',
-    coverUrl: 'https://picsum.photos/seed/album4/400',
-    title: 'Back in Black',
-    artist: 'AC/DC',
-    year: '1980',
-    status: 'owned',
-  },
-  {
-    id: '5',
-    coverUrl: 'https://picsum.photos/seed/album5/400',
-    title: 'Nevermind',
-    artist: 'Nirvana',
-    year: '1991',
-    status: 'listening',
-  },
-  {
-    id: '6',
-    coverUrl: 'https://picsum.photos/seed/album6/400',
-    title: 'OK Computer',
-    artist: 'Radiohead',
-    year: '1997',
-    status: 'owned',
-  },
-  {
-    id: '7',
-    coverUrl: 'https://picsum.photos/seed/album7/400',
-    title: 'Kind of Blue',
-    artist: 'Miles Davis',
-    year: '1959',
-    status: 'listened',
-  },
-  {
-    id: '8',
-    coverUrl: 'https://picsum.photos/seed/album8/400',
-    title: 'Channel Orange',
-    artist: 'Frank Ocean',
-    year: '2012',
-    status: 'want',
-  },
-];
-
-/**
- * UseCollectionData
- */
-
 export const useCollectionData = (): CollectionData => {
+  const user = useUser();
+  const { userReleases } = useRepositories();
+
+  const { data: allAlbums = [] } = useQuery({
+    queryKey: ['collection', user?.id],
+    queryFn: () => userReleases.findAllByUser(user!.id),
+    enabled: !!user,
+  });
+
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('ALL');
 
-  const filteredAlbums = MOCK_ALBUMS.filter(album => {
+  const filteredAlbums = allAlbums.filter(album => {
     const matchesTab =
       activeTab === 'ALL' || album.status === STATUS_MAP[activeTab];
 
@@ -118,7 +49,7 @@ export const useCollectionData = (): CollectionData => {
   });
 
   return {
-    albums: MOCK_ALBUMS,
+    albums: allAlbums,
     searchQuery,
     activeTab,
     setSearchQuery,
