@@ -1,7 +1,3 @@
-/**
- * Types
- */
-
 import type {
   Album,
   CollectionAlbum,
@@ -10,6 +6,12 @@ import type {
   SearchResult,
   Track,
 } from '#/types/domain';
+
+/**
+ * Types
+ */
+
+export type ArtistRole = 'primary' | 'featured' | 'remixer';
 
 export interface SearchResults {
   results: SearchResult[];
@@ -22,6 +24,30 @@ export interface ReleasesRepository {
     page: number,
     pageSize: number
   ): Promise<SearchResults>;
+  create(data: {
+    title: string;
+    coverUrl?: string;
+    releaseYear?: string;
+  }): Promise<string>;
+  linkArtist(
+    releaseId: string,
+    artistId: string,
+    role?: ArtistRole
+  ): Promise<void>;
+  linkGenre(
+    releaseId: string,
+    genreId: string
+  ): Promise<void>;
+}
+
+export interface ArtistsRepository {
+  findByName(name: string): Promise<string | null>;
+  create(name: string): Promise<string>;
+}
+
+export interface GenresRepository {
+  findByName(name: string): Promise<string | null>;
+  create(name: string): Promise<string>;
 }
 
 export interface UserReleasesRepository {
@@ -51,4 +77,6 @@ export interface Repositories {
   userReleases: UserReleasesRepository;
   tracks: TracksRepository;
   stats: StatsRepository;
+  artists: ArtistsRepository;
+  genres: GenresRepository;
 }
