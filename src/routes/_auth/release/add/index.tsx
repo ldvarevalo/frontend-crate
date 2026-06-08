@@ -2,12 +2,14 @@ import { useState, type FunctionComponent } from 'react';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { SearchBar } from '#/components/search-bar';
 import { Typography } from '#/components/ui/typography';
+import { useRepositories } from '#/repositories/hooks';
 import type { ManualEntryData } from '#/types/domain';
 import { ManualEntryForm } from './-components/manual-entry-form';
 import { Pagination } from './-components/pagination';
 import { SearchResults } from './-components/search-results';
 import { SectionDivider } from './-components/section-divider';
 import { useCreateManualRelease } from './-hooks/use-create-manual-release';
+import { useSearchLookup } from './-hooks/use-search-lookup';
 import { useSearchReleases } from './-hooks/use-search-releases';
 
 /**
@@ -37,6 +39,9 @@ const AddReleasePage: FunctionComponent = () => {
     setCurrentPage,
     toggleResult,
   } = useSearchReleases();
+  const { artists, genres } = useRepositories();
+  const artistSearch = useSearchLookup({ searchFn: artists.search });
+  const genreSearch = useSearchLookup({ searchFn: genres.search });
   const [values, setValues] = useState<ManualEntryData>(INITIAL_VALUES);
   const { mutateAsync, isPending } = useCreateManualRelease();
 
@@ -98,6 +103,8 @@ const AddReleasePage: FunctionComponent = () => {
         onSubmit={handleSubmit}
         isValid={isValid}
         isPending={isPending}
+        artistSearch={artistSearch}
+        genreSearch={genreSearch}
       />
     </main>
   );
