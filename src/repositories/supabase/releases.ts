@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { SearchResult } from '#/types/domain';
-import type { ReleasesRepository, SearchResults } from '../types';
+import type { ArtistRole, ReleasesRepository, SearchResults } from '../types';
 
 /**
  * SupabaseReleasesRepository
@@ -65,5 +65,61 @@ export class SupabaseReleasesRepository implements ReleasesRepository {
       results,
       totalPages: count ? Math.ceil(count / pageSize) : 1,
     };
+  }
+
+  async create(data: {
+    title: string;
+    coverUrl?: string;
+    releaseYear?: string;
+  }): Promise<string> {
+    const { data: result, error } = await this.supabase
+      .from('releases')
+      .insert({
+        title: data.title,
+        cover_url: data.coverUrl ?? null,
+        release_year: data.releaseYear ?? null,
+      })
+      .select('id')
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return result.id;
+  }
+
+  async linkArtist(
+    releaseId: string,
+    artistId: string,
+    role: ArtistRole = 'primary'
+  ): Promise<void> {
+    const { error } = await this.supabase
+      .from('release_artists')
+      .insert({
+        release_id: releaseId,
+        artist_id: artistId,
+        role,
+      });
+
+    if (error) {
+      throw error;
+    }
+  }
+
+  async linkGenre(
+    releaseId: string,
+    genreId: string
+  ): Promise<void> {
+    const { error } = await this.supabase
+      .from('release_genres')
+      .insert({
+        release_id: releaseId,
+        genre_id: genreId,
+      });
+
+    if (error) {
+      throw error;
+    }
   }
 }
