@@ -6,6 +6,7 @@ import type {
 } from '#/types/domain';
 import type {
   Repositories,
+  LookupResult,
 } from '../types';
 
 /**
@@ -44,10 +45,12 @@ const createNoopRepositories = (): Repositories => {
     artists: {
       findByName: async (): Promise<string | null> => null,
       create: async (name: string): Promise<string> => name,
+      search: async (): Promise<LookupResult[]> => [],
     },
     genres: {
       findByName: async (): Promise<string | null> => null,
       create: async (name: string): Promise<string> => name,
+      search: async (): Promise<LookupResult[]> => [],
     },
   };
 

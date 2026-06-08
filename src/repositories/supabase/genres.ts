@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { GenresRepository } from '../types';
+import type { GenresRepository, LookupResult } from '../types';
 
 /**
  * SupabaseGenresRepository
@@ -38,5 +38,16 @@ export class SupabaseGenresRepository implements GenresRepository {
     }
 
     return data.id;
+  }
+
+  async search(query: string): Promise<LookupResult[]> {
+    const { data } = await this.supabase
+      .from('genres')
+      .select('id, name')
+      .ilike('name', `%${query}%`)
+      .limit(10)
+      .order('name');
+
+    return data ?? [];
   }
 }

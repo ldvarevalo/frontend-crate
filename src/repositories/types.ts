@@ -13,6 +13,11 @@ import type {
 
 export type ArtistRole = 'primary' | 'featured' | 'remixer';
 
+export interface LookupResult {
+  id: string;
+  name: string;
+}
+
 export interface SearchResults {
   results: SearchResult[];
   totalPages: number;
@@ -43,11 +48,13 @@ export interface ReleasesRepository {
 export interface ArtistsRepository {
   findByName(name: string): Promise<string | null>;
   create(name: string): Promise<string>;
+  search(query: string): Promise<LookupResult[]>;
 }
 
 export interface GenresRepository {
   findByName(name: string): Promise<string | null>;
   create(name: string): Promise<string>;
+  search(query: string): Promise<LookupResult[]>;
 }
 
 export interface UserReleasesRepository {

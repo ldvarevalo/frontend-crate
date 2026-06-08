@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { ArtistsRepository } from '../types';
+import type { ArtistsRepository, LookupResult } from '../types';
 
 /**
  * SupabaseArtistsRepository
@@ -38,5 +38,16 @@ export class SupabaseArtistsRepository implements ArtistsRepository {
     }
 
     return data.id;
+  }
+
+  async search(query: string): Promise<LookupResult[]> {
+    const { data } = await this.supabase
+      .from('artists')
+      .select('id, name')
+      .ilike('name', `%${query}%`)
+      .limit(10)
+      .order('name');
+
+    return data ?? [];
   }
 }

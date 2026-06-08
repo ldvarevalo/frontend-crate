@@ -33,11 +33,13 @@ totalPages: 0 }),
 const mockArtists = {
   findByName: vi.fn().mockResolvedValue(null),
   create: vi.fn().mockResolvedValue(mockArtistId),
+  search: vi.fn().mockResolvedValue([]),
 };
 
 const mockGenres = {
   findByName: vi.fn().mockResolvedValue(null),
   create: vi.fn().mockResolvedValue(mockGenreId),
+  search: vi.fn().mockResolvedValue([]),
 };
 
 const mockUserReleases = {
