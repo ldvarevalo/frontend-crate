@@ -1,0 +1,89 @@
+import type {
+  Album,
+  CollectionAlbum,
+  CollectionStatus,
+  HomeStats,
+  SearchResult,
+  Track,
+} from '#/types/domain';
+
+/**
+ * Types
+ */
+
+export type ArtistRole = 'primary' | 'featured' | 'remixer';
+
+export interface LookupResult {
+  id: string;
+  name: string;
+}
+
+export interface SearchResults {
+  results: SearchResult[];
+  totalPages: number;
+}
+
+export interface ReleasesRepository {
+  findByQuery(
+    query: string,
+    page: number,
+    pageSize: number
+  ): Promise<SearchResults>;
+  create(data: {
+    title: string;
+    coverUrl?: string;
+    releaseYear?: string;
+  }): Promise<string>;
+  linkArtist(
+    releaseId: string,
+    artistId: string,
+    role?: ArtistRole
+  ): Promise<void>;
+  linkGenre(
+    releaseId: string,
+    genreId: string
+  ): Promise<void>;
+}
+
+export interface ArtistsRepository {
+  findByName(name: string): Promise<string | null>;
+  create(name: string): Promise<string>;
+  search(query: string): Promise<LookupResult[]>;
+}
+
+export interface GenresRepository {
+  findByName(name: string): Promise<string | null>;
+  create(name: string): Promise<string>;
+  search(query: string): Promise<LookupResult[]>;
+}
+
+export interface UserReleasesRepository {
+  findRecent(userId: string, limit: number): Promise<Album[]>;
+  findAllByUser(userId: string): Promise<CollectionAlbum[]>;
+  create(data: {
+    userId: string;
+    releaseId: string;
+    status: CollectionStatus;
+  }): Promise<void>;
+}
+
+export interface TracksRepository {
+  findRecentByUser(userId: string, limit: number): Promise<Track[]>;
+}
+
+export interface StatsRepository {
+  findStats(userId: string): Promise<HomeStats>;
+}
+
+/**
+ * Constants
+ */
+
+export interface Repositories {
+  releases: ReleasesRepository;
+  userReleases: UserReleasesRepository;
+  tracks: TracksRepository;
+  stats: StatsRepository;
+  artists: ArtistsRepository;
+  genres: GenresRepository;
+}

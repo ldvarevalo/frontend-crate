@@ -1,6 +1,5 @@
 import { StrictMode } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from '@tanstack/react-router';
 import { createRoot } from 'react-dom/client';
 
@@ -8,12 +7,17 @@ import { createSupabaseAdapter } from './core/auth/adapters/supabase';
 import { AuthProvider } from './core/auth/auth-context';
 import { createQueryClient } from './core/clients/react-query/query-client';
 import { createSupabaseClient } from './core/clients/supabase/client';
+import { setRepositories } from './repositories/instance';
+import { createSupabaseRepositories } from './repositories/supabase';
 import { getRouter } from './router';
 
 const queryClient = createQueryClient();
 const router = getRouter(queryClient);
 const supabase = createSupabaseClient();
 const adapter = createSupabaseAdapter(supabase);
+const repositories = createSupabaseRepositories(supabase);
+
+setRepositories(repositories);
 
 const rootElement = document.getElementById('root');
 if (rootElement && !rootElement.innerHTML) {
@@ -22,7 +26,6 @@ if (rootElement && !rootElement.innerHTML) {
       <AuthProvider adapter={adapter}>
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
-          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </AuthProvider>
     </StrictMode>

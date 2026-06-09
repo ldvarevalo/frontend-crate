@@ -1,6 +1,7 @@
 import { render, screen } from '@test-utils';
-import type { ManualEntryData } from '../../-hooks/use-manual-entry';
+import type { ManualEntryData } from '#/types/domain';
 import { ManualEntryForm } from '../manual-entry-form';
+import type { ManualEntryFormProps } from '../manual-entry-form';
 
 /**
  * Mocks
@@ -8,6 +9,12 @@ import { ManualEntryForm } from '../manual-entry-form';
 
 const handleFieldChangeMock = vi.fn();
 const handleSubmitMock = vi.fn();
+
+const createSearchMock = (): ManualEntryFormProps['artistSearch'] => ({
+  results: [],
+  isSearching: false,
+  onSearch: vi.fn(),
+});
 
 /**
  * Tests
@@ -20,6 +27,7 @@ describe('ManualEntryForm', () => {
     year: '',
     genre: '',
     artworkUrl: '',
+    status: 'want',
   };
 
   afterEach(() => {
@@ -33,6 +41,8 @@ describe('ManualEntryForm', () => {
         onFieldChange={handleFieldChangeMock}
         onSubmit={handleSubmitMock}
         isValid={false}
+        artistSearch={createSearchMock()}
+        genreSearch={createSearchMock()}
       />
     );
 
@@ -40,10 +50,10 @@ describe('ManualEntryForm', () => {
       screen.getByPlaceholderText('e.g. A Love Supreme')
     ).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText('e.g. John Coltrane')
+      screen.getByText('e.g. John Coltrane')
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText('1965')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Jazz')).toBeInTheDocument();
+    expect(screen.getByText('Jazz')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('https://...')).toBeInTheDocument();
   });
 
@@ -54,6 +64,8 @@ describe('ManualEntryForm', () => {
         onFieldChange={handleFieldChangeMock}
         onSubmit={handleSubmitMock}
         isValid={false}
+        artistSearch={createSearchMock()}
+        genreSearch={createSearchMock()}
       />
     );
 
@@ -67,6 +79,8 @@ describe('ManualEntryForm', () => {
         onFieldChange={handleFieldChangeMock}
         onSubmit={handleSubmitMock}
         isValid={true}
+        artistSearch={createSearchMock()}
+        genreSearch={createSearchMock()}
       />
     );
 
@@ -80,6 +94,8 @@ describe('ManualEntryForm', () => {
         onFieldChange={handleFieldChangeMock}
         onSubmit={handleSubmitMock}
         isValid={true}
+        artistSearch={createSearchMock()}
+        genreSearch={createSearchMock()}
       />
     );
 
@@ -100,6 +116,8 @@ describe('ManualEntryForm', () => {
         onFieldChange={handleFieldChangeMock}
         onSubmit={handleSubmitMock}
         isValid={false}
+        artistSearch={createSearchMock()}
+        genreSearch={createSearchMock()}
       />
     );
 

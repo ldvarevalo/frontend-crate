@@ -11,7 +11,7 @@ const Input = ({
     type={type}
     data-slot="input"
     className={cn(
-      'w-full h-16 bg-surface-container-lowest border-none border-b-2 border-transparent focus:border-primary focus:ring-0 px-12 text-on-surface font-label uppercase tracking-widest text-sm transition-all placeholder:text-gray-500',
+      'w-full h-16 bg-surface-container-lowest border-none border-b-2 border-transparent focus:border-primary focus:ring-0 px-8 text-on-surface font-label uppercase tracking-widest text-sm transition-all placeholder:text-gray-500',
       className
     )}
     {...props}

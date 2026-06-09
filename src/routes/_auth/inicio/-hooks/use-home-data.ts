@@ -1,117 +1,53 @@
-/**
- * Types
- */
-
-export interface Album {
-  id: string;
-  coverUrl: string;
-  title: string;
-  artist: string;
-}
-
-export interface Track {
-  id: string;
-  thumbnail: string;
-  title: string;
-  artist: string;
-  duration: string;
-  isActive?: boolean;
-}
-
-export interface HomeStats {
-  totalReleases: number;
-  thisMonth: number;
-  wantToListen: number;
-}
-
-export interface HomeData {
-  stats: HomeStats;
-  albums: Album[];
-  tracks: Track[];
-}
+import { useQuery } from '@tanstack/react-query';
+import { useUser } from '#/core/auth';
+import { useRepositories } from '#/repositories/hooks';
+import type {
+  HomeData,
+  HomeStats,
+} from '#/types/domain';
 
 /**
  * Constants
  */
 
-const MOCK_ALBUMS: Album[] = [
-  {
-    id: '1',
-    coverUrl: 'https://picsum.photos/seed/album1/400',
-    title: 'Dark Side',
-    artist: 'Pink Floyd',
-  },
-  {
-    id: '2',
-    coverUrl: 'https://picsum.photos/seed/album2/400',
-    title: 'Rumours',
-    artist: 'Fleetwood Mac',
-  },
-  {
-    id: '3',
-    coverUrl: 'https://picsum.photos/seed/album3/400',
-    title: 'Thriller',
-    artist: 'Michael Jackson',
-  },
-  {
-    id: '4',
-    coverUrl: 'https://picsum.photos/seed/album4/400',
-    title: 'Back in Black',
-    artist: 'AC/DC',
-  },
-];
-
-const MOCK_TRACKS: Track[] = [
-  {
-    id: 't1',
-    thumbnail: 'https://picsum.photos/seed/track1/200',
-    title: 'Time',
-    artist: 'Pink Floyd',
-    duration: '6:53',
-  },
-  {
-    id: 't2',
-    thumbnail: 'https://picsum.photos/seed/track2/200',
-    title: 'Dreams',
-    artist: 'Fleetwood Mac',
-    duration: '4:17',
-  },
-  {
-    id: 't3',
-    thumbnail: 'https://picsum.photos/seed/track3/200',
-    title: 'Billie Jean',
-    artist: 'Michael Jackson',
-    duration: '4:54',
-    isActive: true,
-  },
-  {
-    id: 't4',
-    thumbnail: 'https://picsum.photos/seed/track4/200',
-    title: 'Hells Bells',
-    artist: 'AC/DC',
-    duration: '5:12',
-  },
-  {
-    id: 't5',
-    thumbnail: 'https://picsum.photos/seed/track5/200',
-    title: 'Bohemian Rhapsody',
-    artist: 'Queen',
-    duration: '5:55',
-  },
-];
-
-const MOCK_STATS: HomeStats = {
-  totalReleases: 1428,
-  thisMonth: 42,
-  wantToListen: 12,
+const EMPTY_STATS: HomeStats = {
+  totalReleases: 0,
+  thisMonth: 0,
+  wantToListen: 0,
 };
+
+const RECENT_ALBUMS_LIMIT = 4;
+const NEXT_TRACKS_LIMIT = 5;
 
 /**
  * UseHomeData
  */
 
-export const useHomeData = (): HomeData => ({
-  stats: MOCK_STATS,
-  albums: MOCK_ALBUMS,
-  tracks: MOCK_TRACKS,
-});
+export const useHomeData = (): HomeData => {
+  const user = useUser();
+  const { stats, userReleases, tracks } = useRepositories();
+
+  const { data: statsData } = useQuery({
+    queryKey: ['home-stats', user?.id],
+    queryFn: () => stats.findStats(user!.id),
+    enabled: !!user,
+  });
+
+  const { data: albumsData } = useQuery({
+    queryKey: ['home-recent', user?.id],
+    queryFn: () => userReleases.findRecent(user!.id, RECENT_ALBUMS_LIMIT),
+    enabled: !!user,
+  });
+
+  const { data: tracksData } = useQuery({
+    queryKey: ['home-tracks', user?.id],
+    queryFn: () => tracks.findRecentByUser(user!.id, NEXT_TRACKS_LIMIT),
+    enabled: !!user,
+  });
+
+  return {
+    stats: statsData ?? EMPTY_STATS,
+    albums: albumsData ?? [],
+    tracks: tracksData ?? [],
+  };
+};

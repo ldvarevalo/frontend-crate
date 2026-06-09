@@ -80,10 +80,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  * {
-    border-color: var(--color-border);
-  }
 }
 
 @layer components {
