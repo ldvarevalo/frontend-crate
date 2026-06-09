@@ -28,16 +28,19 @@ describe('Header', () => {
     expect(screen.getByRole('link', { name: 'Log out' })).toBeInTheDocument();
   });
 
-  it('should render back button when showBack is true', () => {
+  it('should render back button when onBack is provided', () => {
+    const onBack = vi.fn();
+
     vi.mocked(usePageHeader).mockReturnValue({
       title: 'Album',
-      showBack: true,
+      onBack,
     });
 
     render(<Header />);
 
     expect(screen.getByLabelText('Go back')).toBeInTheDocument();
     expect(screen.getByText('Album')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Log out' })).toBeInTheDocument();
+    screen.getByLabelText('Go back').click();
+    expect(onBack).toHaveBeenCalledTimes(1);
   });
 });

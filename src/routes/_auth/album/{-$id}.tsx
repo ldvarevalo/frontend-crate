@@ -114,10 +114,10 @@ const AlbumDetailPage: FunctionComponent = () => {
 
 export const Route = createFileRoute('/_auth/album/{-$id}')({
   component: AlbumDetailPage,
-  loader: () => ({
+  loader: ({ navigate }) => ({
     pageHeader: {
       title: 'Crate',
-      showBack: true,
+      onBack: () => navigate({ to: '_auth/collection' }),
     },
   }),
 });

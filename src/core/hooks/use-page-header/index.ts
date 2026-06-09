@@ -7,7 +7,7 @@ import { useRouterState } from '@tanstack/react-router';
 
 export interface PageHeaderOptions {
   title: string;
-  showBack?: boolean;
+  onBack?: () => void;
   actions?: ReactNode;
 }
 
