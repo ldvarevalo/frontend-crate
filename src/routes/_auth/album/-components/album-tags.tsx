@@ -18,7 +18,7 @@ export const AlbumTags: FunctionComponent<AlbumTagsProps> = ({
   year,
   genre,
 }) => (
-  <div className="flex flex-col gap-1">
+  <div className="flex flex-col items-start gap-1">
     {year && (
       <div className="inline-flex items-center gap-1 bg-surface-container-high px-2 py-1">
         <Typography
