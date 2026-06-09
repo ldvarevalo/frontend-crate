@@ -1,6 +1,9 @@
-/* eslint-disable unicorn/filename-case */
+/* eslint-disable unicorn/filename-case, @typescript-eslint/no-use-before-define */
 import type { FunctionComponent } from 'react';
-import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  useNavigate,
+} from '@tanstack/react-router';
 import { ArrowLeft, EllipsisVertical, Share } from 'lucide-react';
 import { Button } from '#/components/ui/button';
 import { Typography } from '#/components/ui/typography';
@@ -17,7 +20,7 @@ import { useAlbumData } from './-hooks/use-album-data';
  */
 
 interface AlbumParams {
-  $id?: string;
+  id?: string;
 }
 
 /**
@@ -26,11 +29,10 @@ interface AlbumParams {
 
 const AlbumDetailPage: FunctionComponent = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  const { $id } = useParams({ from: Route.fullPath }) as AlbumParams;
-  const { album, isLoading, isError, error } = useAlbumData($id);
+  const { id } = Route.useParams() as AlbumParams;
+  const { album, isLoading, isError, error } = useAlbumData(id);
 
-  if (!$id) {
+  if (!id) {
     return (
       <main className="page-wrap flex items-center justify-center py-20">
         <div className="text-center">
@@ -109,10 +111,7 @@ const AlbumDetailPage: FunctionComponent = () => {
       <main className="page-wrap space-y-6 pb-8">
         <AlbumTags year={album.year} genre={album.genre} />
 
-        <CollectionStatusSelector
-          status={album.status}
-          onChange={() => {}}
-        />
+        <CollectionStatusSelector status={album.status} onChange={() => {}} />
 
         <div>
           <Typography
