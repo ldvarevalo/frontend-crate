@@ -1,4 +1,4 @@
-import type { Album, CollectionAlbum, HomeStats, Track } from '#/types/domain';
+import type { Album, AlbumDetail, CollectionAlbum, HomeStats, Track } from '#/types/domain';
 import type { Repositories, LookupResult } from '../types';
 
 /**
@@ -13,9 +13,16 @@ const createNoopRepositories = (): Repositories => {
         totalPages: 0,
       }),
       create: async () => '',
-      findById: async () => {
-        throw new Error('not implemented');
-      },
+      findById: async (): Promise<AlbumDetail> => ({
+        id: '',
+        coverUrl: '',
+        title: '',
+        artist: '',
+        year: '',
+        genre: '',
+        tracks: [],
+        status: null,
+      }),
       linkArtist: async () => {},
       linkGenre: async () => {},
     },
