@@ -2,6 +2,8 @@
 import type { FunctionComponent } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Typography } from '#/components/ui/typography';
+import { router } from '#/router';
+
 import { AlbumHero } from './-components/album-hero';
 import { AlbumListeningHistory } from './-components/album-listening-history';
 import { AlbumRating } from './-components/album-rating';
@@ -114,10 +116,10 @@ const AlbumDetailPage: FunctionComponent = () => {
 
 export const Route = createFileRoute('/_auth/album/{-$id}')({
   component: AlbumDetailPage,
-  loader: ({ navigate }) => ({
+  loader: () => ({
     pageHeader: {
       title: 'Crate',
-      onBack: () => navigate({ to: '_auth/collection' }),
+      onBack: () => router.navigate({ to: '..' }),
     },
   }),
 });

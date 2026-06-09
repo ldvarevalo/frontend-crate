@@ -1,24 +1,26 @@
-import type { QueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import {
-  createRouter as createTanStackRouter,
+  createRouter,
   type AnyRouter,
 } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
 
-export const getRouter = (queryClient: QueryClient): AnyRouter => {
-  const router = createTanStackRouter({
-    routeTree,
-    scrollRestoration: true,
-    defaultPreload: 'intent',
-    defaultPreloadStaleTime: 0,
-    context: { queryClient },
-  });
+const initialQueryClient = new QueryClient();
 
-  return router;
+export const router = createRouter({
+  routeTree,
+  scrollRestoration: true,
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0,
+  context: { queryClient: initialQueryClient },
+});
+
+export const updateRouterContext = (queryClient: QueryClient): void => {
+  router.update({ context: { queryClient } });
 };
 
 declare module '@tanstack/react-router' {
   interface Register {
-    router: ReturnType<typeof getRouter>;
+    router: AnyRouter;
   }
 }

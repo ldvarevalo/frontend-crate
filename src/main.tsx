@@ -9,10 +9,10 @@ import { createQueryClient } from './core/clients/react-query/query-client';
 import { createSupabaseClient } from './core/clients/supabase/client';
 import { setRepositories } from './repositories/instance';
 import { createSupabaseRepositories } from './repositories/supabase';
-import { getRouter } from './router';
+import { router, updateRouterContext } from './router';
 
 const queryClient = createQueryClient();
-const router = getRouter(queryClient);
+updateRouterContext(queryClient);
 const supabase = createSupabaseClient();
 const adapter = createSupabaseAdapter(supabase);
 const repositories = createSupabaseRepositories(supabase);
