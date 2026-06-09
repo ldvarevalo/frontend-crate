@@ -5,7 +5,19 @@ import { cn } from "#/lib/utils"
 
 const Popover = ({ ...props }: PopoverPrimitive.Root.Props): React.ReactElement => <PopoverPrimitive.Root data-slot="popover" {...props} />
 
-const PopoverTrigger = ({ ...props }: PopoverPrimitive.Trigger.Props): React.ReactElement => <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
+const PopoverTrigger = ({
+  className,
+  ...props
+}: PopoverPrimitive.Trigger.Props): React.ReactElement => (
+    <PopoverPrimitive.Trigger
+      data-slot="popover-trigger"
+      className={cn(
+        'flex h-16 w-full items-center justify-between border-none border-b-2 border-transparent bg-surface-container-lowest px-8 text-sm font-label uppercase tracking-widest text-on-surface transition-all focus:border-primary focus:ring-0 aria-expanded:border-primary data-disabled:cursor-not-allowed data-disabled:opacity-50',
+        className
+      )}
+      {...props}
+    />
+  )
 
 const PopoverContent = ({
   className,
@@ -30,7 +42,7 @@ const PopoverContent = ({
         <PopoverPrimitive.Popup
           data-slot="popover-content"
           className={cn(
-            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-lg bg-surface-container-high p-2.5 text-sm text-popover-foreground shadow-md outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
             className
           )}
           {...props}

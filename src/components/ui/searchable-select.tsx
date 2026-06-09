@@ -1,9 +1,6 @@
-import type { FunctionComponent } from 'react';
-import { useState } from 'react';
+import { useEffect, useRef, useState, type FunctionComponent } from 'react';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { cn } from '#/lib/utils';
 import type { LookupResult } from '#/repositories/types';
-import { buttonVariants } from './button';
 import {
   Command,
   CommandEmpty,
@@ -32,6 +29,19 @@ interface SearchableSelectProps {
 
 /** SearchableSelect */
 
+const usePopoverWidth = (): [React.RefObject<HTMLDivElement | null>, number | undefined] => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (ref.current) {
+      setWidth(ref.current.offsetWidth);
+    }
+  }, []);
+
+  return [ref, width];
+};
+
 export const SearchableSelect: FunctionComponent<SearchableSelectProps> = ({
   value,
   placeholder,
@@ -43,6 +53,7 @@ export const SearchableSelect: FunctionComponent<SearchableSelectProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [wrapperRef, popupWidth] = usePopoverWidth();
 
   const handleSelect = (selectedValue: string): void => {
     onChange(selectedValue);
@@ -50,63 +61,70 @@ export const SearchableSelect: FunctionComponent<SearchableSelectProps> = ({
     setInputValue('');
   };
 
+  const textColor = value ? 'text-on-surface' : 'text-gray-500';
+
+  const shouldShowCreate = !isSearching && results.length === 0 && inputValue.length >= 2;
+
+  const shouldShowEmpty = !isSearching && results.length === 0 && inputValue.length < 2;
+
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        role="combobox"
-        aria-expanded={open}
-        disabled={disabled}
-        className={cn(
-          buttonVariants({ variant: 'outline' }),
-          'w-full justify-between'
-        )}
-      >
-        {value || placeholder}
-        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-      </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
-        <Command shouldFilter={false}>
-          <CommandInput
-            placeholder={placeholder}
-            value={inputValue}
-            onValueChange={(q) => {
-              setInputValue(q);
-              onSearch(q);
-            }}
-          />
-          <CommandList>
-            {isSearching && (
-              <CommandItem disabled>Searching...</CommandItem>
-            )}
-            {!isSearching && results.length === 0 && inputValue.length >= 2 && (
-              <CommandItem
-                onSelect={() => handleSelect(inputValue)}
-              >
-                Create &ldquo;{inputValue}&rdquo;
-              </CommandItem>
-            )}
-            {!isSearching && results.length === 0 && inputValue.length < 2 && (
-              <CommandEmpty>Type at least 2 characters</CommandEmpty>
-            )}
-            <CommandGroup>
-              {results.map((result) => (
+    <div ref={wrapperRef}>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          role="combobox"
+          aria-expanded={open}
+          disabled={disabled}
+        >
+          <span className={textColor}>
+            {value || placeholder}
+          </span>
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </PopoverTrigger>
+        <PopoverContent
+          className="p-0"
+          style={popupWidth ? { width: popupWidth } : undefined}
+        >
+          <Command shouldFilter={false}>
+            <CommandInput
+              placeholder={placeholder}
+              value={inputValue}
+              onValueChange={(q) => {
+                setInputValue(q);
+                onSearch(q);
+              }}
+            />
+            <CommandList>
+              {isSearching && (
+                <CommandItem disabled>Searching...</CommandItem>
+              )}
+              {shouldShowEmpty && <CommandEmpty>Type at least 2 characters</CommandEmpty>}
+              {shouldShowCreate && (
                 <CommandItem
-                  key={result.id}
-                  value={result.name}
-                  onSelect={() => handleSelect(result.name)}
+                  onSelect={() => handleSelect(inputValue)}
                 >
-                  <Check
-                    className={`mr-2 h-4 w-4 ${
-                      value === result.name ? 'opacity-100' : 'opacity-0'
-                    }`}
-                  />
-                  {result.name}
+                  Create &ldquo;{inputValue}&rdquo;
                 </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+              )}
+              <CommandGroup>
+                {results.map((result) => (
+                  <CommandItem
+                    key={result.id}
+                    value={result.name}
+                    onSelect={() => handleSelect(result.name)}
+                  >
+                    <Check
+                      className={`mr-2 h-4 w-4 ${
+                        value === result.name ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    />
+                    {result.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 };
