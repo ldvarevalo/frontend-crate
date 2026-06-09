@@ -86,6 +86,7 @@ export const SearchableSelect: FunctionComponent<SearchableSelectProps> = ({
         >
           <Command shouldFilter={false}>
             <CommandInput
+              autoFocus
               placeholder={placeholder}
               value={inputValue}
               onValueChange={(q) => {
