@@ -40,8 +40,8 @@ const AddReleasePage: FunctionComponent = () => {
     toggleResult,
   } = useSearchReleases();
   const { artists, genres } = useRepositories();
-  const artistSearch = useSearchLookup({ searchFn: artists.search });
-  const genreSearch = useSearchLookup({ searchFn: genres.search });
+  const artistSearch = useSearchLookup({ searchFn: (q) => artists.search(q) });
+  const genreSearch = useSearchLookup({ searchFn: (q) => genres.search(q) });
   const [values, setValues] = useState<ManualEntryData>(INITIAL_VALUES);
   const { mutateAsync, isPending } = useCreateManualRelease();
 
