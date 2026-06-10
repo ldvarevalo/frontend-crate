@@ -41,6 +41,17 @@ export interface CollectionAlbum {
   status: CollectionStatus;
 }
 
+export interface AlbumDetail {
+  id: string;
+  coverUrl: string;
+  title: string;
+  artist: string;
+  year: string;
+  genre: string;
+  tracks: Track[];
+  status: CollectionStatus | null;
+}
+
 export interface SearchResult {
   id: string;
   thumbnail: string;

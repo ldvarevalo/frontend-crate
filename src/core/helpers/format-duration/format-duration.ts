@@ -1,0 +1,14 @@
+/**
+ * formatDuration
+ */
+
+export const formatDuration = (seconds: number | null): string => {
+  if (seconds === null || seconds === undefined) {
+    return '--:--';
+  }
+
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+
+  return `${m}:${s.toString().padStart(2, '0')}`;
+};

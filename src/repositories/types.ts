@@ -1,5 +1,6 @@
 import type {
   Album,
+  AlbumDetail,
   CollectionAlbum,
   CollectionStatus,
   HomeStats,
@@ -40,6 +41,7 @@ export interface ReleasesRepository {
     role?: ArtistRole
   ): Promise<void>;
   linkGenre(releaseId: string, genreId: string): Promise<void>;
+  findById(id: string, userId?: string): Promise<AlbumDetail>;
 }
 
 export interface ArtistsRepository {
@@ -58,6 +60,11 @@ export interface UserReleasesRepository {
   findRecent(userId: string, limit: number): Promise<Album[]>;
   findAllByUser(userId: string): Promise<CollectionAlbum[]>;
   create(data: {
+    userId: string;
+    releaseId: string;
+    status: CollectionStatus;
+  }): Promise<void>;
+  upsert(data: {
     userId: string;
     releaseId: string;
     status: CollectionStatus;
