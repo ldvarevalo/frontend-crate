@@ -5,7 +5,7 @@ import { useRouterState } from '@tanstack/react-router';
  * Types
  */
 
-export interface PageHeaderOptions {
+export interface PageHeaderHook {
   title: string;
   onBack?: () => void;
   actions?: ReactNode;
@@ -16,8 +16,8 @@ export interface PageHeaderOptions {
  */
 
 export const usePageHeader = <
-  T extends { pageHeader?: PageHeaderOptions },
->(): PageHeaderOptions => {
+  T extends { pageHeader?: PageHeaderHook },
+>(): PageHeaderHook => {
   const matches = useRouterState().matches;
   const loaderData = matches[matches.length - 1]?.loaderData as T | undefined;
 
