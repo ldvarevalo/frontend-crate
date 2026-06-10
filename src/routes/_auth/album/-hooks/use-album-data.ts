@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useUser } from '#/core/auth';
 import { useRepositories } from '#/repositories/hooks';
 import type { AlbumDetail } from '#/types/domain';
 
@@ -15,10 +16,11 @@ export const useAlbumData = (
   error: Error | null;
 } => {
   const { releases } = useRepositories();
+  const user = useUser();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['album', id],
-    queryFn: () => releases.findById(id!),
+    queryKey: ['album', id, user?.id],
+    queryFn: () => releases.findById(id!, user?.id),
     enabled: !!id,
   });
 

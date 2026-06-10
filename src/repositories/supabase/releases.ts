@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { formatDuration } from '#/core/helpers/format-duration';
-import type { AlbumDetail, SearchResult, Track } from '#/types/domain';
+import type { AlbumDetail, CollectionStatus, SearchResult, Track } from '#/types/domain';
 import type { ArtistRole, ReleasesRepository, SearchResults } from '../types';
 
 /**
@@ -30,6 +30,48 @@ const mapTrackRow = (
   duration: formatDuration(t.duration_seconds as number | null),
   isActive: index === 0,
 });
+
+const mapAlbumDetailRow = (row: Record<string, unknown>): AlbumDetail => {
+  const releaseArtists = row.release_artists as
+    | Array<Record<string, unknown>>
+    | undefined;
+  const releaseGenres = row.release_genres as
+    | Array<Record<string, unknown>>
+    | undefined;
+  const artist = getPrimaryName(releaseArtists, 'artists');
+  const coverUrl = (row.cover_url as string) ?? '';
+
+  const tracks: Track[] = (
+    (row.tracks as Array<Record<string, unknown>> | undefined) ?? []
+  )
+    .sort(sortByPosition)
+    .map((t, index) =>
+      mapTrackRow(
+        t,
+        {
+          coverUrl,
+          artist,
+        },
+        index
+      )
+    );
+
+  const userReleases = row.user_releases as
+    | Array<Record<string, unknown>>
+    | undefined;
+  const status = (userReleases?.[0]?.status as CollectionStatus | null) ?? null;
+
+  return {
+    id: row.id as string,
+    coverUrl,
+    title: row.title as string,
+    artist,
+    year: (row.release_year as string) ?? '',
+    genre: getPrimaryName(releaseGenres, 'genres'),
+    tracks,
+    status,
+  };
+};
 
 /**
  * SupabaseReleasesRepository
@@ -148,8 +190,8 @@ export class SupabaseReleasesRepository implements ReleasesRepository {
     }
   }
 
-  async findById(id: string): Promise<AlbumDetail> {
-    const { data, error } = await this.supabase
+  async findById(id: string, userId?: string): Promise<AlbumDetail> {
+    let query = this.supabase
       .from('releases')
       .select(
         `
@@ -173,50 +215,24 @@ export class SupabaseReleasesRepository implements ReleasesRepository {
           duration_seconds,
           side,
           position
+        ),
+        user_releases!left (
+          status
         )
       `
       )
-      .eq('id', id)
-      .single();
+      .eq('id', id);
+
+    if (userId) {
+      query = query.eq('user_releases.user_id', userId);
+    }
+
+    const { data, error } = await query.single();
 
     if (error || !data) {
       throw new Error(`Release not found: ${id}`);
     }
 
-    const row = data as Record<string, unknown>;
-    const releaseArtists = row.release_artists as
-      | Array<Record<string, unknown>>
-      | undefined;
-    const releaseGenres = row.release_genres as
-      | Array<Record<string, unknown>>
-      | undefined;
-    const artist = getPrimaryName(releaseArtists, 'artists');
-    const coverUrl = (row.cover_url as string) ?? '';
-
-    const tracks: Track[] = (
-      (row.tracks as Array<Record<string, unknown>> | undefined) ?? []
-    )
-      .sort(sortByPosition)
-      .map((t, index) =>
-        mapTrackRow(
-          t,
-          {
-            coverUrl,
-            artist,
-          },
-          index
-        )
-      );
-
-    return {
-      id: row.id as string,
-      coverUrl,
-      title: row.title as string,
-      artist,
-      year: (row.release_year as string) ?? '',
-      genre: getPrimaryName(releaseGenres, 'genres'),
-      tracks,
-      status: null,
-    };
+    return mapAlbumDetailRow(data as Record<string, unknown>);
   }
 }
