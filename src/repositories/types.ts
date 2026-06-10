@@ -70,6 +70,10 @@ export interface UserReleasesRepository {
     releaseId: string;
     status: CollectionStatus;
   }): Promise<void>;
+  findByRelease(
+    releaseId: string,
+    userId: string
+  ): Promise<{ id: string } | null>;
 }
 
 export interface TracksRepository {

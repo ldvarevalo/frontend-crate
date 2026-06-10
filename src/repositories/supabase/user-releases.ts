@@ -156,4 +156,19 @@ export class SupabaseUserReleasesRepository implements UserReleasesRepository {
       throw error;
     }
   }
+
+  async findByRelease(
+    releaseId: string,
+    userId: string
+  ): Promise<{ id: string } | null> {
+    const { data, error } = await this.supabase
+      .from('user_releases')
+      .select('id')
+      .eq('release_id', releaseId)
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  }
 }
