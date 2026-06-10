@@ -11,6 +11,7 @@ import { AlbumTags } from './-components/album-tags';
 import { AlbumTracklist } from './-components/album-tracklist';
 import { CollectionStatusSelector } from './-components/collection-status-selector';
 import { useAlbumData } from './-hooks/use-album-data';
+import { useSetCollectionStatus } from './-hooks/use-set-collection-status';
 
 /**
  * Types
@@ -27,6 +28,7 @@ interface AlbumParams {
 const AlbumDetailPage: FunctionComponent = () => {
   const { id } = Route.useParams() as AlbumParams;
   const { album, isLoading, isError, error } = useAlbumData(id);
+  const { mutate: setStatus } = useSetCollectionStatus();
 
   if (!id) {
     return (
@@ -89,7 +91,13 @@ const AlbumDetailPage: FunctionComponent = () => {
       <main className="page-wrap space-y-6 pb-8">
         <AlbumTags year={album.year} genre={album.genre} />
 
-        <CollectionStatusSelector status={album.status} onChange={() => {}} />
+        <CollectionStatusSelector
+          status={album.status}
+          onChange={(status) => {
+            setStatus({ releaseId: id,
+              status });
+          }}
+        />
 
         <div>
           <Typography

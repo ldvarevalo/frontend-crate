@@ -118,3 +118,7 @@ CREATE POLICY "user_select_own_releases" ON user_releases
 
 CREATE POLICY "user_insert_own_releases" ON user_releases
   FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "user_update_own_releases" ON user_releases
+  FOR UPDATE TO authenticated USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);

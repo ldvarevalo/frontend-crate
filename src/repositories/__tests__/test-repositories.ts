@@ -36,6 +36,7 @@ const createNoopRepositories = (): Repositories => {
       findRecent: async (): Promise<Album[]> => [],
       findAllByUser: async (): Promise<CollectionAlbum[]> => [],
       create: async () => {},
+      upsert: async () => {},
     },
     tracks: {
       findRecentByUser: async (): Promise<Track[]> => [],

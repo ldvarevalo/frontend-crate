@@ -64,6 +64,11 @@ export interface UserReleasesRepository {
     releaseId: string;
     status: CollectionStatus;
   }): Promise<void>;
+  upsert(data: {
+    userId: string;
+    releaseId: string;
+    status: CollectionStatus;
+  }): Promise<void>;
 }
 
 export interface TracksRepository {
