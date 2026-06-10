@@ -3,7 +3,6 @@ import type { FunctionComponent } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Typography } from '#/components/ui/typography';
 import { router } from '#/router';
-
 import { AlbumHero } from './-components/album-hero';
 import { AlbumListeningHistory } from './-components/album-listening-history';
 import { AlbumRating } from './-components/album-rating';
@@ -93,22 +92,15 @@ const AlbumDetailPage: FunctionComponent = () => {
 
         <CollectionStatusSelector
           status={album.status}
-          onChange={(status) => {
-            setStatus({ releaseId: id,
-              status });
+          onChange={status => {
+            setStatus({
+              releaseId: id,
+              status,
+            });
           }}
         />
 
-        <div>
-          <Typography
-            size="xs"
-            transform="uppercase"
-            className="text-on-surface-variant"
-          >
-            YOUR RATING
-          </Typography>
-          <AlbumRating />
-        </div>
+        <AlbumRating />
 
         <AlbumTracklist tracks={album.tracks} />
 

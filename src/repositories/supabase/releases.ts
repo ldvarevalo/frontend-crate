@@ -1,6 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { formatDuration } from '#/core/helpers/format-duration';
-import type { AlbumDetail, CollectionStatus, SearchResult, Track } from '#/types/domain';
+import type {
+  AlbumDetail,
+  CollectionStatus,
+  SearchResult,
+  Track,
+} from '#/types/domain';
 import type { ArtistRole, ReleasesRepository, SearchResults } from '../types';
 
 /**

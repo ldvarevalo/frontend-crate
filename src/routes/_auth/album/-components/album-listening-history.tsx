@@ -28,13 +28,18 @@ export const AlbumListeningHistory: FunctionComponent = () => (
       </Button>
     </div>
     <div className="flex items-center justify-center bg-surface-container-high py-8">
-      <Typography
-        family="heading"
-        size="md"
-        className="text-center text-on-surface-variant"
-      >
-        No sessions recorded yet. Start your first spin of this record.
-      </Typography>
+      <div className="flex flex-col items-center justify-center gap-1 bg-surface-container-high py-8">
+        <Typography
+          family="heading"
+          size="lg"
+          className="text-center text-on-surface-variant"
+        >
+          No sessions recorded yet
+        </Typography>
+        <Typography size="sm" className="text-center text-on-surface-variant">
+          Start your first spin of this record.
+        </Typography>
+      </div>
     </div>
   </section>
 );

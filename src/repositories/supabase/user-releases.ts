@@ -141,18 +141,16 @@ export class SupabaseUserReleasesRepository implements UserReleasesRepository {
     releaseId: string;
     status: CollectionStatus;
   }): Promise<void> {
-    const { error } = await this.supabase
-      .from('user_releases')
-      .upsert(
-        {
-          user_id: data.userId,
-          release_id: data.releaseId,
-          status: data.status,
-        },
-        {
-          onConflict: 'user_id,release_id',
-        }
-      );
+    const { error } = await this.supabase.from('user_releases').upsert(
+      {
+        user_id: data.userId,
+        release_id: data.releaseId,
+        status: data.status,
+      },
+      {
+        onConflict: 'user_id,release_id',
+      }
+    );
 
     if (error) {
       throw error;

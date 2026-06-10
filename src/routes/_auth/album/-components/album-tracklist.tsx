@@ -26,14 +26,16 @@ export const AlbumTracklist: FunctionComponent<AlbumTracklistProps> = ({
       TRACKLIST
     </Typography>
     {tracks.length === 0 ? (
-      <div className="flex items-center justify-center bg-surface-container-high py-8">
+      <div className="flex flex-col items-center justify-center gap-1 bg-surface-container-high py-8">
         <Typography
           family="heading"
-          size="md"
+          size="lg"
           className="text-center text-on-surface-variant"
         >
-          No tracklist available. Import tracks from the menu or add them
-          manually.
+          No tracklist available
+        </Typography>
+        <Typography size="sm" className="text-center text-on-surface-variant">
+          Import tracks from the menu or add them manually.
         </Typography>
       </div>
     ) : (
