@@ -4,6 +4,7 @@ import type {
   CollectionAlbum,
   CollectionStatus,
   HomeStats,
+  ListeningScope,
   SearchResult,
   Track,
 } from '#/types/domain';
@@ -77,6 +78,14 @@ export interface TracksRepository {
 
 export interface StatsRepository {
   findStats(userId: string): Promise<HomeStats>;
+}
+
+export interface ListeningSessionsRepository {
+  create(data: {
+    userReleaseId: string;
+    scope: ListeningScope;
+    durationSeconds: number | null;
+  }): Promise<void>;
 }
 
 /**
