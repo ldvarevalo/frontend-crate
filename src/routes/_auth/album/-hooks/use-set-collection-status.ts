@@ -12,7 +12,7 @@ interface UpsertPayload {
   status: CollectionStatus;
 }
 
-interface UseSetCollectionStatusResult {
+interface UseSetCollectionStatusHook {
   mutate: (payload: UpsertPayload) => void;
   isPending: boolean;
 }
@@ -21,7 +21,7 @@ interface UseSetCollectionStatusResult {
  * useSetCollectionStatus
  */
 
-export const useSetCollectionStatus = (): UseSetCollectionStatusResult => {
+export const useSetCollectionStatus = (): UseSetCollectionStatusHook => {
   const queryClient = useQueryClient();
   const user = useUser();
   const { userReleases } = useRepositories();

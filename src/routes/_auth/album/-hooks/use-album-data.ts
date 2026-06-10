@@ -4,17 +4,23 @@ import { useRepositories } from '#/repositories/hooks';
 import type { AlbumDetail } from '#/types/domain';
 
 /**
+ * Types
+ */
+
+interface UseAlbumDataHook {
+  album: AlbumDetail | null;
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+}
+
+/**
  * useAlbumData
  */
 
 export const useAlbumData = (
   id: string | undefined
-): {
-  album: AlbumDetail | null;
-  isLoading: boolean;
-  isError: boolean;
-  error: Error | null;
-} => {
+): UseAlbumDataHook => {
   const { releases } = useRepositories();
   const user = useUser();
 
