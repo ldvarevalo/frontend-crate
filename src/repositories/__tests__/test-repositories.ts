@@ -58,6 +58,9 @@ const createNoopRepositories = (): Repositories => {
       create: async (name: string): Promise<string> => name,
       search: async (): Promise<LookupResult[]> => [],
     },
+    sessions: {
+      create: async () => {},
+    },
   };
 
   return noop;

@@ -99,4 +99,5 @@ export interface Repositories {
   stats: StatsRepository;
   artists: ArtistsRepository;
   genres: GenresRepository;
+  sessions: ListeningSessionsRepository;
 }
