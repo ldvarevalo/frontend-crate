@@ -1,9 +1,9 @@
 /* eslint-disable unicorn/filename-case, @typescript-eslint/no-use-before-define */
 import type { FunctionComponent } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { AlbumHero } from '#/components/album-hero';
 import { Typography } from '#/components/ui/typography';
 import { router } from '#/router';
-import { AlbumHero } from './-components/album-hero';
 import { AlbumListeningHistory } from './-components/album-listening-history';
 import { AlbumRating } from './-components/album-rating';
 import { AlbumTags } from './-components/album-tags';
