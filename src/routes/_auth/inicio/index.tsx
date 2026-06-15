@@ -25,10 +25,7 @@ const HomePage: FunctionComponent = () => {
         count={stats.wantToListen}
         onClick={() => navigate({ to: '/want-to-listen' })}
       />
-      <SectionHeader
-        title="Recently Listened"
-        onLinkClick={() => navigate({ to: '/recent' })}
-      />
+      <SectionHeader title="Recently Listened" />
       <div className="grid grid-cols-2 gap-4">
         {albums.map(album => (
           <AlbumCard
