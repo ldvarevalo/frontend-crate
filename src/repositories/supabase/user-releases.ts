@@ -26,6 +26,8 @@ const ALL_FIELDS_SELECT = `
   status,
   priority,
   rating,
+  is_listened,
+  listened_at,
   release_id,
   releases!inner (
     id,
@@ -65,6 +67,7 @@ const mapCollectionAlbum = (row: Record<string, unknown>): CollectionAlbum => {
     artist: getArtistName(releases),
     year: (releases.release_year as string) ?? '',
     status: row.status as CollectionStatus,
+    isListened: row.is_listened as boolean,
   };
 };
 
@@ -95,8 +98,8 @@ export class SupabaseUserReleasesRepository implements UserReleasesRepository {
       .from('user_releases')
       .select(RECENT_ALBUM_SELECT)
       .eq('user_id', userId)
-      .eq('status', 'listened')
-      .order('created_at', { ascending: false })
+      .eq('is_listened', true)
+      .order('listened_at', { ascending: false, nullsFirst: false })
       .limit(limit);
 
     if (error) {
@@ -172,5 +175,19 @@ export class SupabaseUserReleasesRepository implements UserReleasesRepository {
       throw error;
     }
     return data;
+  }
+
+  async markAsListened(userReleaseId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('user_releases')
+      .update({
+        is_listened: true,
+        listened_at: new Date().toISOString(),
+      })
+      .eq('id', userReleaseId);
+
+    if (error) {
+      throw error;
+    }
   }
 }
