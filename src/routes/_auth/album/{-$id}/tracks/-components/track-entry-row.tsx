@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '#/components/ui/button';
+import { Input } from '#/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -41,12 +42,12 @@ export const TrackEntryRow: FunctionComponent<TrackEntryRowProps> = ({
 }) => (
   <div className="flex flex-col gap-2 border-b border-outline-20 pb-3 last:border-b-0">
     <div className="flex items-center gap-2">
-      <input
-        type="text"
+      <Input
         placeholder="Track title"
         value={track.title}
         onChange={e => onChange(track.id, 'title', e.target.value)}
-        className="min-w-0 flex-1 border border-outline-20 bg-transparent px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+        className="min-w-0 flex-1"
+        aria-label="Track title"
       />
 
       <Button
@@ -60,12 +61,12 @@ export const TrackEntryRow: FunctionComponent<TrackEntryRowProps> = ({
     </div>
 
     <div className="flex gap-2">
-      <input
-        type="text"
+      <Input
         placeholder="M:SS"
         value={track.durationMinutes}
         onChange={e => onChange(track.id, 'durationMinutes', e.target.value)}
-        className="w-20 border border-outline-20 bg-transparent px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+        className="w-24"
+        aria-label="Track duration"
       />
 
       <Select
@@ -88,14 +89,15 @@ export const TrackEntryRow: FunctionComponent<TrackEntryRowProps> = ({
         </SelectContent>
       </Select>
 
-      <input
+      <Input
         type="number"
         placeholder="#"
         value={track.position}
         onChange={e =>
           onChange(track.id, 'position', Number(e.target.value))
         }
-        className="w-16 border border-outline-20 bg-transparent px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+        className="w-20"
+        aria-label="Track position"
       />
     </div>
   </div>
