@@ -76,6 +76,7 @@ export interface UserReleasesRepository {
     releaseId: string,
     userId: string
   ): Promise<{ id: string } | null>;
+  markAsListened(userReleaseId: string): Promise<void>;
 }
 
 export interface TracksRepository {
