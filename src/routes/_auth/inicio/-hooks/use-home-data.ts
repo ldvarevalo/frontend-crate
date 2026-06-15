@@ -14,7 +14,19 @@ const EMPTY_STATS: HomeStats = {
 };
 
 const RECENT_ALBUMS_LIMIT = 4;
-const NEXT_TRACKS_LIMIT = 5;
+const UP_NEXT_LIMIT = 10;
+
+const shuffleArray = <T>(array: T[]): T[] => {
+  const shuffled = [...array];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+};
 
 /**
  * UseHomeData
@@ -22,7 +34,7 @@ const NEXT_TRACKS_LIMIT = 5;
 
 export const useHomeData = (): HomeData => {
   const user = useUser();
-  const { stats, userReleases, tracks } = useRepositories();
+  const { stats, userReleases } = useRepositories();
 
   const { data: statsData } = useQuery({
     queryKey: ['home-stats', user?.id],
@@ -36,15 +48,15 @@ export const useHomeData = (): HomeData => {
     enabled: !!user,
   });
 
-  const { data: tracksData } = useQuery({
-    queryKey: ['home-tracks', user?.id],
-    queryFn: () => tracks.findRecentByUser(user!.id, NEXT_TRACKS_LIMIT),
+  const { data: upNextData } = useQuery({
+    queryKey: ['home-up-next', user?.id],
+    queryFn: () => userReleases.findUpNext(user!.id, UP_NEXT_LIMIT),
     enabled: !!user,
   });
 
   return {
     stats: statsData ?? EMPTY_STATS,
     albums: albumsData ?? [],
-    tracks: tracksData ?? [],
+    upNext: upNextData ? shuffleArray(upNextData) : [],
   };
 };
