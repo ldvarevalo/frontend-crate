@@ -61,6 +61,7 @@ export interface GenresRepository {
 
 export interface UserReleasesRepository {
   findRecent(userId: string, limit: number): Promise<Album[]>;
+  findUpNext(userId: string, limit: number): Promise<Album[]>;
   findAllByUser(userId: string): Promise<CollectionAlbum[]>;
   create(data: {
     userId: string;
