@@ -39,6 +39,7 @@ beforeEach(() => {
         genre: '',
         tracks: [],
         status: null,
+        isListened: false,
       }),
       linkArtist: async () => {},
       linkGenre: async () => {},
@@ -49,6 +50,7 @@ beforeEach(() => {
       create: async () => {},
       upsert: async () => {},
       findByRelease: async () => null,
+      markAsListened: async () => {},
     },
     tracks: {
       findRecentByUser: async () => [],

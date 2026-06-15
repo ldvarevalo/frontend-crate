@@ -21,6 +21,7 @@ describe('CollectionAlbumGrid', () => {
       artist: 'Artist 1',
       year: '2001',
       status: 'owned' as const,
+      isListened: false,
     },
     {
       id: '2',
@@ -29,6 +30,7 @@ describe('CollectionAlbumGrid', () => {
       artist: 'Artist 2',
       year: '2002',
       status: 'want' as const,
+      isListened: true,
     },
   ];
 

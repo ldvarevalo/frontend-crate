@@ -28,6 +28,7 @@ const createNoopRepositories = (): Repositories => {
         genre: '',
         tracks: [],
         status: null,
+        isListened: false,
       }),
       linkArtist: async () => {},
       linkGenre: async () => {},
@@ -38,6 +39,7 @@ const createNoopRepositories = (): Repositories => {
       create: async () => {},
       upsert: async () => {},
       findByRelease: async () => null,
+      markAsListened: async () => {},
     },
     tracks: {
       findRecentByUser: async (): Promise<Track[]> => [],
