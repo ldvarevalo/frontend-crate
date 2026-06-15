@@ -10,6 +10,7 @@ import { AlbumTags } from '../-components/album-tags';
 import { AlbumTracklist } from '../-components/album-tracklist';
 import { CollectionStatusSelector } from '../-components/collection-status-selector';
 import { useAlbumData } from '../-hooks/use-album-data';
+import { useAlbumSessions } from '../-hooks/use-album-sessions';
 import { useSetCollectionStatus } from '../-hooks/use-set-collection-status';
 
 /**
@@ -21,6 +22,18 @@ interface AlbumParams {
 }
 
 /**
+ * Constants
+ */
+
+const SCOPE_LABELS: Record<string, string> = {
+  full_release: 'Full Album',
+  side_a: 'Side A',
+  side_b: 'Side B',
+  side_c: 'Side C',
+  side_d: 'Side D',
+};
+
+/**
  * AlbumDetailPage
  */
 
@@ -29,6 +42,7 @@ const AlbumDetailPage: FunctionComponent = () => {
   const navigate = useNavigate();
   const { album, isLoading, isError, error } = useAlbumData(id);
   const { mutate: setStatus } = useSetCollectionStatus();
+  const { sessions, isLoading: sessionsLoading } = useAlbumSessions(id);
 
   if (!id) {
     return (
@@ -106,6 +120,13 @@ const AlbumDetailPage: FunctionComponent = () => {
         <AlbumTracklist tracks={album.tracks} />
 
         <AlbumListeningHistory
+          sessions={sessions.map(s => ({
+            id: s.id,
+            listenedAt: s.listenedAt,
+            scopeLabel: SCOPE_LABELS[s.scope] ?? s.scope,
+            sourceFormat: s.sourceFormat,
+          }))}
+          isLoading={sessionsLoading}
           onNewSessionClick={() =>
             navigate({
               to: `/album/${id}/session`,
