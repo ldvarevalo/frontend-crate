@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { Typography } from '#/components/ui/typography';
-import type { ListeningScope } from '#/types/domain';
 import { cn } from '#/lib/utils';
+import type { ListeningScope } from '#/types/domain';
 
 /**
  * Types
@@ -46,7 +46,7 @@ export const ListeningModeTabs: FunctionComponent<ListeningModeTabsProps> = ({
           className={cn(
             'flex-1 basis-[calc(25%-0.5rem)] px-4 py-3 transition-colors',
             isActive
-              ? 'bg-primary text-on-primary'
+              ? 'bg-primary-container text-on-primary-container'
               : 'bg-surface-container-high text-on-surface-variant'
           )}
         >
@@ -54,7 +54,9 @@ export const ListeningModeTabs: FunctionComponent<ListeningModeTabsProps> = ({
             size="xs"
             weight="bold"
             transform="uppercase"
-            className={isActive ? 'text-on-primary' : 'text-on-surface-variant'}
+            className={
+              isActive ? 'text-on-primary-container' : 'text-on-surface-variant'
+            }
           >
             {MODE_LABELS[mode]}
           </Typography>

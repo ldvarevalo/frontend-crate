@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import type { ListeningScope, SourceFormat } from '#/types/domain';
 import { useUser } from '#/core/auth';
 import { useRepositories } from '#/repositories/hooks';
+import type { ListeningScope, SourceFormat } from '#/types/domain';
 
 /**
  * Types
@@ -23,9 +23,13 @@ interface UseCreateSessionHook {
  */
 
 const durationToSeconds = (duration: string): number | null => {
-  if (!duration) return null;
+  if (!duration) {
+    return null;
+  }
   const parts = duration.split(':').map(Number);
-  if (parts.length !== 3 || parts.some(isNaN)) return null;
+  if (parts.length !== 3 || parts.some(isNaN)) {
+    return null;
+  }
   return parts[0] * 3600 + parts[1] * 60 + parts[2];
 };
 
@@ -45,10 +49,7 @@ export const useCreateSession = (
         throw new Error('Missing albumId or user');
       }
 
-      const userRelease = await userReleases.findByRelease(
-        albumId,
-        user.id
-      );
+      const userRelease = await userReleases.findByRelease(albumId, user.id);
 
       if (!userRelease) {
         throw new Error(
@@ -64,5 +65,8 @@ export const useCreateSession = (
     },
   });
 
-  return { mutate, isPending };
+  return {
+    mutate,
+    isPending,
+  };
 };

@@ -1,16 +1,16 @@
-/* eslint-disable unicorn/filename-case, @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import type { FunctionComponent } from 'react';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { AlbumHero } from '#/components/album-hero';
 import { Typography } from '#/components/ui/typography';
 import { router } from '#/router';
-import { AlbumListeningHistory } from './-components/album-listening-history';
-import { AlbumRating } from './-components/album-rating';
-import { AlbumTags } from './-components/album-tags';
-import { AlbumTracklist } from './-components/album-tracklist';
-import { CollectionStatusSelector } from './-components/collection-status-selector';
-import { useAlbumData } from './-hooks/use-album-data';
-import { useSetCollectionStatus } from './-hooks/use-set-collection-status';
+import { AlbumListeningHistory } from '../-components/album-listening-history';
+import { AlbumRating } from '../-components/album-rating';
+import { AlbumTags } from '../-components/album-tags';
+import { AlbumTracklist } from '../-components/album-tracklist';
+import { CollectionStatusSelector } from '../-components/collection-status-selector';
+import { useAlbumData } from '../-hooks/use-album-data';
+import { useSetCollectionStatus } from '../-hooks/use-set-collection-status';
 
 /**
  * Types
@@ -101,28 +101,17 @@ const AlbumDetailPage: FunctionComponent = () => {
           }}
         />
 
-        <button
-          type="button"
-          onClick={() => navigate({ to: '/album/$id/session',
-params: { id } })}
-          className="mx-4 block w-[calc(100%-2rem)] bg-gradient-to-br from-primary/80 to-primary py-4 text-center"
-        >
-          <Typography
-            size="sm"
-            weight="bold"
-            transform="uppercase"
-            tracking="widest"
-            className="text-on-primary"
-          >
-            NEW SESSION
-          </Typography>
-        </button>
-
         <AlbumRating />
 
         <AlbumTracklist tracks={album.tracks} />
 
-        <AlbumListeningHistory />
+        <AlbumListeningHistory
+          onNewSessionClick={() =>
+            navigate({
+              to: `/album/${id}/session`,
+            })
+          }
+        />
       </main>
     </div>
   );
@@ -132,7 +121,7 @@ params: { id } })}
  * AlbumRoute
  */
 
-export const Route = createFileRoute('/_auth/album/{-$id}')({
+export const Route = createFileRoute('/_auth/album/{-$id}/')({
   component: AlbumDetailPage,
   loader: () => ({
     pageHeader: {

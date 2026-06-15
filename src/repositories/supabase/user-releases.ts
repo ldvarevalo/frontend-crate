@@ -168,7 +168,9 @@ export class SupabaseUserReleasesRepository implements UserReleasesRepository {
       .eq('user_id', userId)
       .maybeSingle();
 
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return data;
   }
 }

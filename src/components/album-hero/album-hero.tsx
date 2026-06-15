@@ -37,7 +37,11 @@ export const AlbumHero: FunctionComponent<AlbumHeroProps> = ({
       <>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 space-y-1 p-4">
-          <Typography size="2xl" weight="bold" className="font-heading not-italic">
+          <Typography
+            size="2xl"
+            weight="bold"
+            className="font-heading not-italic"
+          >
             {title}
           </Typography>
           <Typography family="heading" size="md" className="text-primary">

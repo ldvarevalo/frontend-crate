@@ -11,6 +11,16 @@ interface DurationInputProps {
 }
 
 /**
+ * Helpers
+ */
+
+const formatDuration = (digits: string): string => {
+  const padded = digits.padStart(6, '0');
+
+  return `${padded.slice(0, 2)}:${padded.slice(2, 4)}:${padded.slice(4, 6)}`;
+};
+
+/**
  * DurationInput
  */
 
@@ -19,12 +29,8 @@ export const DurationInput: FunctionComponent<DurationInputProps> = ({
   onChange,
 }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const raw = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
-    const formatted = raw.replace(
-      /^(\d{0,2})(\d{0,2})(\d{0,2})$/,
-      (_, ...parts) => parts.filter(Boolean).join(':')
-    );
-    onChange(formatted);
+    const digits = e.target.value.replace(/\D/g, '').slice(-6);
+    onChange(digits);
   };
 
   return (
@@ -32,10 +38,10 @@ export const DurationInput: FunctionComponent<DurationInputProps> = ({
       <input
         type="text"
         inputMode="numeric"
-        value={value}
+        value={value ? formatDuration(value) : ''}
         onChange={handleChange}
         placeholder="00:43:57"
-        className="w-full border-b-2 border-primary bg-transparent py-2 text-center font-mono text-4xl text-foreground outline-none placeholder:text-on-surface-variant/50"
+        className="w-full border-b-2 border-primary-container bg-transparent py-2 text-center font-mono text-4xl text-foreground outline-none placeholder:text-on-surface-variant/50"
       />
       <Typography
         size="xs"

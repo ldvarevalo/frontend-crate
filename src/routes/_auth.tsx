@@ -28,10 +28,9 @@ const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
 const AuthenticatedLayout: FunctionComponent = () => {
   const matchRoute = useMatchRoute();
   const location = useLocation();
-  const activeTab: TabId =
-    location.pathname.startsWith('/album/')
-      ? 'collection'
-      : TAB_ROUTES.find(([, to]) => matchRoute({ to }))?.[0] ?? 'home';
+  const activeTab: TabId = location.pathname.startsWith('/album/')
+    ? 'collection'
+    : (TAB_ROUTES.find(([, to]) => matchRoute({ to }))?.[0] ?? 'home');
 
   return (
     <div className="min-h-screen bg-background pb-20">

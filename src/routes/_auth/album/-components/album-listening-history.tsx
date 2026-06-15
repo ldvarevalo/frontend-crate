@@ -4,10 +4,20 @@ import { Button } from '#/components/ui/button';
 import { Typography } from '#/components/ui/typography';
 
 /**
+ * Types
+ */
+
+interface AlbumListeningHistoryProps {
+  onNewSessionClick: () => void;
+}
+
+/**
  * AlbumListeningHistory
  */
 
-export const AlbumListeningHistory: FunctionComponent = () => (
+export const AlbumListeningHistory: FunctionComponent<
+  AlbumListeningHistoryProps
+> = ({ onNewSessionClick }) => (
   <section className="space-y-2">
     <div className="flex items-center justify-between">
       <Typography
@@ -20,6 +30,7 @@ export const AlbumListeningHistory: FunctionComponent = () => (
       <Button
         variant="ghost"
         className="flex items-center gap-1 border border-outline-20"
+        onClick={onNewSessionClick}
       >
         <Play className="size-3" />
         <Typography size="xs" transform="uppercase">

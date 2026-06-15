@@ -69,7 +69,12 @@ export interface ManualEntryData {
   status: CollectionStatus;
 }
 
-export type ListeningScope = 'full_release' | 'side_a' | 'side_b' | 'side_c' | 'side_d';
+export type ListeningScope =
+  | 'full_release'
+  | 'side_a'
+  | 'side_b'
+  | 'side_c'
+  | 'side_d';
 
 export type SourceFormat = 'vinyl' | 'digital';
 

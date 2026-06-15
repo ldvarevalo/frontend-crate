@@ -29,7 +29,7 @@ export const ActionButtons: FunctionComponent<ActionButtonsProps> = ({
       disabled={!isValid || isPending}
       onClick={onSubmit}
       className={cn(
-        'w-full bg-gradient-to-br from-primary/80 to-primary py-4 text-center transition-opacity',
+        'w-full bg-gradient-to-br from-primary-container/80 to-primary-container py-4 text-center transition-opacity',
         (!isValid || isPending) && 'opacity-50'
       )}
     >
@@ -38,7 +38,7 @@ export const ActionButtons: FunctionComponent<ActionButtonsProps> = ({
         weight="bold"
         transform="uppercase"
         tracking="widest"
-        className="text-on-primary"
+        className="text-on-primary-container"
       >
         {isPending ? 'SAVING...' : 'NEW SESSION'}
       </Typography>

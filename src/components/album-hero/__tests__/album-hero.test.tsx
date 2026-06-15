@@ -47,9 +47,13 @@ describe('AlbumHero (cover variant)', () => {
   });
 
   it('should not render gradient overlay in cover variant', () => {
-    const { container } = render(<AlbumHero {...defaultProps} variant="cover" />);
+    const { container } = render(
+      <AlbumHero {...defaultProps} variant="cover" />
+    );
 
-    expect(container.querySelector('.bg-gradient-to-t')).not.toBeInTheDocument();
+    expect(
+      container.querySelector('.bg-gradient-to-t')
+    ).not.toBeInTheDocument();
   });
 
   it('should render h1 in cover variant', () => {
