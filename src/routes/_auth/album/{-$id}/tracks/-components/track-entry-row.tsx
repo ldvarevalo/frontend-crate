@@ -1,4 +1,5 @@
 import type { FunctionComponent } from 'react';
+import { X } from 'lucide-react';
 import { Button } from '#/components/ui/button';
 
 /**
@@ -44,8 +45,9 @@ export const TrackEntryRow: FunctionComponent<TrackEntryRowProps> = ({
         type="button"
         variant="text"
         onClick={() => onRemove(track.id)}
+        aria-label="Remove track"
       >
-        ✕
+        <X className="size-4" />
       </Button>
     </div>
 
