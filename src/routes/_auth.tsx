@@ -4,6 +4,7 @@ import {
   redirect,
   Outlet,
   useMatchRoute,
+  useLocation,
 } from '@tanstack/react-router';
 import { type TabId, BottomNav } from '#/components/bottom-nav';
 import { Header } from '#/components/header';
@@ -26,8 +27,10 @@ const TAB_ROUTES: [TabId, FileRouteTypes['to']][] = [
 
 const AuthenticatedLayout: FunctionComponent = () => {
   const matchRoute = useMatchRoute();
-  const activeTab =
-    TAB_ROUTES.find(([, to]) => matchRoute({ to }))?.[0] ?? 'home';
+  const location = useLocation();
+  const activeTab: TabId = location.pathname.startsWith('/album/')
+    ? 'collection'
+    : (TAB_ROUTES.find(([, to]) => matchRoute({ to }))?.[0] ?? 'home');
 
   return (
     <div className="min-h-screen bg-background pb-20">

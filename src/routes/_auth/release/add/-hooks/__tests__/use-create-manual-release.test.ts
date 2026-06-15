@@ -45,9 +45,12 @@ const mockGenres = {
 
 const mockUserReleases = {
   findRecent: vi.fn().mockResolvedValue([]),
+  findUpNext: vi.fn().mockResolvedValue([]),
   findAllByUser: vi.fn().mockResolvedValue([]),
   create: vi.fn().mockResolvedValue(undefined),
   upsert: vi.fn().mockResolvedValue(undefined),
+  findByRelease: vi.fn().mockResolvedValue(null),
+  markAsListened: vi.fn().mockResolvedValue(undefined),
 };
 
 const mockEntry: ManualEntryData = {

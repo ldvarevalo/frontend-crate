@@ -16,12 +16,16 @@ const TABS = [
     label: 'ALL',
   },
   {
-    id: 'OWNED',
-    label: 'OWNED',
+    id: 'DISCOVER',
+    label: 'DISCOVER',
   },
   {
     id: 'WANT',
     label: 'WANT',
+  },
+  {
+    id: 'OWNED',
+    label: 'OWNED',
   },
   {
     id: 'LISTENED',

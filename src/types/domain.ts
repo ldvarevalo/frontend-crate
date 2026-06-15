@@ -2,7 +2,7 @@
  * Types
  */
 
-export type CollectionStatus = 'owned' | 'want' | 'listened';
+export type CollectionStatus = 'discover' | 'want' | 'owned';
 
 export interface Album {
   id: string;
@@ -23,13 +23,13 @@ export interface Track {
 export interface HomeStats {
   totalReleases: number;
   thisMonth: number;
-  wantToListen: number;
+  wantToBuy: number;
 }
 
 export interface HomeData {
   stats: HomeStats;
   albums: Album[];
-  tracks: Track[];
+  upNext: Album[];
 }
 
 export interface CollectionAlbum {
@@ -39,6 +39,7 @@ export interface CollectionAlbum {
   artist: string;
   year: string;
   status: CollectionStatus;
+  isListened: boolean;
 }
 
 export interface AlbumDetail {
@@ -50,6 +51,7 @@ export interface AlbumDetail {
   genre: string;
   tracks: Track[];
   status: CollectionStatus | null;
+  isListened: boolean;
 }
 
 export interface SearchResult {
@@ -67,4 +69,23 @@ export interface ManualEntryData {
   genre: string;
   artworkUrl: string;
   status: CollectionStatus;
+}
+
+export type ListeningScope =
+  | 'full_release'
+  | 'side_a'
+  | 'side_b'
+  | 'side_c'
+  | 'side_d';
+
+export type SourceFormat = 'vinyl' | 'digital';
+
+export interface ListeningSession {
+  id: string;
+  userReleaseId: string;
+  scope: ListeningScope;
+  sourceFormat: SourceFormat;
+  durationSeconds: number | null;
+  listenedAt: string;
+  createdAt: string;
 }

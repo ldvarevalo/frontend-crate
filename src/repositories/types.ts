@@ -4,7 +4,10 @@ import type {
   CollectionAlbum,
   CollectionStatus,
   HomeStats,
+  ListeningScope,
+  ListeningSession,
   SearchResult,
+  SourceFormat,
   Track,
 } from '#/types/domain';
 
@@ -58,6 +61,7 @@ export interface GenresRepository {
 
 export interface UserReleasesRepository {
   findRecent(userId: string, limit: number): Promise<Album[]>;
+  findUpNext(userId: string, limit: number): Promise<Album[]>;
   findAllByUser(userId: string): Promise<CollectionAlbum[]>;
   create(data: {
     userId: string;
@@ -69,6 +73,11 @@ export interface UserReleasesRepository {
     releaseId: string;
     status: CollectionStatus;
   }): Promise<void>;
+  findByRelease(
+    releaseId: string,
+    userId: string
+  ): Promise<{ id: string } | null>;
+  markAsListened(userReleaseId: string): Promise<void>;
 }
 
 export interface TracksRepository {
@@ -77,6 +86,17 @@ export interface TracksRepository {
 
 export interface StatsRepository {
   findStats(userId: string): Promise<HomeStats>;
+}
+
+export interface ListeningSessionsRepository {
+  create(data: {
+    userReleaseId: string;
+    scope: ListeningScope;
+    sourceFormat: SourceFormat;
+    durationSeconds: number | null;
+  }): Promise<void>;
+
+  findByRelease(releaseId: string, userId: string): Promise<ListeningSession[]>;
 }
 
 /**
@@ -90,4 +110,5 @@ export interface Repositories {
   stats: StatsRepository;
   artists: ArtistsRepository;
   genres: GenresRepository;
+  sessions: ListeningSessionsRepository;
 }

@@ -31,14 +31,14 @@ export const BannerCta: FunctionComponent<BannerCtaProps> = ({
         weight="medium"
         className="text-on-primary-container"
       >
-        WANT TO LISTEN
+        WHISHLIST
       </Typography>
       <Typography
         family="heading"
         size="xl"
         className="text-on-primary-container"
       >
-        {count} items waiting
+        {count} records waiting
       </Typography>
     </div>
     <span className="text-xl text-on-primary-container">&rarr;</span>

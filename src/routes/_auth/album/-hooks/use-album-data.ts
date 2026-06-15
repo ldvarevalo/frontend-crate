@@ -18,9 +18,7 @@ interface UseAlbumDataHook {
  * useAlbumData
  */
 
-export const useAlbumData = (
-  id: string | undefined
-): UseAlbumDataHook => {
+export const useAlbumData = (id: string | undefined): UseAlbumDataHook => {
   const { releases } = useRepositories();
   const user = useUser();
 

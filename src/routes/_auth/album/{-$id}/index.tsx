@@ -1,16 +1,17 @@
-/* eslint-disable unicorn/filename-case, @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import type { FunctionComponent } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { AlbumHero } from '#/components/album-hero';
 import { Typography } from '#/components/ui/typography';
 import { router } from '#/router';
-import { AlbumHero } from './-components/album-hero';
-import { AlbumListeningHistory } from './-components/album-listening-history';
-import { AlbumRating } from './-components/album-rating';
-import { AlbumTags } from './-components/album-tags';
-import { AlbumTracklist } from './-components/album-tracklist';
-import { CollectionStatusSelector } from './-components/collection-status-selector';
-import { useAlbumData } from './-hooks/use-album-data';
-import { useSetCollectionStatus } from './-hooks/use-set-collection-status';
+import { AlbumListeningHistory } from '../-components/album-listening-history';
+import { AlbumRating } from '../-components/album-rating';
+import { AlbumTags } from '../-components/album-tags';
+import { AlbumTracklist } from '../-components/album-tracklist';
+import { CollectionStatusSelector } from '../-components/collection-status-selector';
+import { useAlbumData } from '../-hooks/use-album-data';
+import { useAlbumSessions } from '../-hooks/use-album-sessions';
+import { useSetCollectionStatus } from '../-hooks/use-set-collection-status';
 
 /**
  * Types
@@ -21,13 +22,27 @@ interface AlbumParams {
 }
 
 /**
+ * Constants
+ */
+
+const SCOPE_LABELS: Record<string, string> = {
+  full_release: 'Full Album',
+  side_a: 'Side A',
+  side_b: 'Side B',
+  side_c: 'Side C',
+  side_d: 'Side D',
+};
+
+/**
  * AlbumDetailPage
  */
 
 const AlbumDetailPage: FunctionComponent = () => {
   const { id } = Route.useParams() as AlbumParams;
+  const navigate = useNavigate();
   const { album, isLoading, isError, error } = useAlbumData(id);
   const { mutate: setStatus } = useSetCollectionStatus();
+  const { sessions, isLoading: sessionsLoading } = useAlbumSessions(id);
 
   if (!id) {
     return (
@@ -104,7 +119,20 @@ const AlbumDetailPage: FunctionComponent = () => {
 
         <AlbumTracklist tracks={album.tracks} />
 
-        <AlbumListeningHistory />
+        <AlbumListeningHistory
+          sessions={sessions.map(s => ({
+            id: s.id,
+            listenedAt: s.listenedAt,
+            scopeLabel: SCOPE_LABELS[s.scope] ?? s.scope,
+            sourceFormat: s.sourceFormat,
+          }))}
+          isLoading={sessionsLoading}
+          onNewSessionClick={() =>
+            navigate({
+              to: `/album/${id}/session`,
+            })
+          }
+        />
       </main>
     </div>
   );
@@ -114,12 +142,12 @@ const AlbumDetailPage: FunctionComponent = () => {
  * AlbumRoute
  */
 
-export const Route = createFileRoute('/_auth/album/{-$id}')({
+export const Route = createFileRoute('/_auth/album/{-$id}/')({
   component: AlbumDetailPage,
   loader: () => ({
     pageHeader: {
       title: 'Crate',
-      onBack: () => router.navigate({ to: '/collection' }),
+      onBack: () => router.history.back(),
     },
   }),
 });
