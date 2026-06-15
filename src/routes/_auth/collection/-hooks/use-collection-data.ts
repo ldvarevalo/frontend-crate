@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useUser } from '#/core/auth';
 import { useRepositories } from '#/repositories/hooks';
-import type { CollectionAlbum } from '#/types/domain';
-
-type CollectionStatus = 'owned' | 'want' | 'listened';
+import type { CollectionAlbum, CollectionStatus } from '#/types/domain';
 
 export interface CollectionData {
   albums: CollectionAlbum[];
@@ -16,9 +14,9 @@ export interface CollectionData {
 }
 
 const STATUS_MAP: Record<string, CollectionStatus> = {
-  OWNED: 'owned',
+  DISCOVER: 'discover',
   WANT: 'want',
-  LISTENED: 'listened',
+  OWNED: 'owned',
 };
 
 export const useCollectionData = (): CollectionData => {
@@ -35,6 +33,10 @@ export const useCollectionData = (): CollectionData => {
   const [activeTab, setActiveTab] = useState('ALL');
 
   const filteredAlbums = allAlbums.filter(album => {
+    if (activeTab === 'LISTENED') {
+      return album.isListened;
+    }
+
     const matchesTab =
       activeTab === 'ALL' || album.status === STATUS_MAP[activeTab];
 
