@@ -46,6 +46,7 @@ beforeEach(() => {
     },
     userReleases: {
       findRecent: async () => [],
+      findUpNext: async () => [],
       findAllByUser: async () => [],
       create: async () => {},
       upsert: async () => {},
