@@ -78,7 +78,9 @@ export const TrackEntryRow: FunctionComponent<TrackEntryRowProps> = ({
         }}
       >
         <SelectTrigger className="w-32" aria-label="Track side">
-          <SelectValue />
+          <SelectValue>
+            {sideOptions.find(o => o.value === track.side)?.label}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {sideOptions.map(opt => (
