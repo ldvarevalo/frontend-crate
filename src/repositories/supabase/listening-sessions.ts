@@ -10,9 +10,7 @@ import type { ListeningSessionsRepository } from '../types';
  * SupabaseListeningSessionsRepository
  */
 
-export class SupabaseListeningSessionsRepository
-  implements ListeningSessionsRepository
-{
+export class SupabaseListeningSessionsRepository implements ListeningSessionsRepository {
   private supabase: SupabaseClient;
 
   constructor(supabase: SupabaseClient) {

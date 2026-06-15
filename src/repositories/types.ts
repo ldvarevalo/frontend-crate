@@ -94,10 +94,7 @@ export interface ListeningSessionsRepository {
     durationSeconds: number | null;
   }): Promise<void>;
 
-  findByRelease(
-    releaseId: string,
-    userId: string
-  ): Promise<ListeningSession[]>;
+  findByRelease(releaseId: string, userId: string): Promise<ListeningSession[]>;
 }
 
 /**

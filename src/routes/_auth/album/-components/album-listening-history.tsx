@@ -81,14 +81,14 @@ const SessionList: FunctionComponent<{ sessions: SessionDisplay[] }> = ({
       >
         <div>
           <Typography size="sm" className="text-foreground">
-            {session.scopeLabel}
+            {formatDate(session.listenedAt)}
           </Typography>
           <Typography size="xs" className="text-on-surface-variant">
-            {session.sourceFormat}
+            {session.scopeLabel}
           </Typography>
         </div>
         <Typography size="xs" className="text-on-surface-variant">
-          {formatDate(session.listenedAt)}
+          {session.sourceFormat}
         </Typography>
       </li>
     ))}
@@ -125,8 +125,6 @@ export const AlbumListeningHistory: FunctionComponent<
 
     {isLoading && <LoadingState />}
     {!isLoading && sessions.length === 0 && <EmptyState />}
-    {!isLoading && sessions.length > 0 && (
-      <SessionList sessions={sessions} />
-    )}
+    {!isLoading && sessions.length > 0 && <SessionList sessions={sessions} />}
   </section>
 );
