@@ -10,7 +10,7 @@ import type { HomeData, HomeStats } from '#/types/domain';
 const EMPTY_STATS: HomeStats = {
   totalReleases: 0,
   thisMonth: 0,
-  wantToListen: 0,
+  wantToBuy: 0,
 };
 
 const RECENT_ALBUMS_LIMIT = 4;

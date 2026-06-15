@@ -22,8 +22,8 @@ const HomePage: FunctionComponent = () => {
         thisMonth={stats.thisMonth}
       />
       <BannerCta
-        count={stats.wantToListen}
-        onClick={() => navigate({ to: '/want-to-listen' })}
+        count={stats.wantToBuy}
+        onClick={() => navigate({ to: '/whishlist' })}
       />
       <SectionHeader title="Recently Listened" />
       <div className="grid grid-cols-2 gap-4">

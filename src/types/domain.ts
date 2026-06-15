@@ -23,7 +23,7 @@ export interface Track {
 export interface HomeStats {
   totalReleases: number;
   thisMonth: number;
-  wantToListen: number;
+  wantToBuy: number;
 }
 
 export interface HomeData {

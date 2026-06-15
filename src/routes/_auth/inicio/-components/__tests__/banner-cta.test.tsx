@@ -16,17 +16,17 @@ describe('BannerCta', () => {
     vi.clearAllMocks();
   });
 
-  it('should render count and items waiting text', () => {
+  it('should render count and records waiting text', () => {
     render(<BannerCta count={5} onClick={handleClickMock} />);
 
-    expect(screen.getByText('5 items waiting')).toBeInTheDocument();
-    expect(screen.getByText('WANT TO LISTEN')).toBeInTheDocument();
+    expect(screen.getByText('5 records waiting')).toBeInTheDocument();
+    expect(screen.getByText('WHISHLIST')).toBeInTheDocument();
   });
 
   it('should fire onClick when clicked', () => {
     render(<BannerCta count={5} onClick={handleClickMock} />);
 
-    screen.getByText('5 items waiting').closest('button')?.click();
+    screen.getByText('5 records waiting').closest('button')?.click();
 
     expect(handleClickMock).toHaveBeenCalledTimes(1);
   });

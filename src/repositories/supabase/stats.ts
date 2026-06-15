@@ -36,12 +36,12 @@ export class SupabaseStatsRepository implements StatsRepository {
 
     const thisMonth = rows.filter(r => r.created_at >= firstOfMonth).length;
 
-    const wantToListen = rows.filter(r => r.status === 'want').length;
+    const wantToBuy = rows.filter(r => r.status === 'want').length;
 
     return {
       totalReleases,
       thisMonth,
-      wantToListen,
+      wantToBuy,
     };
   }
 }

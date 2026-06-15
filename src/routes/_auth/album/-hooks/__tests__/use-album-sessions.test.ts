@@ -59,7 +59,7 @@ beforeEach(() => {
       findStats: async () => ({
         totalReleases: 0,
         thisMonth: 0,
-        wantToListen: 0,
+        wantToBuy: 0,
       }),
     },
     artists: {
