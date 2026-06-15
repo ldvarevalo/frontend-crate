@@ -2,7 +2,7 @@
  * Types
  */
 
-export type CollectionStatus = 'owned' | 'want' | 'listened';
+export type CollectionStatus = 'discover' | 'want' | 'owned';
 
 export interface Album {
   id: string;
@@ -39,6 +39,7 @@ export interface CollectionAlbum {
   artist: string;
   year: string;
   status: CollectionStatus;
+  isListened: boolean;
 }
 
 export interface AlbumDetail {
@@ -50,6 +51,7 @@ export interface AlbumDetail {
   genre: string;
   tracks: Track[];
   status: CollectionStatus | null;
+  isListened: boolean;
 }
 
 export interface SearchResult {
