@@ -82,6 +82,7 @@ export interface ListeningSession {
   id: string;
   userReleaseId: string;
   scope: ListeningScope;
+  sourceFormat: SourceFormat;
   durationSeconds: number | null;
   listenedAt: string;
   createdAt: string;
