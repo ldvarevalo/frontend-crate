@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUser } from '#/core/auth';
 import { useRepositories } from '#/repositories/hooks';
 import type { ListeningScope, SourceFormat } from '#/types/domain';
@@ -40,6 +40,7 @@ const durationToSeconds = (duration: string): number | null => {
 export const useCreateSession = (
   albumId: string | undefined
 ): UseCreateSessionHook => {
+  const queryClient = useQueryClient();
   const { sessions, userReleases } = useRepositories();
   const user = useUser();
 
@@ -63,6 +64,15 @@ export const useCreateSession = (
         sourceFormat: data.sourceFormat,
         durationSeconds: durationToSeconds(data.duration),
       });
+
+      await userReleases.markAsListened(userRelease.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['album', albumId],
+      });
+      queryClient.invalidateQueries({ queryKey: ['collection'] });
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
     },
   });
 
