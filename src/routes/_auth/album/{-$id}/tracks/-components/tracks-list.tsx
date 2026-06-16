@@ -27,9 +27,7 @@ export const TracksList: FunctionComponent<TracksListProps> = ({ bySide }) => {
   return (
     <div className="space-y-4">
       {sides.map(side => {
-        const tracks = [...bySide[side]].sort(
-          (a, b) => a.position - b.position
-        );
+        const tracks = bySide[side];
         const totalDuration = sumTrackDurations(tracks);
         const label = getListeningScopeLabel(side);
 

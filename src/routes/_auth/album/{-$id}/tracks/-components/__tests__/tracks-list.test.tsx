@@ -26,14 +26,28 @@ describe('TracksList', () => {
           side: 'side_a',
           position: 1,
         },
-      ],
-      side_b: [
         {
           id: '2',
           title: 'Track Two',
           durationSeconds: 120,
+          side: 'side_a',
+          position: 2,
+        },
+      ],
+      side_b: [
+        {
+          id: '3',
+          title: 'Track Three',
+          durationSeconds: 100,
           side: 'side_b',
           position: 1,
+        },
+        {
+          id: '4',
+          title: 'Track Four',
+          durationSeconds: 80,
+          side: 'side_b',
+          position: 2,
         },
       ],
     };
@@ -42,8 +56,12 @@ describe('TracksList', () => {
 
     expect(screen.getByText('Side A')).toBeInTheDocument();
     expect(screen.getByText('Side B')).toBeInTheDocument();
-    expect(screen.getAllByText('3:45').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText('2:00').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText('5:45')).toBeInTheDocument();
+    expect(screen.getByText('3:00')).toBeInTheDocument();
+    expect(screen.getByText('3:45')).toBeInTheDocument();
+    expect(screen.getByText('2:00')).toBeInTheDocument();
+    expect(screen.getByText('1:40')).toBeInTheDocument();
+    expect(screen.getByText('1:20')).toBeInTheDocument();
   });
 
   it('should render each track with title and formatted duration', () => {
@@ -74,16 +92,9 @@ describe('TracksList', () => {
     expect(screen.getByText('2:00')).toBeInTheDocument();
   });
 
-  it('should render tracks within each side sorted by position', () => {
+  it('should render tracks within each side in array order', () => {
     const bySide: Record<string, Track[]> = {
       side_a: [
-        {
-          id: '3',
-          title: 'Third',
-          durationSeconds: null,
-          side: 'side_a',
-          position: 3,
-        },
         {
           id: '1',
           title: 'First',
@@ -97,6 +108,13 @@ describe('TracksList', () => {
           durationSeconds: null,
           side: 'side_a',
           position: 2,
+        },
+        {
+          id: '3',
+          title: 'Third',
+          durationSeconds: null,
+          side: 'side_a',
+          position: 3,
         },
       ],
     };
