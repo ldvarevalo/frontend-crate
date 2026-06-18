@@ -139,7 +139,7 @@ const AddTracksDialog: FunctionComponent<AddTracksDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="mx-4 max-w-lg">
         <DialogTitle>
           <Typography
             size="xs"
