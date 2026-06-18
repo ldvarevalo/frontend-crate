@@ -181,7 +181,7 @@ const AddTracksDialog: FunctionComponent<AddTracksDialogProps> = ({
         </Button>
 
         {errorMessage !== null && (
-          <Typography size="sm" className="text-destructive">
+          <Typography size="sm" role="alert" className="text-destructive">
             {errorMessage}
           </Typography>
         )}
