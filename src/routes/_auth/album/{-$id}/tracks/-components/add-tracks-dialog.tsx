@@ -21,6 +21,7 @@ interface AddTracksDialogProps {
   onSubmit: (tracks: TrackInput[]) => void;
   isSubmitting: boolean;
   errorMessage: string | null;
+  existingTracksCount: number;
 }
 
 /**
@@ -63,16 +64,6 @@ const durationStringToSeconds = (value: string): number | null => {
   return null;
 };
 
-const getNextPosition = (rows: TrackRowData[], side: string): number => {
-  const sideRows = rows.filter(r => r.side === side);
-
-  if (sideRows.length === 0) {
-    return 1;
-  }
-
-  return Math.max(...sideRows.map(r => r.position)) + 1;
-};
-
 /**
  * AddTracksDialog
  */
@@ -83,9 +74,12 @@ const AddTracksDialog: FunctionComponent<AddTracksDialogProps> = ({
   onSubmit,
   isSubmitting,
   errorMessage,
+  existingTracksCount,
 }) => {
+  const initialPosition = existingTracksCount + 1;
+
   const [rows, setRows] = useState<TrackRowData[]>([
-    createEmptyRow('side_a', 1),
+    createEmptyRow('side_a', initialPosition),
   ]);
 
   const handleRowChange = (
@@ -112,7 +106,7 @@ const AddTracksDialog: FunctionComponent<AddTracksDialogProps> = ({
   const handleAddRow = (): void => {
     setRows(prev => [
       ...prev,
-      createEmptyRow('side_a', getNextPosition(prev, 'side_a')),
+      createEmptyRow('side_a', existingTracksCount + prev.length + 1),
     ]);
   };
 
@@ -129,7 +123,7 @@ const AddTracksDialog: FunctionComponent<AddTracksDialogProps> = ({
 
   const handleOpenChange = (nextOpen: boolean): void => {
     if (!nextOpen) {
-      setRows([createEmptyRow('side_a', 1)]);
+      setRows([createEmptyRow('side_a', initialPosition)]);
     }
     onOpenChange(nextOpen);
   };
@@ -139,7 +133,7 @@ const AddTracksDialog: FunctionComponent<AddTracksDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="mx-4 max-w-lg">
+      <DialogContent className="max-w-[min(32rem,calc(100%-2rem))]">
         <DialogTitle>
           <Typography
             size="xs"

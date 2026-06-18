@@ -13,6 +13,7 @@ interface HarnessProps {
   onSubmit?: (tracks: TrackInput[]) => void;
   isSubmitting?: boolean;
   errorMessage?: string | null;
+  existingTracksCount?: number;
 }
 
 /**
@@ -26,6 +27,7 @@ const renderDialog = (
   const onSubmit = props.onSubmit ?? vi.fn();
   const isSubmitting = props.isSubmitting ?? false;
   const errorMessage = props.errorMessage ?? null;
+  const existingTracksCount = props.existingTracksCount ?? 0;
 
   return render(
     <AddTracksDialog
@@ -34,6 +36,7 @@ const renderDialog = (
       onSubmit={onSubmit}
       isSubmitting={isSubmitting}
       errorMessage={errorMessage}
+      existingTracksCount={existingTracksCount}
     />
   );
 };

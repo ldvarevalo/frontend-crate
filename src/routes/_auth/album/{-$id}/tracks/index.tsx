@@ -159,6 +159,7 @@ const TracksPage: FunctionComponent = () => {
           onSubmit={handleSubmit}
           isSubmitting={isPending}
           errorMessage={errorMessage}
+          existingTracksCount={album.tracks.length}
         />
       </main>
     </div>
