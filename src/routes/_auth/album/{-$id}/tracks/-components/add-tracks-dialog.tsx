@@ -146,7 +146,7 @@ const AddTracksDialog: FunctionComponent<AddTracksDialogProps> = ({
           </Typography>
         </DialogTitle>
 
-        <div className="space-y-3">
+        <div className="min-h-0 max-h-[50vh] space-y-3 overflow-y-auto">
           {rows.map(row => (
             <TrackEntryRow
               key={row.id}
