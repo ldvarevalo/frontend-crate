@@ -11,8 +11,13 @@ interface UseCreateTracksData {
   tracks: TrackInput[];
 }
 
+interface UseCreateTracksCallbacks {
+  onSuccess?: () => void;
+  onError?: (error: unknown) => void;
+}
+
 interface UseCreateTracksHook {
-  mutate: (data: UseCreateTracksData, callbacks?: { onSuccess?: () => void }) => void;
+  mutate: (data: UseCreateTracksData, callbacks?: UseCreateTracksCallbacks) => void;
   isPending: boolean;
 }
 
@@ -40,6 +45,9 @@ export const useCreateTracks = (): UseCreateTracksHook => {
       mutate(data, {
         onSuccess: () => {
           callbacks?.onSuccess?.();
+        },
+        onError: (error) => {
+          callbacks?.onError?.(error);
         },
       });
     },
