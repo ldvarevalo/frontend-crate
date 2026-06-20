@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { createMusicSearchRepository } from '../music-search';
 import type { Repositories } from '../types';
 import { SupabaseArtistsRepository } from './artists';
 import { SupabaseGenresRepository } from './genres';
@@ -16,10 +17,7 @@ export const createSupabaseRepositories = (
   supabase: SupabaseClient
 ): Repositories => ({
   releases: new SupabaseReleasesRepository(supabase),
-  // TODO(deezer-task-5): replace with createMusicSearchRepository() (Dezer with Supabase fallback)
-  musicSearch: {
-    search: async () => [],
-  },
+  musicSearch: createMusicSearchRepository(),
   userReleases: new SupabaseUserReleasesRepository(supabase),
   tracks: new SupabaseTracksRepository(supabase),
   stats: new SupabaseStatsRepository(supabase),
