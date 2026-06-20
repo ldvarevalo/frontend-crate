@@ -16,6 +16,10 @@ export const createSupabaseRepositories = (
   supabase: SupabaseClient
 ): Repositories => ({
   releases: new SupabaseReleasesRepository(supabase),
+  // TODO(deezer-task-5): replace with createMusicSearchRepository() (Dezer with Supabase fallback)
+  musicSearch: {
+    search: async () => [],
+  },
   userReleases: new SupabaseUserReleasesRepository(supabase),
   tracks: new SupabaseTracksRepository(supabase),
   stats: new SupabaseStatsRepository(supabase),

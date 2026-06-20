@@ -27,6 +27,19 @@ export interface SearchResults {
   totalPages: number;
 }
 
+export interface SearchItem {
+  id: string;
+  title: string;
+  artist: string;
+  coverUrl: string;
+  year: string;
+  genre: string;
+}
+
+export interface MusicSearchRepository {
+  search(query: string): Promise<SearchItem[]>;
+}
+
 export interface ReleasesRepository {
   findByQuery(
     query: string,
@@ -114,6 +127,7 @@ export interface ListeningSessionsRepository {
 
 export interface Repositories {
   releases: ReleasesRepository;
+  musicSearch: MusicSearchRepository;
   userReleases: UserReleasesRepository;
   tracks: TracksRepository;
   stats: StatsRepository;
