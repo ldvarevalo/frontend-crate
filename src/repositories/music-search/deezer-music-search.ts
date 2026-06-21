@@ -5,8 +5,8 @@ import type { MusicSearchRepository, SearchItem } from './types';
  */
 
 const MAX_GENRE_ENRICHMENT = 5;
-const SEARCH_ENDPOINT = 'https://api.deezer.com/search/album';
-const ALBUM_ENDPOINT = 'https://api.deezer.com/album';
+const SEARCH_ENDPOINT = '/api-deezer/search/album';
+const ALBUM_ENDPOINT = '/api-deezer/album';
 
 /**
  * Types
@@ -25,6 +25,7 @@ interface DeezerSearchResponse {
 }
 
 interface DeezerAlbumResponse {
+  release_date?: string;
   genres?: Array<{ name: string }>;
 }
 
@@ -41,7 +42,7 @@ const toSearchItem = (a: DeezerSearchAlbum): SearchItem => ({
   genre: '',
 });
 
-const enrichGenres = async (
+const enrichDetails = async (
   items: SearchItem[]
 ): Promise<SearchItem[]> => {
   const slice = items.slice(0, MAX_GENRE_ENRICHMENT);
@@ -49,11 +50,17 @@ const enrichGenres = async (
     slice.map(async item => {
       const res = await fetch(`${ALBUM_ENDPOINT}/${item.id}`);
       if (!res.ok) {
-        return '';
+        return {
+          year: '',
+          genre: '',
+        };
       }
       const body = (await res.json()) as DeezerAlbumResponse;
 
-      return body.genres?.[0]?.name ?? '';
+      return {
+        year: body.release_date ? body.release_date.slice(0, 4) : '',
+        genre: body.genres?.[0]?.name ?? '',
+      };
     })
   );
 
@@ -63,9 +70,14 @@ const enrichGenres = async (
     }
     const r = results[index];
 
+    if (r?.status !== 'fulfilled') {
+      return item;
+    }
+
     return {
       ...item,
-      genre: r?.status === 'fulfilled' ? r.value : '',
+      year: r.value.year || item.year,
+      genre: r.value.genre,
     };
   });
 };
@@ -88,7 +100,7 @@ export class DeezerMusicSearchRepository implements MusicSearchRepository {
       const body = (await res.json()) as DeezerSearchResponse;
       const items = (body.data ?? []).map(toSearchItem);
 
-      return enrichGenres(items);
+      return enrichDetails(items);
     } catch {
       return [];
     }

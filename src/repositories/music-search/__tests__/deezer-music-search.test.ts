@@ -217,4 +217,41 @@ describe('DeezerMusicSearchRepository', () => {
     expect(result.slice(0, 5).every(r => r.genre === 'Pop')).toBe(true);
     expect(result.slice(5).every(r => r.genre === '')).toBe(true);
   });
+
+  it('should fall back to album detail year when search response has no release_date', async () => {
+    mockFetch([
+      {
+        ok: true,
+        body: {
+          data: [
+            {
+              id: 222,
+              title: 'Album Without Date',
+              cover_big: 'https://cdn.deezer/cover.jpg',
+              artist: {
+                name: 'Artist X',
+              },
+            },
+          ],
+        },
+      },
+      {
+        ok: true,
+        body: {
+          release_date: '2020-06-15',
+          genres: [
+            {
+              name: 'Pop',
+            },
+          ],
+        },
+      },
+    ]);
+
+    const repo = new DeezerMusicSearchRepository();
+    const result = await repo.search('album');
+
+    expect(result[0].year).toBe('2020');
+    expect(result[0].genre).toBe('Pop');
+  });
 });
