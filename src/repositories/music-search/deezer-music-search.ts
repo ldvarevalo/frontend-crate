@@ -24,9 +24,18 @@ interface DeezerSearchResponse {
   data?: DeezerSearchAlbum[];
 }
 
+interface DeezerGenresResponse {
+  id: string;
+  name: string;
+}
+
+interface DeezerGenresDataResponse {
+  data?: DeezerGenresResponse[];
+}
+
 interface DeezerAlbumResponse {
   release_date?: string;
-  genres?: Array<{ name: string }>;
+  genres?: DeezerGenresDataResponse;
 }
 
 /**
@@ -59,7 +68,7 @@ const enrichDetails = async (
 
       return {
         year: body.release_date ? body.release_date.slice(0, 4) : '',
-        genre: body.genres?.[0]?.name ?? '',
+        genre: body.genres?.data?.[0].name ?? '',
       };
     })
   );
@@ -68,16 +77,16 @@ const enrichDetails = async (
     if (index >= MAX_GENRE_ENRICHMENT) {
       return item;
     }
-    const r = results[index];
+    const result = results[index];
 
-    if (r?.status !== 'fulfilled') {
+    if (result?.status !== 'fulfilled') {
       return item;
     }
 
     return {
       ...item,
-      year: r.value.year || item.year,
-      genre: r.value.genre,
+      year: result.value.year || item.year,
+      genre: result.value.genre,
     };
   });
 };

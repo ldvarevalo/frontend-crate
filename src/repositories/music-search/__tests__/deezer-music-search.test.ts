@@ -70,11 +70,13 @@ describe('DeezerMusicSearchRepository', () => {
       {
         ok: true,
         body: {
-          genres: [
-            {
-              name: 'Jazz',
-            },
-          ],
+          genres: {
+            data: [
+              {
+                name: 'Jazz',
+              },
+            ],
+          },
         },
       },
     ]);
@@ -156,11 +158,13 @@ describe('DeezerMusicSearchRepository', () => {
       {
         ok: true,
         body: {
-          genres: [
-            {
-              name: 'Rock',
-            },
-          ],
+          genres: {
+            data: [
+              {
+                name: 'Rock',
+              },
+            ],
+          },
         },
       },
     ] as MockResponse[]);
@@ -199,11 +203,13 @@ describe('DeezerMusicSearchRepository', () => {
       responses.push({
         ok: true,
         body: {
-          genres: [
-            {
-              name: 'Pop',
-            },
-          ],
+          genres: {
+            data: [
+              {
+                name: 'Pop',
+              },
+            ],
+          },
         },
       });
     }
@@ -239,11 +245,13 @@ describe('DeezerMusicSearchRepository', () => {
         ok: true,
         body: {
           release_date: '2020-06-15',
-          genres: [
-            {
-              name: 'Pop',
-            },
-          ],
+          genres: {
+            data: [
+              {
+                name: 'Pop',
+              },
+            ],
+          },
         },
       },
     ]);
