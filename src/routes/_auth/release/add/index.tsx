@@ -40,7 +40,7 @@ const toLookupResult = (item: SearchItem): LookupResult => ({
  */
 
 // eslint-disable-next-line max-statements
-const AddReleasePage: FunctionComponent = () => {
+export const AddReleasePage: FunctionComponent = () => {
   const navigate = useNavigate();
   const { query, setQuery, results, isPending } = useAlbumSearch();
   const { artists, genres } = useRepositories();
