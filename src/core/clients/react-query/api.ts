@@ -19,6 +19,13 @@ export class ApiError extends Error {
 }
 
 /**
+ * Constants
+ */
+
+const SUPABASE_AUTH_KEY_PREFIX = 'sb-';
+const SUPABASE_AUTH_KEY_SUFFIX = '-auth-token';
+
+/**
  * Helpers
  */
 
@@ -30,16 +37,52 @@ const getBaseUrl = (): string => {
   return url;
 };
 
+const findSupabaseSessionKey = (): string | null => {
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key?.startsWith(SUPABASE_AUTH_KEY_PREFIX) && key?.endsWith(SUPABASE_AUTH_KEY_SUFFIX)) {
+      return key;
+    }
+  }
+  return null;
+};
+
+const getToken = (): string | null => {
+  try {
+    const key = findSupabaseSessionKey();
+    if (!key) {
+      return null;
+    }
+
+    const raw = localStorage.getItem(key);
+    if (!raw) {
+      return null;
+    }
+
+    const session = JSON.parse(raw);
+    return session?.access_token ?? null;
+  } catch {
+    return null;
+  }
+};
+
 const request = async <T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> => {
   const url = `${getBaseUrl()}${endpoint}`;
+  const token = getToken();
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...(options.headers as Record<string, string>),
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const response = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
+    headers,
     ...options,
   });
 
