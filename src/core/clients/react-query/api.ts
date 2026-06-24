@@ -19,6 +19,13 @@ export class ApiError extends Error {
 }
 
 /**
+ * Constants
+ */
+
+const SUPABASE_AUTH_KEY_PREFIX = 'sb-';
+const SUPABASE_AUTH_KEY_SUFFIX = '-auth-token';
+
+/**
  * Helpers
  */
 
@@ -29,9 +36,6 @@ const getBaseUrl = (): string => {
   }
   return url;
 };
-
-const SUPABASE_AUTH_KEY_PREFIX = 'sb-';
-const SUPABASE_AUTH_KEY_SUFFIX = '-auth-token';
 
 const findSupabaseSessionKey = (): string | null => {
   for (let i = 0; i < localStorage.length; i++) {
