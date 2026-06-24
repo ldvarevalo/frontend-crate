@@ -6,7 +6,7 @@ import type { SearchItem } from '../types';
  * Helpers
  */
 
-const mockResponse = (status: number, body: unknown) =>
+const mockResponse = (status: number, body: unknown): Response =>
   ({
     ok: status >= 200 && status < 300,
     status,
