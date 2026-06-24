@@ -32,7 +32,16 @@ const getBaseUrl = (): string => {
 
 const getToken = (): string | null => {
   try {
-    return localStorage.getItem('auth_token');
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('sb-') && key.endsWith('-auth-token')) {
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+        const session = JSON.parse(raw);
+        return session?.access_token ?? null;
+      }
+    }
+    return null;
   } catch {
     return null;
   }
