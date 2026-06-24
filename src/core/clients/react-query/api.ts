@@ -30,18 +30,33 @@ const getBaseUrl = (): string => {
   return url;
 };
 
+const SUPABASE_AUTH_KEY_PREFIX = 'sb-';
+const SUPABASE_AUTH_KEY_SUFFIX = '-auth-token';
+
+const findSupabaseSessionKey = (): string | null => {
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key?.startsWith(SUPABASE_AUTH_KEY_PREFIX) && key?.endsWith(SUPABASE_AUTH_KEY_SUFFIX)) {
+      return key;
+    }
+  }
+  return null;
+};
+
 const getToken = (): string | null => {
   try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key?.startsWith('sb-') && key.endsWith('-auth-token')) {
-        const raw = localStorage.getItem(key);
-        if (!raw) continue;
-        const session = JSON.parse(raw);
-        return session?.access_token ?? null;
-      }
+    const key = findSupabaseSessionKey();
+    if (!key) {
+      return null;
     }
-    return null;
+
+    const raw = localStorage.getItem(key);
+    if (!raw) {
+      return null;
+    }
+
+    const session = JSON.parse(raw);
+    return session?.access_token ?? null;
   } catch {
     return null;
   }
